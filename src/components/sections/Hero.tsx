@@ -36,7 +36,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative min-h-[90svh] md:min-h-screen w-full bg-[#050505] overflow-hidden flex flex-col justify-center">
+    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-32 md:pt-48 pb-0">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -51,7 +51,7 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON --- */}
-      <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+      <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[45vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] flex items-center justify-center">
 
@@ -68,8 +68,8 @@ export default function Hero() {
                   d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-               <text fill="#bcff00" fontSize="4.5" fontWeight="bold" letterSpacing="2.8">
-                <textPath xlinkHref="#circlePath"> • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
+               <text fill="#bcff00" fontSize="4.1" fontWeight="bold" letterSpacing="2.8">
+                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
                 </textPath>
               </text>
             </motion.svg>
@@ -97,9 +97,9 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 3: KONTEN TEKS --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-20 md:pb-32">
         <motion.div
-          className="max-w-4xl text-left pt-12 md:pt-0"
+          className="max-w-4xl text-left"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -114,13 +114,11 @@ export default function Hero() {
           <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-white">
             New Tech
           </h1>
-          {/* PERBAIKAN: Jarak bawah h1 ditambah agar tidak menempel ke slogan */}
           <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-10 md:mb-14">
             Solution
           </h1>
 
           {/* Slogan */}
-          {/* PERBAIKAN: mt-4 ditambahkan dan mb ditingkatkan agar lebih lega */}
           <div className="max-w-[260px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-4 mb-10 md:mb-14 text-left">
             <p className="text-white/40 text-xs md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
@@ -128,8 +126,7 @@ export default function Hero() {
           </div>
 
           {/* Tombol CTA */}
-          {/* PERBAIKAN: href diarahkan ke #projects */}
-          <a href="#work" className="inline-block">
+          <a href="#projects" className="inline-block">
             <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
@@ -138,8 +135,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK --- */}
-      <div className="absolute bottom-0 w-full py-4 md:py-6 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
+      {/* --- LAYER 4: MARQUEE TECH STACK (SEBAGAI PENUTUP BAWAH) --- */}
+      <div className="relative w-full py-6 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
