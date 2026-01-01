@@ -51,7 +51,6 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON --- */}
-      {/* PERBAIKAN: Penyesuaian top agar pas dengan finalY di page.tsx */}
       <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] flex items-center justify-center">
@@ -69,19 +68,14 @@ export default function Hero() {
                   d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-              <text
-                fill="#bcff00"
-                fontWeight="bold"
-                // Letter spacing disesuaikan agar teks menyebar rata
-                letterSpacing="2.1"
-                style={{
-                  fontSize: '3.8px', // Sedikit diperkecil agar lebih elegan
-                  textTransform: 'uppercase'
-                }}
+              <text 
+                fill="#bcff00" 
+                fontWeight="bold" 
+                letterSpacing="2.8"
+                style={{ fontSize: '4.1px' }}
               >
                 <textPath xlinkHref="#circlePath">
-                  {/* Menambahkan Bullet dan Spasi ekstra di ujung agar saat berputar menyambung sempurna */}
-                  • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
+                  • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
                 </textPath>
               </text>
             </motion.svg>
@@ -117,27 +111,30 @@ export default function Hero() {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           {/* Badge System Online */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-4 md:mb-8 bg-[#bcff00]/5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-6 md:mb-10 bg-[#bcff00]/5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
             <span className="text-[8px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
 
-          {/* Judul Utama - Diatur agar tidak overflow di layar kecil */}
+          {/* Judul Utama */}
           <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-white">
             New Tech
           </h1>
-          <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-6 md:mb-10">
+          {/* PERBAIKAN: Jarak bawah h1 ditambah agar tidak menempel ke slogan */}
+          <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-10 md:mb-14">
             Solution
           </h1>
 
           {/* Slogan */}
-          <div className="max-w-[260px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mb-8 md:mb-12 text-left">
+          {/* PERBAIKAN: mt-4 ditambahkan dan mb ditingkatkan agar lebih lega */}
+          <div className="max-w-[260px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-4 mb-10 md:mb-14 text-left">
             <p className="text-white/40 text-xs md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
           </div>
 
           {/* Tombol CTA */}
+          {/* PERBAIKAN: href diarahkan ke #projects */}
           <a href="#work" className="inline-block">
             <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
@@ -148,20 +145,18 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 4: MARQUEE TECH STACK --- */}
-      {/* PERBAIKAN: Posisi bottom-0 dan padding dioptimalkan agar rapat dengan section About */}
       <div className="absolute bottom-0 w-full py-4 md:py-6 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
         >
-          {/* Render stack 2x untuk infinite effect */}
           {[...techStack, ...techStack].map((tech, i) => (
             <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
-              <img
-                src={tech.logo}
-                alt={tech.name}
-                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110"
+              <img 
+                src={tech.logo} 
+                alt={tech.name} 
+                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110" 
               />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
