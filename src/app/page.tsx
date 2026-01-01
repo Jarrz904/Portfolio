@@ -13,6 +13,7 @@ import Scene from "@/components/canvas/Scene";
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Ambil progress scroll global
@@ -20,23 +21,49 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true);
+    
+    // Deteksi apakah user menggunakan Mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    
     // Fix untuk memaksa browser refresh kalkulasi scroll
     window.scrollTo(window.scrollX, window.scrollY + 1);
+    
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // --- PERBAIKAN LOGIKA POSISI ---
-  // Kita gunakan angka mentah (0-100) agar useSpring bekerja mulus
-  const xRaw = useTransform(scrollYProgress, [0, 0.12, 1], [75, 25, 25]);
-  const yRaw = useTransform(scrollYProgress, [0, 0.18, 0.23], [50, 50, -60]);
+  // --- LOGIKA POSISI ---
+  // Jika mobile, kita buat xRaw tetap di tengah (50) atau sesuai keinginan
+  const xRaw = useTransform(
+    scrollYProgress, 
+    [0, 0.12, 1], 
+    isMobile ? [50, 50, 50] : [75, 25, 25]
+  );
+  
+  const yRaw = useTransform(
+    scrollYProgress, 
+    [0, 0.18, 0.23], 
+    isMobile ? [35, 35, -60] : [50, 50, -60]
+  );
   
   const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.85]);
+  
+  // Di Mobile, kita buat scale awalnya lebih kecil (0.6) agar tidak menutupi layar
+  const scale = useTransform(
+    scrollYProgress, 
+    [0, 0.12], 
+    isMobile ? [0.6, 0.5] : [1, 0.85]
+  );
 
   // Spring hanya memproses angka mentah
   const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
   const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
 
-  // Gabungkan angka spring dengan unit vw/vh menggunakan useTransform lagi
+  // Gabungkan angka spring dengan unit vw/vh
   const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
   const finalY = useTransform(smoothYRaw, (val) => `${val}vh`);
 
@@ -53,7 +80,7 @@ export default function Home() {
       <motion.div
         style={{ 
           position: "fixed",
-          left: finalX, // Menggunakan nilai yang sudah digabung unitnya
+          left: finalX, 
           top: finalY, 
           opacity,
           scale,
@@ -62,14 +89,15 @@ export default function Home() {
           pointerEvents: "none",
           zIndex: 999 
         }}
-        className="hidden md:block"
+        // "hidden md:block" dihapus agar foto muncul di mobile dengan ukuran yang sudah kita atur di atas
       >
         <div className="relative flex items-center justify-center">
-          {/* Glow Background */}
-          <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
+          {/* Glow Background - Ukuran diperkecil di mobile via CSS variabel jika perlu, 
+              tapi scale di atas sudah cukup membantu */}
+          <div className="absolute w-[200px] h-[200px] md:w-[300px] md:h-[300px] bg-[#bcff00] rounded-full blur-[60px] md:blur-[80px] opacity-20" />
           
           {/* Frame Foto Profil */}
-          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)]">
+          <div className="relative w-48 h-48 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)]">
             <img 
               src="/foto-profil.jpg" 
               alt="Avatar" 

@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X, ChevronLeft, ChevronRight, Monitor, Sparkles } from "lucide-react";
 
-// Data Proyek Tetap Sama
+// Data Proyek
 const projectData = [
   {
     id: 1,
@@ -144,11 +144,11 @@ export default function Projects() {
   if (!isMounted) return null;
 
   return (
-    <section id="work" className="py-24 bg-[#050505] text-white relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#bcff00]/5 rounded-full blur-[150px] pointer-events-none" />
+    <section id="work" className="py-20 md:py-32 bg-[#050505] text-white relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-[#bcff00]/5 rounded-full blur-[100px] md:blur-[150px] pointer-events-none" />
 
       <div className="px-6 md:px-12 lg:px-20 relative z-10">
-        <div className="mb-12 md:mb-16 lg:mb-20">
+        <div className="mb-12 md:mb-20">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -165,7 +165,7 @@ export default function Projects() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter italic leading-[1.1] md:leading-[1.0]"
+            className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter italic leading-[1.1] md:leading-[0.9]"
           >
             Hasil Karya Saya <br /> 
             <span className="text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]">
@@ -174,7 +174,8 @@ export default function Projects() {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {/* Responsive Grid: 1 col on mobile, 2 on sm, 3 on lg, 4 on xl */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {projectData.map((project, i) => (
             <motion.div
               key={project.id}
@@ -185,15 +186,15 @@ export default function Projects() {
               onClick={() => setSelectedProject(project)}
               className="group cursor-pointer"
             >
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/10 bg-neutral-900 transition-all duration-500 group-hover:border-[#bcff00]/40 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem] md:rounded-[2rem] border border-white/10 bg-neutral-900 transition-all duration-500 group-hover:border-[#bcff00]/40 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 <img
                   src={project.images[0].src}
                   alt={project.title}
                   className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90 transition-opacity group-hover:opacity-70" />
-                <div className="absolute inset-0 p-8 flex flex-col justify-between">
-                  <div className="flex justify-between items-start opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-[-10px] group-hover:translate-y-0">
+                <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
+                  <div className="flex justify-between items-start opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-0 md:translate-y-[-10px] md:group-hover:translate-y-0">
                     <span className="bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[9px] font-bold tracking-widest uppercase">
                       #{project.id}
                     </span>
@@ -202,11 +203,11 @@ export default function Projects() {
                     </div>
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-2 h-2 rounded-full bg-[#bcff00] animate-pulse" />
-                      <span className="text-[10px] uppercase font-bold text-[#bcff00] tracking-widest">{project.type}</span>
+                    <div className="flex items-center gap-2 mb-2 md:mb-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
+                      <span className="text-[9px] md:text-[10px] uppercase font-bold text-[#bcff00] tracking-widest">{project.type}</span>
                     </div>
-                    <h3 className="text-2xl font-black uppercase tracking-tighter leading-none group-hover:text-[#bcff00] transition-colors">{project.title}</h3>
+                    <h3 className="text-xl md:text-2xl font-black uppercase tracking-tighter leading-none group-hover:text-[#bcff00] transition-colors">{project.title}</h3>
                   </div>
                 </div>
               </div>
@@ -221,82 +222,84 @@ export default function Projects() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[999] flex items-center justify-center p-4 md:p-10 bg-black/98 backdrop-blur-xl"
+            className="fixed inset-0 z-[999] flex items-center justify-center p-2 sm:p-4 md:p-10 bg-black/95 sm:bg-black/98 backdrop-blur-xl"
             onClick={closeModal}
           >
             <motion.div
-              initial={{ scale: 0.95, y: 20, opacity: 0 }}
+              initial={{ scale: 0.9, y: 40, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
+              exit={{ scale: 0.9, y: 40, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-6xl max-h-[90vh] bg-[#0a0a0a] border border-white/10 rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row shadow-[0_0_80px_rgba(0,0,0,1)]"
+              className="relative w-full max-w-6xl max-h-[95vh] bg-[#0a0a0a] border border-white/10 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row shadow-[0_0_80px_rgba(0,0,0,1)]"
             >
-              {/* Image Section */}
-              <div className="w-full lg:w-[65%] bg-black relative flex items-center justify-center min-h-[350px] lg:min-h-0 overflow-hidden border-b lg:border-b-0 lg:border-r border-white/5">
+              {/* Image Section - Responsive height */}
+              <div className="w-full lg:w-[65%] bg-black relative flex items-center justify-center min-h-[300px] sm:min-h-[400px] lg:min-h-0 overflow-hidden border-b lg:border-b-0 lg:border-r border-white/5">
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={activeImageIndex}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4, ease: "circOut" }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 0.4 }}
                     src={selectedProject.images[activeImageIndex].src}
                     className="w-full h-full object-contain p-4 md:p-12"
                     alt="Project shot"
                   />
                 </AnimatePresence>
 
-                <div className="absolute inset-0 flex items-center justify-between px-6 pointer-events-none">
-                  <button onClick={prevImage} className="pointer-events-auto p-4 bg-white/5 hover:bg-[#bcff00] rounded-full text-white hover:text-black transition-all border border-white/10 backdrop-blur-md group">
-                    <ChevronLeft size={24} className="group-hover:scale-110 transition-transform" />
+                {/* Nav Buttons - Responsive sizes */}
+                <div className="absolute inset-0 flex items-center justify-between px-4 md:px-6 pointer-events-none">
+                  <button onClick={prevImage} className="pointer-events-auto p-3 md:p-4 bg-black/40 hover:bg-[#bcff00] rounded-full text-white hover:text-black transition-all border border-white/10 backdrop-blur-md group">
+                    <ChevronLeft size={20} className="md:size-24 group-hover:scale-110 transition-transform" />
                   </button>
-                  <button onClick={nextImage} className="pointer-events-auto p-4 bg-white/5 hover:bg-[#bcff00] rounded-full text-white hover:text-black transition-all border border-white/10 backdrop-blur-md group">
-                    <ChevronRight size={24} className="group-hover:scale-110 transition-transform" />
+                  <button onClick={nextImage} className="pointer-events-auto p-3 md:p-4 bg-black/40 hover:bg-[#bcff00] rounded-full text-white hover:text-black transition-all border border-white/10 backdrop-blur-md group">
+                    <ChevronRight size={20} className="md:size-24 group-hover:scale-110 transition-transform" />
                   </button>
                 </div>
 
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-[10px] font-black tracking-[0.3em] uppercase">
+                <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-[8px] md:text-[10px] font-black tracking-[0.2em] md:tracking-[0.3em] uppercase">
                   {activeImageIndex + 1} / {selectedProject.images.length}
                 </div>
               </div>
 
-              {/* Sidebar Info Section */}
-              <div className="w-full lg:w-[35%] flex flex-col h-full bg-[#0a0a0a]">
-                <div className="flex-grow overflow-y-auto custom-scrollbar p-8 md:p-12">
-                  <div className="space-y-10">
+              {/* Sidebar Info Section - Scrollable on mobile */}
+              <div className="w-full lg:w-[35%] flex flex-col h-full bg-[#0a0a0a] overflow-hidden">
+                <div className="flex-grow overflow-y-auto custom-scrollbar p-6 md:p-12">
+                  <div className="space-y-6 md:space-y-10">
                     <div className="flex justify-between items-start">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#bcff00]/10 border border-[#bcff00]/20 text-[#bcff00] text-[10px] font-black tracking-widest uppercase">
-                        <Sparkles size={12} /> Project Detail
+                      <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-[#bcff00]/10 border border-[#bcff00]/20 text-[#bcff00] text-[8px] md:text-[10px] font-black tracking-widest uppercase">
+                        <Sparkles size={10} className="md:size-12" /> Project Detail
                       </div>
                       <button
                         onClick={closeModal}
-                        className="p-3 bg-white/5 rounded-full hover:bg-red-500/20 hover:text-red-500 transition-all border border-white/10"
+                        className="p-2 md:p-3 bg-white/5 rounded-full hover:bg-red-500/20 hover:text-red-500 transition-all border border-white/10"
                       >
-                        <X size={20} />
+                        <X size={18} md:size={20} />
                       </button>
                     </div>
 
                     <div>
-                      <h2 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter leading-[0.9] mb-4">
+                      <h2 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase italic tracking-tighter leading-[1.0] md:leading-[0.9] mb-4">
                         {selectedProject.title}
                       </h2>
-                      <div className="flex items-center gap-2 text-white/40 text-[10px] font-bold tracking-[0.3em] uppercase">
-                        <Monitor size={14} className="text-[#bcff00]" /> {selectedProject.type} Solution
+                      <div className="flex items-center gap-2 text-white/40 text-[9px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase">
+                        <Monitor size={12} className="md:size-14 text-[#bcff00]" /> {selectedProject.type} Solution
                       </div>
                     </div>
 
                     <div className="space-y-4">
                       <div className="w-8 h-[2px] bg-[#bcff00]" />
-                      <p className="text-white/70 text-base leading-relaxed font-medium italic">
+                      <p className="text-white/70 text-sm md:text-base leading-relaxed font-medium italic">
                         "{selectedProject.desc}"
                       </p>
                     </div>
                   </div>
                 </div>
                 
-                {/* Bagian bawah modal sekarang bersih tanpa tombol, hanya memberikan padding penutup */}
-                <div className="p-6 border-t border-white/5 bg-[#0a0a0a]/50 text-center">
-                  <p className="text-[9px] text-white/20 uppercase tracking-[0.5em]">Scroll to read more</p>
+                <div className="p-4 md:p-6 border-t border-white/5 bg-[#0a0a0a]/50 text-center">
+                  <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.5em]">
+                    {selectedProject.images.length > 1 ? "Slide to see more shots" : "End of project"}
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -305,10 +308,13 @@ export default function Projects() {
       </AnimatePresence>
 
       <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 3px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(188, 255, 0, 0.2); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(188, 255, 0, 0.1); border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #bcff00; }
+        @media (max-width: 768px) {
+          .custom-scrollbar::-webkit-scrollbar { width: 0px; }
+        }
       `}</style>
     </section>
   );

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Check, Plus, Rocket, ShieldCheck, Zap, MessageSquare, Code2, Layout, Search } from "lucide-react";
 
 const PRICING_DATA = [
-  // WEB STATIS
   {
     name: "Landing Page",
     category: "Statis",
@@ -26,7 +25,6 @@ const PRICING_DATA = [
     features: ["Galeri Foto Produk", "Detail Spesifikasi Produk", "Pemesanan Langsung Ke WA", "Kecepatan Akses Tinggi"],
     highlight: false,
   },
-  // WEB DINAMIS
   {
     name: "Sistem Booking",
     category: "Dinamis",
@@ -78,7 +76,6 @@ export default function Pricing() {
     setIsMounted(true);
   }, []);
 
-  // Fungsi untuk mengarahkan ke WhatsApp dengan pesan otomatis
   const handleWhatsApp = (packageName: string) => {
     const phoneNumber = "6285741129749";
     const message = `Halo, saya ingin memesan paket *${packageName}*. Bisa bantu proses selanjutnya?`;
@@ -89,18 +86,22 @@ export default function Pricing() {
   if (!isMounted) return null;
 
   return (
-    <section id="pricing" className="py-20 px-6 md:px-12 lg:px-20 bg-[#050505] overflow-hidden">
+    <section id="pricing" className="py-20 px-4 sm:px-8 md:px-12 lg:px-20 bg-[#050505] overflow-hidden">
       <div className="max-w-6xl mx-auto">
+        
         {/* Header Section */}
-        <div className="mb-12">
-          <h2 className="text-xs uppercase tracking-[0.5em] text-white/40 font-bold mb-3">/ Rencana Harga</h2>
-          <h3 className="text-4xl md:text-6xl font-black uppercase tracking-tighter italic text-white leading-none">
-            Pilih Paket <br /> <span className="opacity-50 text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.2)]">Digital Anda</span>
+        <div className="mb-12 text-center md:text-left">
+          <h2 className="text-[10px] md:text-xs uppercase tracking-[0.5em] text-white/40 font-bold mb-3">/ Rencana Harga</h2>
+          <h3 className="text-3xl md:text-6xl font-black uppercase tracking-tighter italic text-white leading-none">
+            Pilih Paket <br /> 
+            <span className="opacity-50 text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.2)] block mt-2">
+              Digital Anda
+            </span>
           </h3>
         </div>
 
         {/* --- GRID SYSTEM --- */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-16">
           {PRICING_DATA.map((tier, i) => (
             <motion.div
               key={i}
@@ -108,14 +109,14 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
               viewport={{ once: true }}
-              className="group relative p-8 border border-white/10 bg-[#0a0a0a]/50 rounded-2xl flex flex-col transition-all duration-500 hover:border-[#bcff00] hover:bg-[#bcff00]/5 hover:shadow-[0_0_40px_rgba(188,255,0,0.1)] hover:-translate-y-1"
+              className="group relative p-6 md:p-8 border border-white/10 bg-[#0a0a0a]/50 rounded-2xl flex flex-col transition-all duration-500 hover:border-[#bcff00] hover:bg-[#bcff00]/5 hover:shadow-[0_0_40px_rgba(188,255,0,0.1)] hover:-translate-y-1"
             >
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <span className="text-[9px] uppercase font-bold tracking-widest opacity-50 block mb-1 group-hover:text-[#bcff00] transition-colors">
+                  <span className="text-[8px] md:text-[9px] uppercase font-bold tracking-widest opacity-50 block mb-1 group-hover:text-[#bcff00] transition-colors">
                     Web {tier.category}
                   </span>
-                  <h4 className="text-xl font-black uppercase tracking-tight text-white group-hover:text-[#bcff00] transition-colors">
+                  <h4 className="text-lg md:text-xl font-black uppercase tracking-tight text-white group-hover:text-[#bcff00] transition-colors">
                     {tier.name}
                   </h4>
                 </div>
@@ -128,22 +129,22 @@ export default function Pricing() {
 
               <div className="flex items-baseline gap-1 mb-6 text-white group-hover:text-[#bcff00] transition-colors">
                 <span className="text-xs opacity-50 font-bold">Rp</span>
-                <span className="text-4xl font-black italic">{tier.price}</span>
+                <span className="text-3xl md:text-4xl font-black italic">{tier.price}</span>
                 {tier.price !== "Request" && <span className="text-xs opacity-50 font-bold">,-</span>}
               </div>
 
               <ul className="space-y-3 mb-8 flex-grow">
                 {tier.features.map((feat, idx) => (
-                  <li key={idx} className="flex items-center gap-2.5 text-[11px] text-white/50 group-hover:text-white/80 transition-colors">
-                    <Check size={12} className="text-white/20 group-hover:text-[#bcff00] transition-colors flex-shrink-0" />
-                    {feat}
+                  <li key={idx} className="flex items-start gap-2.5 text-[10px] md:text-[11px] text-white/50 group-hover:text-white/80 transition-colors">
+                    <Check size={12} className="text-white/20 group-hover:text-[#bcff00] transition-colors flex-shrink-0 mt-0.5" />
+                    <span className="leading-tight">{feat}</span>
                   </li>
                 ))}
               </ul>
 
               <button 
                 onClick={() => handleWhatsApp(tier.name)}
-                className="w-full py-3.5 rounded-lg font-black text-[9px] uppercase tracking-[0.2em] transition-all bg-white/10 text-white group-hover:bg-[#bcff00] group-hover:text-black group-hover:shadow-[0_10px_20px_rgba(188,255,0,0.2)] active:scale-95 border border-white/10 group-hover:border-transparent"
+                className="w-full py-4 rounded-lg font-black text-[9px] uppercase tracking-[0.2em] transition-all bg-white/10 text-white group-hover:bg-[#bcff00] group-hover:text-black group-hover:shadow-[0_10px_20px_rgba(188,255,0,0.2)] active:scale-95 border border-white/10 group-hover:border-transparent"
               >
                 Pesan Sekarang
               </button>
@@ -151,38 +152,39 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* --- FITUR OPSIONAL (ADD-ONS) --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 pt-10 border-t border-white/5">
+        {/* --- ADD-ONS & WORKFLOW --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-10 border-t border-white/5">
+          {/* ADD-ONS */}
           <div>
             <div className="flex items-center gap-3 mb-6">
                <Plus size={16} className="text-[#bcff00]" />
-               <h5 className="text-sm font-black uppercase tracking-widest text-white">Layanan Tambahan Opsional</h5>
+               <h5 className="text-xs md:text-sm font-black uppercase tracking-widest text-white">Layanan Tambahan Opsional</h5>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {OPTIONAL_ADDONS.map((item, idx) => (
                 <div key={idx} className="flex justify-between items-center p-4 bg-white/5 rounded-xl border border-white/5 hover:border-[#bcff00]/30 transition-all">
-                  <span className="text-[10px] font-bold text-white/70 uppercase tracking-tight">{item.name}</span>
-                  <span className="text-[10px] font-black text-[#bcff00]">+ {item.price}</span>
+                  <span className="text-[9px] md:text-[10px] font-bold text-white/70 uppercase tracking-tight">{item.name}</span>
+                  <span className="text-[9px] md:text-[10px] font-black text-[#bcff00] whitespace-nowrap">+ {item.price}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* --- ALUR PEMBUATAN --- */}
+          {/* WORKFLOW */}
           <div>
             <div className="flex items-center gap-3 mb-6">
                <Search size={16} className="text-[#bcff00]" />
-               <h5 className="text-sm font-black uppercase tracking-widest text-white">Alur Pengerjaan Website</h5>
+               <h5 className="text-xs md:text-sm font-black uppercase tracking-widest text-white">Alur Pengerjaan Website</h5>
             </div>
-            <div className="relative flex flex-col gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
               {WORKFLOW.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-4 group">
-                  <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] font-black text-[#bcff00] group-hover:bg-[#bcff00] group-hover:text-black transition-all">
+                  <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] font-black text-[#bcff00] group-hover:bg-[#bcff00] group-hover:text-black transition-all shrink-0">
                     {item.step}
                   </div>
                   <div className="flex items-center gap-3 flex-grow p-3 bg-white/5 rounded-xl border border-white/5">
-                    <span className="text-white/30">{item.icon}</span>
-                    <span className="text-[10px] font-bold text-white uppercase tracking-[0.1em]">{item.title}</span>
+                    <span className="text-white/30 shrink-0">{item.icon}</span>
+                    <span className="text-[9px] md:text-[10px] font-bold text-white uppercase tracking-[0.1em]">{item.title}</span>
                   </div>
                 </div>
               ))}
@@ -190,18 +192,19 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* --- KEUNGGULAN (BENEFITS) --- */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* --- KEUNGGULAN --- */}
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
           {ADVANTAGES.map((adv, idx) => (
             <div key={idx} className="p-6 bg-gradient-to-b from-white/5 to-transparent rounded-2xl border border-white/5 flex flex-col items-center text-center group hover:border-[#bcff00]/20 transition-all">
               <div className="mb-4 text-[#bcff00] bg-[#bcff00]/10 p-3 rounded-full group-hover:scale-110 transition-transform">
                 {adv.icon}
               </div>
-              <h6 className="text-xs font-black uppercase text-white mb-2 tracking-widest">{adv.title}</h6>
-              <p className="text-[10px] text-white/40 leading-relaxed uppercase font-medium">{adv.desc}</p>
+              <h6 className="text-[10px] md:text-xs font-black uppercase text-white mb-2 tracking-widest">{adv.title}</h6>
+              <p className="text-[9px] md:text-[10px] text-white/40 leading-relaxed uppercase font-medium">{adv.desc}</p>
             </div>
           ))}
         </div>
+        
       </div>
     </section>
   );
