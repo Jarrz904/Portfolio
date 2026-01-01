@@ -51,12 +51,11 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON --- */}
-      {/* Posisi diturunkan di mobile agar sinkron dengan foto profil yang bersifat fixed */}
       <div className="absolute left-[50vw] md:left-[75vw] top-[40vh] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] flex items-center justify-center">
 
-            {/* --- NAMA BERPUTAR (UKURAN DIPERBAIKI UNTUK MOBILE) --- */}
+            {/* --- NAMA BERPUTAR --- */}
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
@@ -69,15 +68,20 @@ export default function Hero() {
                   d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-              {/* FontSize disesuaikan agar pas dengan lingkar profil di mobile (4.5 -> 3.8) */}
-              <text fill="#bcff00" fontSize="3.8" md:fontSize="4.2" fontWeight="bold" letterSpacing="2.8">
+              {/* PERBAIKAN: Menggunakan className Tailwind untuk fontSize responsif pada SVG */}
+              <text 
+                fill="#bcff00" 
+                fontWeight="bold" 
+                letterSpacing="2.8"
+                className="text-[3.8px] md:text-[4.2px]"
+              >
                 <textPath xlinkHref="#circlePath">
                   • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
                 </textPath>
               </text>
             </motion.svg>
 
-            {/* Ring Putar Putus-putus (Dikecilkan sedikit di mobile agar tidak menabrak teks) */}
+            {/* Ring Putar Putus-putus */}
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
@@ -87,7 +91,7 @@ export default function Hero() {
             {/* Cahaya Pendar (Glow) */}
             <div className="absolute w-[180px] h-[180px] md:w-[280px] md:h-[280px] bg-[#bcff00]/10 rounded-full blur-[40px] md:blur-[70px]" />
 
-            {/* Label PHP & JS EXPERT (Posisi dipaskan di mobile) */}
+            {/* Label PHP & JS EXPERT */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -125,11 +129,9 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* PERBAIKAN TOMBOL: MENGHAPUS CARD PUTIH DI BAWAH */}
           <a href="#work" className="inline-block">
             <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
-              {/* Layer hover putih dipastikan berada di dalam kontainer tombol yang overflow-hidden */}
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
             </button>
           </a>
