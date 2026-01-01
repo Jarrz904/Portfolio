@@ -133,7 +133,7 @@ export default function Hero() {
           </div>
 
           {/* Tombol CTA */}
-          <a href="#projects" className="inline-block">
+          <a href="#work" className="inline-block">
             <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
