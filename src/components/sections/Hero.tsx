@@ -31,12 +31,12 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-10 md:pt-0 min-h-screen justify-center">
+    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-20 md:pt-32 pb-0 min-h-[90vh] md:min-h-screen justify-center">
       
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
         <div
-          className="absolute bottom-[-5%] left-[-50%] w-[200%] h-[100%] origin-bottom rotate-x-[60deg] opacity-10"
+          className="absolute bottom-[-10%] left-[-50%] w-[200%] h-[100%] origin-bottom rotate-x-[60deg] opacity-10"
           style={{
             backgroundImage: `linear-gradient(to right, #bcff00 1px, transparent 1px), linear-gradient(to bottom, #bcff00 1px, transparent 1px)`,
             backgroundSize: '60px 60px',
@@ -45,40 +45,86 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: KONTEN TEKS (Fokus pada Kiri) --- */}
-      <div className="container mx-auto px-4 md:px-12 relative z-10 flex flex-col justify-center">
+      {/* --- LAYER 2: DEKORASI NEON & PROFIL --- */}
+      {/* Posisi 'top' dikurangi agar profil naik ke atas mengikuti teks */}
+      <div className="absolute left-[50vw] md:left-[75vw] top-[240px] md:top-[45vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+        {mounted && (
+          <div className="relative w-[180px] h-[180px] md:w-[450px] md:h-[450px] flex items-center justify-center scale-90 md:scale-100">
+            {/* Nama Berputar */}
+            <motion.svg
+              animate={{ rotate: 360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute w-[170px] h-[170px] md:w-[420px] md:h-[420px] z-10 opacity-60 md:opacity-80"
+              viewBox="0 0 100 100"
+            >
+              <defs>
+                <path id="circlePath" d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0" />
+              </defs>
+              <text fill="#bcff00" fontSize="4.1" fontWeight="bold" letterSpacing="2.8">
+                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK • </textPath>
+              </text>
+            </motion.svg>
+
+            {/* Ring Putus-putus */}
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="absolute w-[140px] h-[140px] md:w-[360px] md:h-[360px] border-[1px] md:border-[1.5px] border-dashed border-[#bcff00]/30 rounded-full"
+            />
+
+            {/* Cahaya Glow */}
+            <div className="absolute w-[100px] h-[100px] md:w-[320px] md:h-[320px] bg-[#bcff00]/10 rounded-full blur-[30px] md:blur-[100px]" />
+
+            {/* Frame Foto Utama */}
+            <div className="relative w-24 h-24 md:w-72 md:h-72 rounded-full border-[2px] md:border-[6px] border-[#bcff00] p-1 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_20px_rgba(188,255,0,0.3)] z-0">
+               <img src="/foto-profil.jpg" alt="Profile" className="w-full h-full object-cover rounded-full" />
+            </div>
+
+            {/* Label Expert */}
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[10%] md:top-[15%] -right-2 md:-right-10 px-2 py-0.5 bg-black border border-[#bcff00] text-[#bcff00] text-[5px] md:text-[9px] font-black uppercase rounded-full z-20 shadow-[0_0_10px_rgba(188,255,0,0.5)]"
+            >
+              PHP & JS EXPERT
+            </motion.div>
+          </div>
+        )}
+      </div>
+
+      {/* --- LAYER 3: KONTEN TEKS --- */}
+      {/* mt-[-40px] digunakan untuk menarik konten lebih ke atas */}
+      <div className="container mx-auto px-4 md:px-8 relative z-10 flex-grow flex flex-col justify-center mt-[-40px] md:mt-[-80px] pb-10 md:pb-20">
         <motion.div
-          className="max-w-4xl text-left"
+          className="max-w-4xl text-left ml-0 md:-ml-4"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-6 bg-[#bcff00]/5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-4 md:mb-8 bg-[#bcff00]/5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
-            <span className="text-[9px] md:text-[11px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
+            <span className="text-[8px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
 
-          {/* Judul Utama */}
-          <div className="space-y-0">
-            <h1 className="text-[15vw] md:text-[9vw] font-black uppercase leading-[0.75] tracking-tighter text-white">
-              New Tech
-            </h1>
-            <h1 className="text-[15vw] md:text-[9vw] font-black uppercase leading-[0.75] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-8 md:mb-12">
-              Solution
-            </h1>
-          </div>
+          {/* Judul */}
+          <h1 className="text-[14vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-white">
+            New Tech
+          </h1>
+          <h1 className="text-[14vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-6 md:mb-10">
+            Solution
+          </h1>
 
           {/* Slogan */}
-          <div className="max-w-[280px] md:max-w-lg border-l-2 border-[#bcff00] pl-5 md:pl-8 mt-6 mb-10 text-left">
-            <p className="text-white/40 text-xs md:text-xl leading-relaxed italic">
+          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-2 mb-8 text-left">
+            <p className="text-white/40 text-[10px] md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
           </div>
 
-          {/* Tombol Aksi */}
+          {/* Tombol */}
           <a href="#work" className="inline-block">
-            <button className="group relative px-8 md:px-12 py-3 md:py-5 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-xs tracking-[0.3em] transition-all hover:shadow-[0_0_40px_rgba(188,255,0,0.6)] overflow-hidden">
+            <button className="group relative px-6 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[9px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
             </button>
@@ -86,17 +132,17 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* --- LAYER 3: MARQUEE (Paling Bawah) --- */}
-      <div className="absolute bottom-0 w-full py-5 md:py-10 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
+      {/* --- LAYER 4: MARQUEE --- */}
+      <div className="relative w-full py-4 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-          className="flex whitespace-nowrap gap-10 md:gap-24 items-center"
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
         >
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="group flex items-center gap-4 opacity-40 hover:opacity-100 transition-all duration-500">
-              <img src={tech.logo} alt={tech.name} className="w-5 h-5 md:w-6 md:h-6 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100" />
-              <span className="text-white text-[10px] md:text-xs uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors">{tech.name}</span>
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500">
+              <img src={tech.logo} alt={tech.name} className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-transform group-hover:scale-110" />
+              <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors">{tech.name}</span>
               <div className="w-1 h-1 bg-[#bcff00] rounded-full" />
             </div>
           ))}
