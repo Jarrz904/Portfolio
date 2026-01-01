@@ -111,6 +111,7 @@ export default function Pricing() {
               viewport={{ once: true }}
               className="group relative p-6 md:p-8 border border-white/10 bg-[#0a0a0a]/50 rounded-2xl flex flex-col transition-all duration-500 hover:border-[#bcff00] hover:bg-[#bcff00]/5 hover:shadow-[0_0_40px_rgba(188,255,0,0.1)] hover:-translate-y-1"
             >
+              {/* Bagian Atas: Kategori & Nama */}
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <span className="text-[8px] md:text-[9px] uppercase font-bold tracking-widest opacity-50 block mb-1 group-hover:text-[#bcff00] transition-colors">
@@ -127,13 +128,15 @@ export default function Pricing() {
                 </div>
               </div>
 
+              {/* Harga */}
               <div className="flex items-baseline gap-1 mb-6 text-white group-hover:text-[#bcff00] transition-colors">
                 <span className="text-xs opacity-50 font-bold">Rp</span>
                 <span className="text-3xl md:text-4xl font-black italic">{tier.price}</span>
                 {tier.price !== "Request" && <span className="text-xs opacity-50 font-bold">,-</span>}
               </div>
 
-              <ul className="space-y-3 mb-8 flex-grow">
+              {/* Fitur List: Diberikan flex-grow agar mendorong tombol ke bawah */}
+              <ul className="space-y-4 mb-10 flex-grow">
                 {tier.features.map((feat, idx) => (
                   <li key={idx} className="flex items-start gap-2.5 text-[10px] md:text-[11px] text-white/50 group-hover:text-white/80 transition-colors">
                     <Check size={12} className="text-white/20 group-hover:text-[#bcff00] transition-colors flex-shrink-0 mt-0.5" />
@@ -142,11 +145,11 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              {/* PERBAIKAN: Tombol Pesan Sekarang dibuat lebih proporsional */}
-              <div className="w-full flex justify-start">
+              {/* Tombol: Menggunakan mt-auto untuk spasi maksimal dari konten atas */}
+              <div className="w-full mt-auto pt-4">
                 <button 
                   onClick={() => handleWhatsApp(tier.name)}
-                  className="px-6 py-3 rounded-lg font-black text-[9px] uppercase tracking-[0.2em] transition-all bg-white/10 text-white group-hover:bg-[#bcff00] group-hover:text-black group-hover:shadow-[0_10px_20px_rgba(188,255,0,0.2)] active:scale-95 border border-white/10 group-hover:border-transparent min-w-[160px]"
+                  className="px-6 py-3.5 rounded-lg font-black text-[9px] uppercase tracking-[0.2em] transition-all bg-white/10 text-white group-hover:bg-[#bcff00] group-hover:text-black group-hover:shadow-[0_10px_20px_rgba(188,255,0,0.2)] active:scale-95 border border-white/10 group-hover:border-transparent min-w-[170px]"
                 >
                   Pesan Sekarang
                 </button>
