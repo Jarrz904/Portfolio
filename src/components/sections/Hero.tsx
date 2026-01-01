@@ -31,7 +31,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-32 md:pt-48 pb-0">
+    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-20 md:pt-32 pb-0 min-h-[90vh] md:min-h-screen justify-center">
       
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -45,8 +45,9 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: DEKORASI NEON & PROFIL (HANYA SATU) --- */}
-      <div className="absolute left-[50vw] md:left-[75vw] top-[280px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+      {/* --- LAYER 2: DEKORASI NEON & PROFIL --- */}
+      {/* Posisi 'top' dikurangi agar profil naik ke atas mengikuti teks */}
+      <div className="absolute left-[50vw] md:left-[75vw] top-[240px] md:top-[45vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[180px] h-[180px] md:w-[450px] md:h-[450px] flex items-center justify-center scale-90 md:scale-100">
             {/* Nama Berputar */}
@@ -91,8 +92,9 @@ export default function Hero() {
         )}
       </div>
 
-      {/* --- LAYER 3: KONTEN TEKS (GESER KIRI MAKSIMAL) --- */}
-      <div className="container mx-auto px-4 md:px-8 relative z-10 flex-grow pb-20 md:pb-32">
+      {/* --- LAYER 3: KONTEN TEKS --- */}
+      {/* mt-[-40px] digunakan untuk menarik konten lebih ke atas */}
+      <div className="container mx-auto px-4 md:px-8 relative z-10 flex-grow flex flex-col justify-center mt-[-40px] md:mt-[-80px] pb-10 md:pb-20">
         <motion.div
           className="max-w-4xl text-left ml-0 md:-ml-4"
           initial={{ opacity: 0, x: -30 }}
@@ -100,7 +102,7 @@ export default function Hero() {
           transition={{ duration: 1, ease: "easeOut" }}
         >
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-6 md:mb-10 bg-[#bcff00]/5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-4 md:mb-8 bg-[#bcff00]/5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
             <span className="text-[8px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
@@ -109,12 +111,12 @@ export default function Hero() {
           <h1 className="text-[14vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-white">
             New Tech
           </h1>
-          <h1 className="text-[14vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-8 md:mb-12">
+          <h1 className="text-[14vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-6 md:mb-10">
             Solution
           </h1>
 
           {/* Slogan */}
-          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-4 mb-10 text-left">
+          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-2 mb-8 text-left">
             <p className="text-white/40 text-[10px] md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
@@ -122,7 +124,7 @@ export default function Hero() {
 
           {/* Tombol */}
           <a href="#work" className="inline-block">
-            <button className="group relative px-6 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[9px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] overflow-hidden">
+            <button className="group relative px-6 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[9px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
             </button>
@@ -139,7 +141,7 @@ export default function Hero() {
         >
           {[...techStack, ...techStack].map((tech, i) => (
             <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500">
-              <img src={tech.logo} alt={tech.name} className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100" />
+              <img src={tech.logo} alt={tech.name} className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-transform group-hover:scale-110" />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors">{tech.name}</span>
               <div className="w-1 h-1 bg-[#bcff00] rounded-full" />
             </div>
