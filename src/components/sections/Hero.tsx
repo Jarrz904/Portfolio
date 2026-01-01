@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-// Data Tech Stack diperbanyak fokus pada Laravel & Next.js Ecosystem
 const techStack = [
   { name: "Next.js", logo: "https://cdn.worldvectorlogo.com/logos/next-js.svg" },
   { name: "Laravel", logo: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Laravel.svg" },
@@ -39,25 +38,27 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: DEKORASI NEON TERKUNCI --- */}
-      <div className="absolute left-[75vw] top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none hidden md:block">
+      {/* --- LAYER 2: DEKORASI NEON TERKUNCI --- 
+          Menggunakan left-[75%] agar sinkron dengan smoothX di page.tsx
+      */}
+      <div className="absolute left-[75%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none hidden md:block">
         {mounted && (
-          <div className="relative w-[400px] h-[400px] flex items-center justify-center">
+          <div className="relative w-[450px] h-[450px] flex items-center justify-center">
 
             {/* --- NAMA BERPUTAR --- */}
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[385px] h-[385px] z-10 opacity-70"
+              className="absolute w-[430px] h-[430px] z-10 opacity-70"
               viewBox="0 0 100 100"
             >
               <defs>
                 <path
                   id="circlePath"
-                  d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
+                  d="M 50, 50 m -43, 0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0"
                 />
               </defs>
-              <text fill="#bcff00" fontSize="4.5" fontWeight="bold" letterSpacing="2.8">
+              <text fill="#bcff00" fontSize="4.2" fontWeight="bold" letterSpacing="2.5">
                 <textPath xlinkHref="#circlePath"> • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
                 </textPath>
               </text>
@@ -67,17 +68,14 @@ export default function Hero() {
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[325px] h-[325px] border-[1px] border-dashed border-[#bcff00]/30 rounded-full"
+              className="absolute w-[360px] h-[360px] border-[1px] border-dashed border-[#bcff00]/30 rounded-full"
             />
 
-            {/* Cahaya Pendar Pusat */}
-            <div className="absolute w-[280px] h-[280px] bg-[#bcff00]/10 rounded-full blur-[70px]" />
-
-            {/* Label PHP & JS EXPERT */}
+            {/* Label Status Floating */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[10%] -right-8 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[8px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
+              className="absolute top-[10%] -right-4 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[8px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
             >
               PHP & JS EXPERT
             </motion.div>
@@ -107,7 +105,7 @@ export default function Hero() {
 
           <div className="max-w-md border-l-2 border-[#bcff00] pl-6 mb-12 ml-1">
             <p className="text-white/40 text-lg md:text-xl leading-relaxed italic">
-              "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
+              &quot;Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga.&quot;
             </p>
           </div>
 
@@ -120,19 +118,18 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK (INFINITE LOOP) --- */}
+      {/* --- LAYER 4: MARQUEE TECH STACK --- */}
       <div className="absolute bottom-0 w-full py-6 bg-black/40 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
         <div className="flex w-fit">
           <motion.div
             animate={{ x: ["0%", "-50%"] }}
             transition={{ 
-              duration: 40, // Ditingkatkan durasinya agar gerakan lebih halus karena item lebih banyak
+              duration: 40, 
               repeat: Infinity, 
               ease: "linear" 
             }}
             className="flex whitespace-nowrap gap-20 items-center pr-20"
           >
-            {/* Render 2x untuk menciptakan ilusi infinite tanpa jeda */}
             {[...techStack, ...techStack].map((tech, i) => (
               <div key={i} className="flex items-center gap-4 opacity-40 hover:opacity-100 transition-opacity duration-500 group cursor-default">
                 <img 

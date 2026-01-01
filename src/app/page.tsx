@@ -14,80 +14,87 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const fotoProfile = "/foto-profil.jpg";
 
+  // Memastikan komponen sudah termuat di browser sebelum render
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   /**
    * 1. POSISI X (HORIZONTAL)
-   * Awalnya 75% ke kanan (untuk masuk ke dalam area grid Hero kanan)
-   * Berubah ke 25% saat scroll ke About
+   * Menggunakan % agar sinkron dengan koordinat absolut di Hero.tsx
+   * 75% berarti di sisi kanan (area kosong Hero)
    */
   const xPos = useTransform(
-    scrollYProgress,
-    [0, 0.12, 1],
-    ["75%", "25%", "25%"] 
+    scrollYProgress, 
+    [0, 0.12, 1], 
+    ["75%", "25%", "25%"]
   );
 
   /**
    * 2. POSISI Y (VERTICAL)
-   * Tetap di tengah (50%) saat di Hero
+   * 50% berarti tepat di tengah layar secara vertikal
    */
   const yPos = useTransform(
-    scrollYProgress,
+    scrollYProgress, 
     [0, 0.18, 0.23], 
     ["50%", "50%", "-60%"]
   );
 
   /**
-   * 3. OPACITY & SCALE
+   * 3. OPACITY (TRANSPARANSI)
    */
   const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.8]);
 
-  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30 });
-  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30 });
+  /**
+   * 4. SMOOTHING
+   * Menggunakan stiffness & damping yang pas agar gerakan tidak kaku
+   */
+  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  if (!isMounted) return null;
+  // Cegah blank/hydration error
+  if (!isMounted) return <div className="bg-[#050505] min-h-screen" />;
 
   return (
-    <main className="relative bg-[#050505] min-h-screen">
+    <main className="relative bg-[#050505] min-h-screen overflow-x-hidden">
       <Navbar />
       <Scene />
       
       {/* FOTO PROFIL LAYER 
-          Menggunakan position fixed dengan koordinat yang disinkronkan ke Hero 
+          Properti 'position: fixed' diletakkan di dalam style agar 
+          Framer Motion bisa menghitung koordinat 'left' dan 'top' dengan benar.
       */}
       <motion.div
         style={{ 
+          position: "fixed",
           left: smoothX, 
           top: smoothY, 
           opacity,
-          scale,
           x: "-50%", 
           y: "-50%",
-          pointerEvents: "none" 
+          pointerEvents: "none",
+          willChange: "transform" 
         }}
-        className="fixed z-[40] hidden md:block"
+        className="z-[40] hidden md:block"
       >
         <div className="relative flex items-center justify-center">
           
-          {/* Efek Cahaya di belakang foto */}
-          <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-10" />
+          {/* Efek Pendar Neon di belakang foto */}
+          <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
           
-          {/* Kontainer Foto Utama - Ukuran disesuaikan agar pas di tengah lingkaran Hero */}
-          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-2 border-[#bcff00]/50 p-2 bg-[#050505] overflow-hidden shadow-[0_0_40px_rgba(188,255,0,0.2)] z-20">
+          {/* Frame Lingkaran Foto */}
+          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.4)]">
             <img 
-              src={fotoProfile}
-              alt="Muhammad Fajar Sidik"
-              className="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-700"
+              src={fotoProfile} 
+              alt="Profile Avatar" 
+              className="w-full h-full object-cover rounded-full" 
             />
           </div>
-
+          
         </div>
       </motion.div>
 
-      {/* SECTIONS CONTENT */}
+      {/* Kontainer Section agar tetap berada di atas Background */}
       <div className="relative z-10">
         <Hero />
         <About />
