@@ -46,19 +46,18 @@ export default function Home() {
   );
   
   // Vertical Position (Y)
-  // PERBAIKAN: Di mobile, profil ditahan di 40vh sampai progress 0.6 (lebih lama)
-  // agar tetap sinkron dengan dekorasi lingkaran di Hero.
+  // DISESUAIKAN: Di mobile dimulai dari 45vh agar pas di tengah dekorasi Hero yang baru
   const yRaw = useTransform(
     scrollYProgress, 
-    isMobile ? [0, 0.6, 0.8] : [0, 0.3, 0.45], 
-    isMobile ? [40, 40, -100] : [50, 50, -60]
+    isMobile ? [0, 0.35, 0.55] : [0, 0.3, 0.45], 
+    isMobile ? [45, 45, -100] : [50, 50, -60]
   );
   
   // Opacity
-  // PERBAIKAN: Opacity dibuat bertahan lebih lama di mobile agar tidak flicker saat scroll awal
+  // PERBAIKAN: Dibuat lebih tajam transisinya agar menghilang tepat saat pindah section
   const opacity = useTransform(
     scrollYProgress, 
-    isMobile ? [0, 0.7, 0.8] : [0, 0.18, 0.21], 
+    isMobile ? [0, 0.4, 0.5] : [0, 0.18, 0.25], 
     [1, 1, 0]
   );
   
@@ -66,7 +65,7 @@ export default function Home() {
   const scale = useTransform(
     scrollYProgress, 
     [0, 0.25], 
-    isMobile ? [0.65, 0.55] : [1, 0.85]
+    isMobile ? [0.65, 0.5] : [1, 0.8]
   );
 
   // Spring untuk kelembutan gerakan
@@ -89,14 +88,14 @@ export default function Home() {
       {/* FOTO PROFIL LAYER */}
       <motion.div
         style={{ 
-          position: "fixed", // Tetap fixed agar tidak terdorong scroll ke atas secara manual
+          position: "fixed", 
           left: finalX, 
           top: finalY, 
           opacity,
           scale,
           x: "-50%", 
           y: "-50%",
-          pointerEvents: "none", // Agar tidak menghalangi klik pada tombol Hero
+          pointerEvents: "none", 
           zIndex: 999,
           willChange: "transform" 
         }}
@@ -117,12 +116,17 @@ export default function Home() {
       </motion.div>
 
       {/* Konten Utama */}
-      <div className="relative z-10 flex flex-col gap-0">
+      {/* PERBAIKAN: Menghilangkan flex-col dan gap agar section menempel rapi */}
+      <div className="relative z-10">
         <Hero />
-        <About />
-        <Projects />
-        <Pricing />
-        <Contact />
+        
+        {/* Container untuk section selanjutnya agar memiliki transisi yang rapat */}
+        <div className="bg-[#050505] relative z-20">
+          <About />
+          <Projects />
+          <Pricing />
+          <Contact />
+        </div>
       </div>
     </main>
   );
