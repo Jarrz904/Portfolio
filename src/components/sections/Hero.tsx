@@ -69,21 +69,21 @@ export default function Hero() {
                   d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-             <text 
-  fill="#bcff00" 
-  fontWeight="bold" 
-  // Letter spacing disesuaikan agar teks menyebar rata
-  letterSpacing="2.1" 
-  style={{ 
-    fontSize: '3.8px', // Sedikit diperkecil agar lebih elegan
-    textTransform: 'uppercase' 
-  }}
->
-  <textPath xlinkHref="#circlePath">
-    {/* Menambahkan Bullet dan Spasi ekstra di ujung agar saat berputar menyambung sempurna */}
-    • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
-  </textPath>
-</text>
+              <text
+                fill="#bcff00"
+                fontWeight="bold"
+                // Letter spacing disesuaikan agar teks menyebar rata
+                letterSpacing="2.1"
+                style={{
+                  fontSize: '3.8px', // Sedikit diperkecil agar lebih elegan
+                  textTransform: 'uppercase'
+                }}
+              >
+                <textPath xlinkHref="#circlePath">
+                  {/* Menambahkan Bullet dan Spasi ekstra di ujung agar saat berputar menyambung sempurna */}
+                  • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
+                </textPath>
+              </text>
             </motion.svg>
 
             {/* Ring Putar Putus-putus */}
@@ -158,10 +158,10 @@ export default function Hero() {
           {/* Render stack 2x untuk infinite effect */}
           {[...techStack, ...techStack].map((tech, i) => (
             <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
-              <img 
-                src={tech.logo} 
-                alt={tech.name} 
-                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110" 
+              <img
+                src={tech.logo}
+                alt={tech.name}
+                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110"
               />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
