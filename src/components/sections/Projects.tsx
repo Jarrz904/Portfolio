@@ -174,7 +174,6 @@ export default function Projects() {
           </motion.h2>
         </div>
 
-        {/* Responsive Grid: 1 col on mobile, 2 on sm, 3 on lg, 4 on xl */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
           {projectData.map((project, i) => (
             <motion.div
@@ -232,7 +231,6 @@ export default function Projects() {
               onClick={(e) => e.stopPropagation()}
               className="relative w-full max-w-6xl max-h-[95vh] bg-[#0a0a0a] border border-white/10 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden flex flex-col lg:flex-row shadow-[0_0_80px_rgba(0,0,0,1)]"
             >
-              {/* Image Section - Responsive height */}
               <div className="w-full lg:w-[65%] bg-black relative flex items-center justify-center min-h-[300px] sm:min-h-[400px] lg:min-h-0 overflow-hidden border-b lg:border-b-0 lg:border-r border-white/5">
                 <AnimatePresence mode="wait">
                   <motion.img
@@ -247,13 +245,12 @@ export default function Projects() {
                   />
                 </AnimatePresence>
 
-                {/* Nav Buttons - Responsive sizes */}
                 <div className="absolute inset-0 flex items-center justify-between px-4 md:px-6 pointer-events-none">
                   <button onClick={prevImage} className="pointer-events-auto p-3 md:p-4 bg-black/40 hover:bg-[#bcff00] rounded-full text-white hover:text-black transition-all border border-white/10 backdrop-blur-md group">
-                    <ChevronLeft size={20} className="md:size-24 group-hover:scale-110 transition-transform" />
+                    <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
                   </button>
                   <button onClick={nextImage} className="pointer-events-auto p-3 md:p-4 bg-black/40 hover:bg-[#bcff00] rounded-full text-white hover:text-black transition-all border border-white/10 backdrop-blur-md group">
-                    <ChevronRight size={20} className="md:size-24 group-hover:scale-110 transition-transform" />
+                    <ChevronRight className="w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
                   </button>
                 </div>
 
@@ -262,19 +259,18 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Sidebar Info Section - Scrollable on mobile */}
               <div className="w-full lg:w-[35%] flex flex-col h-full bg-[#0a0a0a] overflow-hidden">
                 <div className="flex-grow overflow-y-auto custom-scrollbar p-6 md:p-12">
                   <div className="space-y-6 md:space-y-10">
                     <div className="flex justify-between items-start">
                       <div className="inline-flex items-center gap-2 px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-[#bcff00]/10 border border-[#bcff00]/20 text-[#bcff00] text-[8px] md:text-[10px] font-black tracking-widest uppercase">
-                        <Sparkles size={10} className="md:size-12" /> Project Detail
+                        <Sparkles className="w-2.5 h-2.5 md:w-3 md:h-3" /> Project Detail
                       </div>
                       <button
                         onClick={closeModal}
                         className="p-2 md:p-3 bg-white/5 rounded-full hover:bg-red-500/20 hover:text-red-500 transition-all border border-white/10"
                       >
-                        <X size={18} md:size={20} />
+                        <X className="w-[18px] h-[18px] md:w-5 md:h-5" />
                       </button>
                     </div>
 
@@ -283,7 +279,7 @@ export default function Projects() {
                         {selectedProject.title}
                       </h2>
                       <div className="flex items-center gap-2 text-white/40 text-[9px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase">
-                        <Monitor size={12} className="md:size-14 text-[#bcff00]" /> {selectedProject.type} Solution
+                        <Monitor className="w-3 h-3 md:w-3.5 md:h-3.5 text-[#bcff00]" /> {selectedProject.type} Solution
                       </div>
                     </div>
 
