@@ -28,7 +28,7 @@ const techStack = [
   { name: "GitHub", logo: "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" },
   { name: "Vite", logo: "https://vitejs.dev/logo-with-shadow.png" },
   { name: "VS Code", logo: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" },
-  { name: "Vercel", logo: "https://assets.vercel.com/image/upload/v1588805177/repositories/vercel/logo.png" },
+  { name: "Vercel", logo: "https://assets.vercel.app/image/upload/v1588805177/repositories/vercel/logo.png" },
 ];
 
 export default function Hero() {
@@ -36,7 +36,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative min-h-[100svh] w-full bg-[#050505] overflow-hidden flex flex-col justify-center">
+    <section id="home" className="relative min-h-[90svh] md:min-h-screen w-full bg-[#050505] overflow-hidden flex flex-col justify-center">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -51,7 +51,7 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON --- */}
-      {/* Posisi Fixed agar pas dengan koordinat Foto Profil di page.tsx */}
+      {/* PERBAIKAN: Penyesuaian top agar pas dengan finalY di page.tsx */}
       <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] flex items-center justify-center">
@@ -106,30 +106,34 @@ export default function Hero() {
       {/* --- LAYER 3: KONTEN TEKS --- */}
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         <motion.div
-          className="max-w-4xl text-left pt-16 md:pt-0"
+          className="max-w-4xl text-left pt-12 md:pt-0"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-6 md:mb-8 bg-[#bcff00]/5">
+          {/* Badge System Online */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-4 md:mb-8 bg-[#bcff00]/5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
             <span className="text-[8px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
 
-          <h1 className="text-[14vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-white">
+          {/* Judul Utama - Diatur agar tidak overflow di layar kecil */}
+          <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-white">
             New Tech
           </h1>
-          <h1 className="text-[14vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-8 md:mb-10">
+          <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-6 md:mb-10">
             Solution
           </h1>
 
-          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mb-8 md:mb-12 text-left">
-            <p className="text-white/40 text-sm md:text-xl leading-relaxed italic">
+          {/* Slogan */}
+          <div className="max-w-[260px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mb-8 md:mb-12 text-left">
+            <p className="text-white/40 text-xs md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
           </div>
 
-          <a href="#work" className="inline-block">
+          {/* Tombol CTA */}
+          <a href="#projects" className="inline-block">
             <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
@@ -139,18 +143,20 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 4: MARQUEE TECH STACK --- */}
-      <div className="absolute bottom-0 w-full py-4 md:py-6 bg-black/40 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
+      {/* PERBAIKAN: Posisi bottom-0 dan padding dioptimalkan agar rapat dengan section About */}
+      <div className="absolute bottom-0 w-full py-4 md:py-6 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="flex whitespace-nowrap gap-10 md:gap-20 items-center"
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
         >
+          {/* Render stack 2x untuk infinite effect */}
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-30 hover:opacity-100 transition-all duration-500 cursor-default">
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
               <img 
                 src={tech.logo} 
                 alt={tech.name} 
-                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert group-hover:grayscale-0 group-hover:invert-0 transition-all duration-500 scale-100 group-hover:scale-110" 
+                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110" 
               />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
