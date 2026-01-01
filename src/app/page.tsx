@@ -46,37 +46,36 @@ export default function Home() {
   );
   
   // Vertical Position (Y)
-  // DISESUAIKAN: Mobile menggunakan 340px (sesuai dekorasi Hero) dan naik lebih cepat saat scroll
+  // DISESUAIKAN: Mobile menggunakan unit px statis di awal agar presisi dengan top-[340px] di Hero
   const yRaw = useTransform(
     scrollYProgress, 
-    isMobile ? [0, 0.2, 0.35] : [0, 0.3, 0.45], 
+    isMobile ? [0, 0.25, 0.5] : [0, 0.3, 0.45], 
     isMobile ? [340, 340, -100] : [50, 50, -60]
   );
   
-  // Opacity: Dibuat menghilang tepat saat teks About mulai terlihat
+  // Opacity
   const opacity = useTransform(
     scrollYProgress, 
-    isMobile ? [0, 0.25, 0.35] : [0, 0.18, 0.25], 
+    isMobile ? [0, 0.3, 0.4] : [0, 0.18, 0.25], 
     [1, 1, 0]
   );
   
-  // Scale: Mengecil di mobile agar tidak menutupi teks About saat transisi
+  // Scale
   const scale = useTransform(
     scrollYProgress, 
     [0, 0.2], 
-    isMobile ? [0.6, 0.4] : [1, 0.8]
+    isMobile ? [0.65, 0.45] : [1, 0.8]
   );
 
   // Spring untuk kelembutan gerakan
   const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
   const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
 
-  // Konversi ke unit CSS
+  // Konversi ke unit CSS (Handle khusus mobile untuk menggunakan px di awal)
   const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
   const finalY = useTransform(smoothYRaw, (val) => {
-    // Logika unit: Mobile menggunakan PX agar presisi dengan top-[340px] di Hero
-    if (isMobile) return `${val}px`; 
-    return `${val}vh`;
+    if (isMobile && val > 100) return `${val}px`; // Awal scroll di mobile pake px
+    return isMobile ? `${val}px` : `${val}vh`; // Selebihnya ikut logika
   });
 
   if (!isMounted) {
@@ -99,7 +98,7 @@ export default function Home() {
           x: "-50%", 
           y: "-50%",
           pointerEvents: "none", 
-          zIndex: 99, 
+          zIndex: 99, // Turun sedikit agar di bawah navbar tapi di atas konten
           willChange: "transform" 
         }}
       >
@@ -122,11 +121,8 @@ export default function Home() {
       <div className="relative z-10">
         <Hero />
         
-        {/* PERBAIKAN: 
-          -mt-20 di mobile menarik section About ke atas untuk menutupi 
-          kekosongan min-h-screen dari Hero.
-        */}
-        <div className="bg-[#050505] relative z-20 -mt-20 md:-mt-1">
+        {/* Container untuk section selanjutnya - Dipastikan tidak ada margin/gap */}
+        <div className="bg-[#050505] relative z-20 -mt-1">
           <About />
           <Projects />
           <Pricing />
