@@ -12,8 +12,6 @@ html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  /* Mencegah bouncing di iOS yang sering memicu whitespace */
-  overscroll-behavior-y: none;
 }
 
 @theme {
@@ -28,10 +26,9 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Menggunakan flex agar semua child (section) menempel sempurna */
+  /* Memastikan body rapat secara vertikal */
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 /* 2. BACKGROUND DECORATION (FIXED) */
@@ -57,40 +54,24 @@ body::before {
 }
 
 /* 3. PERBAIKAN KERAPATAN (SPACING RESET) */
-/* Menghapus margin bawaan browser pada semua elemen teks */
-h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote {
+/* Menghapus margin bawaan browser yang sering bikin renggang */
+h1, h2, h3, h4, h5, h6, p, ul, ol, figure {
   margin: 0;
   padding: 0;
 }
 
-/* Reset image agar tidak ada celah di bawah gambar */
-img, svg {
-  display: block;
-  max-width: 100%;
-}
-
-/* Mengatur jarak standar antar section agar lebih padat */
+/* Mengatur jarak standar antar section agar konsisten dan padat */
 section {
   position: relative;
   width: 100%;
-  /* Padding dikurangi agar antar section lebih rapat */
-  padding-top: 4rem; 
-  padding-bottom: 4rem;
+  padding-top: 5rem;    /* Sesuaikan jika masih terasa terlalu jauh */
+  padding-bottom: 5rem;
   box-sizing: border-box;
 }
 
-/* Responsif Spacing: Lebih rapat lagi di mobile */
-@media (max-width: 768px) {
-  section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-}
-
-/* Khusus Hero Section agar menempel ke Navbar tanpa gap */
+/* Khusus Hero Section agar menempel ke Navbar */
 #home {
   padding-top: 0 !important;
-  margin-top: 0 !important;
 }
 
 /* 4. UTILITIES */
@@ -125,15 +106,6 @@ section {
   background: var(--accent);
 }
 
-/* Mencegah pergeseran layout akibat scrollbar atau animasi */
 * {
   box-sizing: border-box;
-  outline: none;
-}
-
-/* Mencegah adanya whitespace di akhir halaman */
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
