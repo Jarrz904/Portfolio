@@ -50,8 +50,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: DEKORASI NEON --- */}
-      {/* PERBAIKAN: Menyesuaikan top agar sinkron dengan koordinat logic di page.tsx */}
+      {/* --- LAYER 2: DEKORASI NEON & PROFIL --- */}
       <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[280px] h-[280px] md:w-[450px] md:h-[450px] flex items-center justify-center">
@@ -60,7 +59,7 @@ export default function Hero() {
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[260px] h-[260px] md:w-[420px] md:h-[420px] z-10 opacity-70"
+              className="absolute w-[260px] h-[260px] md:w-[420px] md:h-[420px] z-10 opacity-80"
               viewBox="0 0 100 100"
             >
               <defs>
@@ -79,11 +78,20 @@ export default function Hero() {
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[220px] h-[220px] md:w-[360px] md:h-[360px] border-[1.5px] border-dashed border-[#bcff00]/30 rounded-full"
+              className="absolute w-[220px] h-[220px] md:w-[360px] md:h-[360px] border-[1.5px] border-dashed border-[#bcff00]/40 rounded-full"
             />
 
-            {/* Cahaya Pendar (Glow) */}
-            <div className="absolute w-[180px] h-[180px] md:w-[300px] md:h-[300px] bg-[#bcff00]/10 rounded-full blur-[40px] md:blur-[80px]" />
+            {/* Cahaya Pendar (Glow Background) */}
+            <div className="absolute w-[180px] h-[180px] md:w-[320px] md:h-[320px] bg-[#bcff00]/20 rounded-full blur-[50px] md:blur-[100px]" />
+
+            {/* Frame Foto Profil */}
+            <div className="relative w-40 h-40 md:w-72 md:h-72 rounded-full border-[3px] md:border-[6px] border-[#bcff00] p-1.5 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_40px_rgba(188,255,0,0.4)] z-0">
+               <img 
+                 src="/foto-profil.jpg" 
+                 alt="Profile" 
+                 className="w-full h-full object-cover rounded-full"
+               />
+            </div>
 
             {/* Label PHP & JS EXPERT */}
             <motion.div
@@ -98,11 +106,12 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 3: KONTEN TEKS --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-20 md:pb-32">
+      {/* PERBAIKAN: Mengurangi padding kiri (px-4) dan memaksimalkan lebar kontainer agar teks bergeser ke kiri */}
+      <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10 flex-grow pb-20 md:pb-32">
         <motion.div
-          className="max-w-4xl text-left"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          className="max-w-5xl text-left"
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
           {/* Badge System Online */}
@@ -127,7 +136,7 @@ export default function Hero() {
           </div>
 
           {/* Tombol CTA */}
-          <a href="#projects" className="inline-block">
+          <a href="#work" className="inline-block">
             <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
@@ -136,7 +145,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK (SEBAGAI PENUTUP BAWAH) --- */}
+      {/* --- LAYER 4: MARQUEE TECH STACK --- */}
       <div className="relative w-full py-6 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
