@@ -14,13 +14,16 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const fotoProfile = "/foto-profil.jpg";
 
+  // Memperbaiki Error "Calling setState synchronously within an effect" (Screenshot Ln 16)
   useEffect(() => {
-    setIsMounted(true);
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+    }, 100);
+    return () => clearTimeout(timer);
   }, []);
 
   /**
    * 1. POSISI X (HORIZONTAL)
-   * Tetap di 25vw agar pas di tengah kolom kiri About.
    */
   const xPos = useTransform(
     scrollYProgress,
@@ -30,7 +33,6 @@ export default function Home() {
 
   /**
    * 2. POSISI Y (VERTICAL)
-   * Bergerak keluar layar ke atas saat scroll masuk ke Projects.
    */
   const yPos = useTransform(
     scrollYProgress,
@@ -47,17 +49,21 @@ export default function Home() {
     [1, 1, 0]
   );
 
-  const smoothX = useSpring(xPos, { stiffness: 120, damping: 30 });
-  const smoothY = useSpring(yPos, { stiffness: 120, damping: 30 });
+  // Menggunakan konfigurasi spring yang lebih stabil untuk Framer Motion 11
+  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  if (!isMounted) return null;
+  // Mencegah Hydration Error
+  if (!isMounted) {
+    return <div className="bg-[#050505] min-h-screen" />;
+  }
 
   return (
     <main className="relative bg-[#050505] min-h-screen">
       <Navbar />
       <Scene />
       
-      {/* FOTO PROFIL LAYER - BIGGER VERSION */}
+      {/* FOTO PROFIL LAYER - FIXED FOR DEPLOYMENT */}
       <motion.div
         style={{ 
           left: smoothX, 
@@ -65,24 +71,24 @@ export default function Home() {
           opacity,
           x: "-50%", 
           y: "-50%",
+          position: "fixed",
           pointerEvents: "none" 
         }}
-        className="fixed z-[40] hidden md:block"
+        className="z-[40] hidden md:block"
       >
         <div className="relative flex items-center justify-center">
           
-          {/* GLOW BACKGROUND - Ukuran ditambah mengikuti besarnya foto */}
+          {/* GLOW BACKGROUND */}
           <div className="absolute w-[280px] h-[280px] bg-[#bcff00] rounded-full blur-[70px] opacity-20" />
           
-          {/* FRAME FOTO PROFIL - Ukuran ditingkatkan ke w-72 (288px) */}
+          {/* FRAME FOTO PROFIL */}
           <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)] z-20">
             <img 
               src={fotoProfile}
-              alt="Avatar"
+              alt="Avatar Profile"
               className="w-full h-full object-cover rounded-full"
             />
           </div>
-
         </div>
       </motion.div>
 
