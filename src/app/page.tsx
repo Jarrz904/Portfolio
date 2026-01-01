@@ -46,35 +46,37 @@ export default function Home() {
   );
   
   // Vertical Position (Y)
-  // DISESUAIKAN: Di mobile dimulai dari 45vh agar pas di tengah dekorasi Hero yang baru
+  // DISESUAIKAN: Mobile menggunakan unit px statis di awal agar presisi dengan top-[340px] di Hero
   const yRaw = useTransform(
     scrollYProgress, 
-    isMobile ? [0, 0.35, 0.55] : [0, 0.3, 0.45], 
-    isMobile ? [45, 45, -100] : [50, 50, -60]
+    isMobile ? [0, 0.25, 0.5] : [0, 0.3, 0.45], 
+    isMobile ? [340, 340, -100] : [50, 50, -60]
   );
   
   // Opacity
-  // PERBAIKAN: Dibuat lebih tajam transisinya agar menghilang tepat saat pindah section
   const opacity = useTransform(
     scrollYProgress, 
-    isMobile ? [0, 0.4, 0.5] : [0, 0.18, 0.25], 
+    isMobile ? [0, 0.3, 0.4] : [0, 0.18, 0.25], 
     [1, 1, 0]
   );
   
   // Scale
   const scale = useTransform(
     scrollYProgress, 
-    [0, 0.25], 
-    isMobile ? [0.65, 0.5] : [1, 0.8]
+    [0, 0.2], 
+    isMobile ? [0.65, 0.45] : [1, 0.8]
   );
 
   // Spring untuk kelembutan gerakan
   const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
   const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
 
-  // Konversi ke unit CSS
+  // Konversi ke unit CSS (Handle khusus mobile untuk menggunakan px di awal)
   const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
-  const finalY = useTransform(smoothYRaw, (val) => `${val}vh`);
+  const finalY = useTransform(smoothYRaw, (val) => {
+    if (isMobile && val > 100) return `${val}px`; // Awal scroll di mobile pake px
+    return isMobile ? `${val}px` : `${val}vh`; // Selebihnya ikut logika
+  });
 
   if (!isMounted) {
     return <div className="bg-[#050505] min-h-screen" />;
@@ -96,7 +98,7 @@ export default function Home() {
           x: "-50%", 
           y: "-50%",
           pointerEvents: "none", 
-          zIndex: 999,
+          zIndex: 99, // Turun sedikit agar di bawah navbar tapi di atas konten
           willChange: "transform" 
         }}
       >
@@ -109,19 +111,18 @@ export default function Home() {
             <img 
               src="/foto-profil.jpg" 
               alt="Avatar" 
-              className="w-full h-full object-cover rounded-full" 
+              className="w-full h-full object-cover rounded-full shadow-inner" 
             />
           </div>
         </div>
       </motion.div>
 
       {/* Konten Utama */}
-      {/* PERBAIKAN: Menghilangkan flex-col dan gap agar section menempel rapi */}
       <div className="relative z-10">
         <Hero />
         
-        {/* Container untuk section selanjutnya agar memiliki transisi yang rapat */}
-        <div className="bg-[#050505] relative z-20">
+        {/* Container untuk section selanjutnya - Dipastikan tidak ada margin/gap */}
+        <div className="bg-[#050505] relative z-20 -mt-1">
           <About />
           <Projects />
           <Pricing />

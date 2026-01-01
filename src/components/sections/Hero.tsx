@@ -36,7 +36,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative min-h-[100svh] w-full bg-[#050505] overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-start">
+    <section id="home" className="relative min-h-[100svh] w-full bg-[#050505] overflow-hidden flex flex-col justify-center">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -51,8 +51,8 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON --- */}
-      {/* Di mobile top diatur manual agar tidak terlalu jauh ke bawah */}
-      <div className="absolute left-[50vw] md:left-[75vw] top-[380px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+      {/* Posisi Fixed agar pas dengan koordinat Foto Profil di page.tsx */}
+      <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] flex items-center justify-center">
 
@@ -104,10 +104,9 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 3: KONTEN TEKS --- */}
-      <div className="w-full px-6 md:px-12 lg:px-16 relative z-10">
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
         <motion.div
-          // Menggunakan pt-28 untuk memberi ruang navbar di mobile tanpa mt-16 yang menambah gap
-          className="max-w-4xl text-left pt-28 md:pt-0"
+          className="max-w-4xl text-left pt-16 md:pt-0"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
