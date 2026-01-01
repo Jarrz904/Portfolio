@@ -12,23 +12,40 @@ import Scene from "@/components/canvas/Scene";
 export default function Home() {
   const { scrollYProgress } = useScroll();
   const [isMounted, setIsMounted] = useState(false);
-  const fotoProfile = "/foto-profil.jpg"; // Pastikan file ini ada di folder public
+  const fotoProfile = "/foto-profil.jpg";
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // KOORDINAT X: Mulai dari 75% (Kanan) pindah ke 25% (Kiri)
-  const xPos = useTransform(scrollYProgress, [0, 0.12, 1], ["75%", "25%", "25%"]);
-  
-  // KOORDINAT Y: Tetap di 50% (Tengah) lalu terbang ke atas (-60%)
-  const yPos = useTransform(scrollYProgress, [0, 0.18, 0.23], ["50%", "50%", "-60%"]);
-  
+  /**
+   * 1. POSISI X (HORIZONTAL)
+   * Menggunakan % untuk stabilitas koordinat di Vercel (Production)
+   */
+  const xPos = useTransform(
+    scrollYProgress,
+    [0, 0.12, 1],
+    ["75%", "25%", "25%"] 
+  );
+
+  /**
+   * 2. POSISI Y (VERTICAL)
+   */
+  const yPos = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.23], 
+    ["50%", "50%", "-60%"]
+  );
+
+  /**
+   * 3. OPACITY & SCALE
+   */
   const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.85]);
 
-  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30 });
-  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30 });
+  // Spring yang lebih halus untuk transisi yang elegan
+  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   if (!isMounted) return <div className="bg-[#050505] min-h-screen" />;
 
@@ -37,35 +54,40 @@ export default function Home() {
       <Navbar />
       <Scene />
       
-      {/* LAYER FOTO PROFIL (FIXED) */}
+      {/* FOTO PROFIL LAYER - FIXED POSITION */}
       <motion.div
         style={{ 
           position: "fixed",
-          left: smoothX, 
-          top: smoothY, 
+          // Paksa nilai ke 75% jika isMounted belum true untuk mencegah foto ke pojok kiri atas
+          left: isMounted ? smoothX : "75%", 
+          top: isMounted ? smoothY : "50%", 
           opacity,
           scale,
+          // x dan y -50% adalah kunci agar titik tengah foto selaras dengan tengah lingkaran
           translateX: "-50%", 
           translateY: "-50%",
           pointerEvents: "none" 
         }}
-        className="z-[50] hidden md:block"
+        className="z-[40] hidden md:block"
       >
         <div className="relative flex items-center justify-center">
-          {/* Cahaya Neon Belakang Foto */}
-          <div className="absolute w-[280px] h-[280px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
           
-          {/* Frame Foto Profile */}
-          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-1.5 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)]">
+          {/* GLOW BACKGROUND */}
+          <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
+          
+          {/* FRAME FOTO PROFIL - w-72 (288px) */}
+          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)] z-20">
             <img 
               src={fotoProfile}
-              alt="Profile"
+              alt="Avatar"
               className="w-full h-full object-cover rounded-full"
             />
           </div>
+
         </div>
       </motion.div>
 
+      {/* SECTIONS CONTENT */}
       <div className="relative z-10">
         <Hero />
         <About />
