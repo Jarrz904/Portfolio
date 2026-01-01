@@ -14,45 +14,21 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const fotoProfile = "/foto-profil.jpg";
 
-  // Memastikan komponen sudah termuat di browser sebelum render
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  /**
-   * 1. POSISI X (HORIZONTAL)
-   * Menggunakan % agar sinkron dengan koordinat absolut di Hero.tsx
-   * 75% berarti di sisi kanan (area kosong Hero)
-   */
-  const xPos = useTransform(
-    scrollYProgress, 
-    [0, 0.12, 1], 
-    ["75%", "25%", "25%"]
-  );
-
-  /**
-   * 2. POSISI Y (VERTICAL)
-   * 50% berarti tepat di tengah layar secara vertikal
-   */
-  const yPos = useTransform(
-    scrollYProgress, 
-    [0, 0.18, 0.23], 
-    ["50%", "50%", "-60%"]
-  );
-
-  /**
-   * 3. OPACITY (TRANSPARANSI)
-   */
+  // POSISI X: 75% adalah posisi ideal untuk area kanan Hero
+  const xPos = useTransform(scrollYProgress, [0, 0.12, 1], ["75%", "25%", "25%"]);
+  // POSISI Y: 50% adalah tepat di tengah layar secara vertikal
+  const yPos = useTransform(scrollYProgress, [0, 0.18, 0.23], ["50%", "50%", "-60%"]);
+  
   const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.8]);
 
-  /**
-   * 4. SMOOTHING
-   * Menggunakan stiffness & damping yang pas agar gerakan tidak kaku
-   */
-  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30 });
+  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30 });
 
-  // Cegah blank/hydration error
   if (!isMounted) return <div className="bg-[#050505] min-h-screen" />;
 
   return (
@@ -60,41 +36,35 @@ export default function Home() {
       <Navbar />
       <Scene />
       
-      {/* FOTO PROFIL LAYER 
-          Properti 'position: fixed' diletakkan di dalam style agar 
-          Framer Motion bisa menghitung koordinat 'left' dan 'top' dengan benar.
-      */}
+      {/* FOTO PROFIL LAYER - INI YANG HARUS PAS DI TENGAH */}
       <motion.div
         style={{ 
           position: "fixed",
           left: smoothX, 
           top: smoothY, 
           opacity,
+          scale,
           x: "-50%", 
           y: "-50%",
-          pointerEvents: "none",
-          willChange: "transform" 
+          pointerEvents: "none" 
         }}
         className="z-[40] hidden md:block"
       >
         <div className="relative flex items-center justify-center">
-          
-          {/* Efek Pendar Neon di belakang foto */}
+          {/* Cahaya Pendar Hijau Neon */}
           <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
           
-          {/* Frame Lingkaran Foto */}
-          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.4)]">
+          {/* Frame Foto (w-72 md) */}
+          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)]">
             <img 
               src={fotoProfile} 
-              alt="Profile Avatar" 
+              alt="Profile" 
               className="w-full h-full object-cover rounded-full" 
             />
           </div>
-          
         </div>
       </motion.div>
 
-      {/* Kontainer Section agar tetap berada di atas Background */}
       <div className="relative z-10">
         <Hero />
         <About />
