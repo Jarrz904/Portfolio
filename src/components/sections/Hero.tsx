@@ -50,8 +50,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: DEKORASI NEON TERKUNCI (DI SEKELILING FOTO) --- */}
-      {/* Penyesuaian Mobile: Menggunakan md:left-[75vw] dan left-[50vw] di mobile agar center */}
+      {/* --- LAYER 2: DEKORASI NEON TERKUNCI --- */}
       <div className="absolute left-[50vw] md:left-[75vw] top-[35vh] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center">
@@ -140,10 +139,17 @@ export default function Hero() {
           className="flex whitespace-nowrap gap-10 md:gap-20 items-center"
         >
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="flex items-center gap-3 md:gap-4 opacity-30 hover:opacity-100 transition-opacity duration-500">
-              <img src={tech.logo} alt={tech.name} className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert" />
-              <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold">{tech.name}</span>
-              <div className="w-1 h-1 bg-[#bcff00] rounded-full" />
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-30 hover:opacity-100 transition-all duration-500 cursor-default">
+              {/* Image Fix: Logo Grayscale secara default, kembali berwarna saat group di hover */}
+              <img 
+                src={tech.logo} 
+                alt={tech.name} 
+                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert group-hover:grayscale-0 group-hover:invert-0 transition-all duration-500 scale-100 group-hover:scale-110" 
+              />
+              <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
+                {tech.name}
+              </span>
+              <div className="w-1 h-1 bg-[#bcff00] rounded-full group-hover:shadow-[0_0_8px_#bcff00] transition-all" />
             </div>
           ))}
         </motion.div>
