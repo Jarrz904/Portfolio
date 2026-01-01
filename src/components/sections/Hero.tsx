@@ -68,14 +68,8 @@ export default function Hero() {
                   d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-              <text 
-                fill="#bcff00" 
-                fontWeight="bold" 
-                letterSpacing="2.8"
-                style={{ fontSize: '4.1px' }}
-              >
-                <textPath xlinkHref="#circlePath">
-                  • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
+               <text fill="#bcff00" fontSize="4.5" fontWeight="bold" letterSpacing="2.8">
+                <textPath xlinkHref="#circlePath"> • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
                 </textPath>
               </text>
             </motion.svg>
