@@ -14,7 +14,6 @@ html {
   overflow-x: hidden;
   /* Mencegah bouncing di iOS yang sering memicu whitespace */
   overscroll-behavior-y: none;
-  background: var(--background);
 }
 
 @theme {
@@ -64,35 +63,27 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote {
   padding: 0;
 }
 
-/* Reset image agar tidak ada celah di bawah gambar (inline-gap) */
+/* Reset image agar tidak ada celah di bawah gambar */
 img, svg {
   display: block;
   max-width: 100%;
-  height: auto;
 }
 
 /* Mengatur jarak standar antar section agar lebih padat */
 section {
   position: relative;
   width: 100%;
-  padding-top: 5rem; 
-  padding-bottom: 5rem;
+  /* Padding dikurangi agar antar section lebih rapat */
+  padding-top: 4rem; 
+  padding-bottom: 4rem;
   box-sizing: border-box;
-  /* Menghilangkan border-collapse gap */
-  margin-top: -1px; 
 }
 
-/* Responsif Spacing: Sangat rapat di mobile untuk sinkronisasi Hero & About */
+/* Responsif Spacing: Lebih rapat lagi di mobile */
 @media (max-width: 768px) {
   section {
-    padding-top: 2.5rem !important;
-    padding-bottom: 2.5rem !important;
-  }
-
-  /* Memastikan elemen heading tidak memiliki line-height yang terlalu lebar di HP */
-  h1, h2, h3 {
-    line-height: 1.1 !important;
-    letter-spacing: -0.02em;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 }
 
@@ -100,7 +91,6 @@ section {
 #home {
   padding-top: 0 !important;
   margin-top: 0 !important;
-  padding-bottom: 0 !important;
 }
 
 /* 4. UTILITIES */
@@ -139,7 +129,6 @@ section {
 * {
   box-sizing: border-box;
   outline: none;
-  -webkit-tap-highlight-color: transparent;
 }
 
 /* Mencegah adanya whitespace di akhir halaman */
@@ -147,11 +136,4 @@ main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  position: relative;
-}
-
-/* Memperbaiki overflow pada elemen animasi */
-.framer-motion-container {
-  will-change: transform, opacity;
 }
