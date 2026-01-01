@@ -36,7 +36,7 @@ export default function Home() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // --- PERBAIKAN LOGIKA POSISI ---
+  // --- LOGIKA POSISI (DIPERBAIKI) ---
   
   // Horizontal Position (X)
   const xRaw = useTransform(
@@ -46,32 +46,32 @@ export default function Home() {
   );
   
   // Vertical Position (Y)
-  // Perbaikan: Di mobile, kita biarkan di 40vh lebih lama agar terlihat "fixed" saat scroll awal,
-  // baru mulai naik ke atas setelah melewati threshold 0.25 (area About).
+  // Perbaikan Mobile: Profil ditahan di posisi 40vh lebih lama (0 sampai 0.3) 
+  // agar tidak langsung naik saat baru scroll sedikit.
   const yRaw = useTransform(
     scrollYProgress, 
-    [0, 0.25, 0.35], 
+    [0, 0.3, 0.45], 
     isMobile ? [40, 40, -60] : [50, 50, -60]
   );
   
   // Opacity
-  // Profil akan mulai menghilang perlahan hanya setelah user masuk lebih dalam ke section About
+  // Disesuaikan agar menghilang setelah melewati area Hero/Awal About
   const opacity = useTransform(
     scrollYProgress, 
-    isMobile ? [0, 0.28, 0.35] : [0, 0.18, 0.21], 
+    isMobile ? [0, 0.35, 0.4] : [0, 0.18, 0.21], 
     [1, 1, 0]
   );
   
   // Scale
   const scale = useTransform(
     scrollYProgress, 
-    [0, 0.2], 
+    [0, 0.25], 
     isMobile ? [0.65, 0.45] : [1, 0.85]
   );
 
-  // Spring untuk kelembutan gerakan
-  const smoothXRaw = useSpring(xRaw, { stiffness: 120, damping: 40 });
-  const smoothYRaw = useSpring(yRaw, { stiffness: 120, damping: 40 });
+  // Spring untuk kelembutan gerakan - Ditingkatkan agar lebih stabil di mobile
+  const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
+  const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
 
   // Konversi ke unit CSS
   const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
@@ -89,7 +89,7 @@ export default function Home() {
       {/* FOTO PROFIL LAYER */}
       <motion.div
         style={{ 
-          position: "fixed",
+          position: "fixed", // Tetap fixed agar tidak terdorong scroll
           left: finalX, 
           top: finalY, 
           opacity,
@@ -97,7 +97,8 @@ export default function Home() {
           x: "-50%", 
           y: "-50%",
           pointerEvents: "none",
-          zIndex: 999 
+          zIndex: 999,
+          willChange: "transform" // Optimasi performa mobile
         }}
       >
         <div className="relative flex items-center justify-center">
@@ -105,7 +106,6 @@ export default function Home() {
           <div className="absolute w-[180px] h-[180px] md:w-[300px] md:h-[300px] bg-[#bcff00] rounded-full blur-[50px] md:blur-[80px] opacity-20" />
           
           {/* Frame Foto Profil */}
-          {/* Ukuran disesuaikan agar proporsional di mobile (w-40) dan desktop (w-72) */}
           <div className="relative w-40 h-40 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-1.5 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_40px_rgba(188,255,0,0.2)]">
             <img 
               src="/foto-profil.jpg" 
@@ -116,6 +116,7 @@ export default function Home() {
         </div>
       </motion.div>
 
+      {/* Konten ditaruh di dalam pembungkus dengan z-index lebih rendah dari profil */}
       <div className="relative z-10">
         <Hero />
         <About />

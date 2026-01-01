@@ -51,15 +51,16 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON TERKUNCI --- */}
-      <div className="absolute left-[50vw] md:left-[75vw] top-[35vh] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+      {/* Penyesuaian Mobile: Posisi diturunkan sedikit (40vh) agar pas dengan area foto di mobile */}
+      <div className="absolute left-[50vw] md:left-[75vw] top-[40vh] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
-          <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center">
+          <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] flex items-center justify-center">
 
-            {/* --- NAMA BERPUTAR --- */}
+            {/* --- NAMA BERPUTAR (SVG CIRCLE TEXT) --- */}
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[290px] h-[290px] md:w-[385px] md:h-[385px] z-10 opacity-70"
+              className="absolute w-[260px] h-[260px] md:w-[385px] md:h-[385px] z-10 opacity-70"
               viewBox="0 0 100 100"
             >
               <defs>
@@ -68,8 +69,10 @@ export default function Hero() {
                   d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-              <text fill="#bcff00" fontSize="4.5" fontWeight="bold" letterSpacing="2.8">
-                <textPath xlinkHref="#circlePath"> • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
+              {/* font-size dikecilkan di mobile via CSS atau tetap proporsional karena viewBox 100 100 */}
+              <text fill="#bcff00" fontSize="4.2" fontWeight="bold" letterSpacing="2.5">
+                <textPath xlinkHref="#circlePath">
+                  • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
                 </textPath>
               </text>
             </motion.svg>
@@ -78,17 +81,17 @@ export default function Hero() {
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[240px] h-[240px] md:w-[325px] md:h-[325px] border-[1px] border-dashed border-[#bcff00]/30 rounded-full"
+              className="absolute w-[220px] h-[220px] md:w-[325px] md:h-[325px] border-[1px] border-dashed border-[#bcff00]/30 rounded-full"
             />
 
             {/* Cahaya Pendar (Glow) */}
-            <div className="absolute w-[200px] h-[200px] md:w-[280px] md:h-[280px] bg-[#bcff00]/10 rounded-full blur-[50px] md:blur-[70px]" />
+            <div className="absolute w-[180px] h-[180px] md:w-[280px] md:h-[280px] bg-[#bcff00]/10 rounded-full blur-[40px] md:blur-[70px]" />
 
             {/* Label PHP & JS EXPERT */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[15%] md:top-[10%] -right-4 md:-right-8 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[8px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
+              className="absolute top-[20%] md:top-[10%] -right-2 md:-right-8 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[8px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
             >
               PHP & JS EXPERT
             </motion.div>
@@ -140,7 +143,6 @@ export default function Hero() {
         >
           {[...techStack, ...techStack].map((tech, i) => (
             <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-30 hover:opacity-100 transition-all duration-500 cursor-default">
-              {/* Image Fix: Logo Grayscale secara default, kembali berwarna saat group di hover */}
               <img 
                 src={tech.logo} 
                 alt={tech.name} 
