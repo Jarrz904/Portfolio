@@ -2,7 +2,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
-// IMPORT KOMPONEN - Pastikan file-file ini ada di folder tersebut
+// IMPORT KOMPONEN
 import Navbar from "@/components/common/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -15,28 +15,24 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Ambil progress scroll
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
+  // FIX 1: Hapus target ref agar scroll terbaca secara global di Window
+  const { scrollYProgress } = useScroll();
 
-  // Hydration Shield untuk React 19 & Next.js 16
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // Logika Transformasi (Koordinat Center ke Kiri)
-  const xPos = useTransform(scrollYProgress, [0, 0.12, 1], ["75%", "25%", "25%"]);
-  const yPos = useTransform(scrollYProgress, [0, 0.18, 0.23], ["50%", "50%", "-60%"]);
+  // FIX 2: Gunakan unit vw (viewport width) dan vh (viewport height)
+  // Ini memaksa elemen berada di 75% lebar layar dan 50% tinggi layar secara akurat
+  const xPos = useTransform(scrollYProgress, [0, 0.12, 1], ["75vw", "25vw", "25vw"]);
+  const yPos = useTransform(scrollYProgress, [0, 0.18, 0.23], ["50vh", "50vh", "-60vh"]);
+  
   const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.85]);
 
-  // Spring Smoothing - Fix untuk Motion 11
   const smoothX = useSpring(xPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const smoothY = useSpring(yPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  // Cegah Error Build/Hydration
   if (!isMounted) {
     return <div className="bg-[#050505] min-h-screen" />;
   }
@@ -48,6 +44,8 @@ export default function Home() {
       
       {/* FOTO PROFIL LAYER */}
       <motion.div
+        // FIX 3: Tambahkan initial untuk mencegah loncatan saat page load
+        initial={{ left: "75vw", top: "50vh" }}
         style={{ 
           position: "fixed",
           left: smoothX, 
@@ -62,10 +60,8 @@ export default function Home() {
         className="hidden md:block"
       >
         <div className="relative flex items-center justify-center">
-          {/* Glow Background */}
           <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
           
-          {/* Frame Foto Profil */}
           <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)]">
             <img 
               src="/foto-profil.jpg" 
@@ -76,7 +72,6 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Konten Utama */}
       <div className="relative z-10">
         <Hero />
         <About />
