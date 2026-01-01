@@ -6,43 +6,106 @@
   --accent: #bcff00;
 }
 
+/* 1. RESET GLOBAL & SMOOTH SCROLL */
 html {
   scroll-behavior: smooth;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+@theme {
+  --color-accent: var(--accent);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  margin: 0; padding: 0;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Reset Spacing Global untuk merapatkan landing page */
-h1, h2, h3, h4, h5, h6, p {
   margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Memastikan body rapat secara vertikal */
+  display: flex;
+  flex-direction: column;
 }
 
-section {
-  padding-top: 4rem; /* Jarak standar antar section */
-  padding-bottom: 4rem;
+/* 2. BACKGROUND DECORATION (FIXED) */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(188, 255, 0, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(188, 255, 0, 0.08) 0%, transparent 40%);
+  pointer-events: none;
 }
 
-#home {
-  padding-top: 0 !important; /* Hero tidak butuh padding top tambahan */
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--background); }
-::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-/* Noise Effect */
 body::before {
   content: "";
-  position: fixed; inset: 0;
-  opacity: 0.03; z-index: 9999; pointer-events: none;
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+}
+
+/* 3. PERBAIKAN KERAPATAN (SPACING RESET) */
+/* Menghapus margin bawaan browser yang sering bikin renggang */
+h1, h2, h3, h4, h5, h6, p, ul, ol, figure {
+  margin: 0;
+  padding: 0;
+}
+
+/* Mengatur jarak standar antar section agar konsisten dan padat */
+section {
+  position: relative;
+  width: 100%;
+  padding-top: 5rem;    /* Sesuaikan jika masih terasa terlalu jauh */
+  padding-bottom: 5rem;
+  box-sizing: border-box;
+}
+
+/* Khusus Hero Section agar menempel ke Navbar */
+#home {
+  padding-top: 0 !important;
+}
+
+/* 4. UTILITIES */
+.text-outline {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
+  color: transparent;
+  transition: all 0.5s ease;
+}
+
+.group:hover .text-outline-neon {
+  -webkit-text-stroke: 1.5px var(--accent) !important;
+  filter: drop-shadow(0 0 10px var(--accent));
+  color: transparent;
+}
+
+/* 5. CUSTOM SCROLLBAR */
+::-webkit-scrollbar { 
+  width: 5px; 
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb { 
+  background: #222; 
+  border-radius: 10px; 
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+* {
+  box-sizing: border-box;
 }
