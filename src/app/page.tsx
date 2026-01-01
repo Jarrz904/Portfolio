@@ -18,10 +18,32 @@ export default function Home() {
     setIsMounted(true);
   }, []);
 
-  // PERBAIKAN: Gunakan persentase (%) agar sinkron dengan transform Hero
-  const xPos = useTransform(scrollYProgress, [0, 0.12, 1], ["75%", "25%", "25%"]);
-  const yPos = useTransform(scrollYProgress, [0, 0.18, 0.23], ["50%", "50%", "-60%"]);
+  /**
+   * 1. POSISI X (HORIZONTAL)
+   * Awal di 75% (Area kanan Hero), pindah ke 25% (Area kiri About)
+   * Menggunakan % agar sinkron dengan dekorasi di Hero.tsx
+   */
+  const xPos = useTransform(
+    scrollYProgress,
+    [0, 0.12, 1],
+    ["75%", "25%", "25%"] 
+  );
+
+  /**
+   * 2. POSISI Y (VERTICAL)
+   * Tetap di tengah layar (50%) lalu terbang ke atas saat scroll jauh.
+   */
+  const yPos = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.23], 
+    ["50%", "50%", "-60%"]
+  );
+
+  /**
+   * 3. OPACITY & SCALE
+   */
   const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.85]);
 
   const smoothX = useSpring(xPos, { stiffness: 100, damping: 30 });
   const smoothY = useSpring(yPos, { stiffness: 100, damping: 30 });
@@ -33,29 +55,41 @@ export default function Home() {
       <Navbar />
       <Scene />
       
+      {/* FOTO PROFIL LAYER - FIXED POSITION
+          Properti x: "-50%" dan y: "-50%" adalah kunci agar titik pusat foto 
+          berada tepat di koordinat 75% (kanan) dan 50% (tengah).
+      */}
       <motion.div
         style={{ 
           position: "fixed",
           left: smoothX, 
           top: smoothY, 
           opacity,
-          x: "-50%", // Menarik titik pusat ke tengah secara horizontal
-          y: "-50%", // Menarik titik pusat ke tengah secara vertikal
+          scale,
+          x: "-50%", 
+          y: "-50%",
           pointerEvents: "none" 
         }}
         className="z-[40] hidden md:block"
       >
         <div className="relative flex items-center justify-center">
-          {/* Cahaya Pendar */}
+          
+          {/* Glow Neon Background */}
           <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
           
-          {/* FOTO: Ukuran md:w-72 (288px) harus sinkron dengan border di Hero */}
-          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_40px_rgba(188,255,0,0.2)]">
-            <img src={fotoProfile} alt="Profile" className="w-full h-full object-cover rounded-full" />
+          {/* Frame Foto Profile - Ukuran w-72 (288px) */}
+          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)]">
+            <img 
+              src={fotoProfile}
+              alt="Profile Avatar"
+              className="w-full h-full object-cover rounded-full"
+            />
           </div>
+
         </div>
       </motion.div>
 
+      {/* RENDER SEMUA SECTIONS */}
       <div className="relative z-10">
         <Hero />
         <About />
