@@ -12,6 +12,9 @@ html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  /* Mencegah efek bouncing/karet di iOS yang sering memicu whitespace */
+  overscroll-behavior-y: none;
+  background: var(--background);
 }
 
 @theme {
@@ -26,9 +29,10 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Memastikan body rapat secara vertikal */
+  /* Memastikan body rapat secara vertikal dan memenuhi layar */
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 /* 2. BACKGROUND DECORATION (FIXED) */
@@ -54,24 +58,43 @@ body::before {
 }
 
 /* 3. PERBAIKAN KERAPATAN (SPACING RESET) */
-/* Menghapus margin bawaan browser yang sering bikin renggang */
-h1, h2, h3, h4, h5, h6, p, ul, ol, figure {
+/* Menghapus margin bawaan browser pada semua elemen teks */
+h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote {
   margin: 0;
   padding: 0;
+}
+
+/* Reset image & SVG agar tidak ada celah inline-block di bawahnya */
+img, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Mengatur jarak standar antar section agar konsisten dan padat */
 section {
   position: relative;
   width: 100%;
-  padding-top: 5rem;    /* Sesuaikan jika masih terasa terlalu jauh */
+  padding-top: 5rem;    
   padding-bottom: 5rem;
   box-sizing: border-box;
+  /* Mencegah celah 1px antar section pada beberapa browser */
+  margin-top: -1px;
 }
 
-/* Khusus Hero Section agar menempel ke Navbar */
-#home {
+/* Penyesuaian Responsif: Lebih rapat di mobile */
+@media (max-width: 768px) {
+  section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+/* Reset Khusus Hero/Home: Menempel ke Navbar */
+#home, #hero {
   padding-top: 0 !important;
+  margin-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 /* 4. UTILITIES */
@@ -106,6 +129,17 @@ section {
   background: var(--accent);
 }
 
+/* Global Box Sizing */
 * {
   box-sizing: border-box;
+  outline: none;
+  /* Menghilangkan highlight biru saat tap di mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Main Container Fix */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
