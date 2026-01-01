@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+// Data Tech Stack
 const techStack = [
   { name: "Next.js", logo: "https://cdn.worldvectorlogo.com/logos/next-js.svg" },
   { name: "Laravel", logo: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Laravel.svg" },
@@ -30,43 +31,44 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: DEKORASI NEON TERKUNCI (DI SEKELILING FOTO) --- */}
-      <div className="absolute left-[75vw] top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none hidden md:block">
+      {/* --- LAYER 2: DEKORASI NEON TERKUNCI (DI SEKELILING FOTO) --- 
+          PERBAIKAN: Menggunakan left-[75%] dan top-[50%] agar sinkron dengan koordinat smoothX di page.tsx
+      */}
+      <div className="absolute left-[75%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none hidden md:block">
         {mounted && (
-          <div className="relative w-[400px] h-[400px] flex items-center justify-center">
+          <div className="relative w-[450px] h-[450px] flex items-center justify-center">
 
-            {/* --- NAMA BERPUTAR (KALIBRASI RADIUS UNTUK MEMBUNGKUS RAPAT) --- */}
+            {/* --- NAMA BERPUTAR --- */}
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[385px] h-[385px] z-10 opacity-70"
+              className="absolute w-[430px] h-[430px] z-10 opacity-70"
               viewBox="0 0 100 100"
             >
               <defs>
-                {/* Radius 41: Jarak sempurna untuk membungkus profil w-72 */}
+                {/* Radius 43: Memberikan ruang napas yang pas untuk foto profil w-72 */}
                 <path
                   id="circlePath"
-                  d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
+                  d="M 50, 50 m -43, 0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0"
                 />
               </defs>
-              <text fill="#bcff00" fontSize="4.5" fontWeight="bold" letterSpacing="2.8">
+              <text fill="#bcff00" fontSize="4.2" fontWeight="bold" letterSpacing="2.5">
                 <textPath xlinkHref="#circlePath"> • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
                 </textPath>
               </text>
             </motion.svg>
 
-            {/* Ring Putar Putus-putus (Radius diperkecil agar pas sebagai border luar tipis) */}
+            {/* Ring Putar Putus-putus */}
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[325px] h-[325px] border-[1px] border-dashed border-[#bcff00]/30 rounded-full"
+              className="absolute w-[360px] h-[360px] border-[1px] border-dashed border-[#bcff00]/30 rounded-full"
             />
 
-            {/* Cahaya Pendar (Glow) Pusat yang lebih tight */}
-            <div className="absolute w-[280px] h-[280px] bg-[#bcff00]/10 rounded-full blur-[70px]" />
+            {/* Cahaya Pendar (Glow) Pusat */}
+            <div className="absolute w-[300px] h-[300px] bg-[#bcff00]/10 rounded-full blur-[80px]" />
 
-            {/* Label PHP & JS EXPERT (Ditempelkan secara diagonal mengikuti lengkungan) */}
-            {/* Label PHP & JS EXPERT (Dinaikkan ke top-10% dan digeser lebih ke kanan) */}
+            {/* Label PHP & JS EXPERT */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
