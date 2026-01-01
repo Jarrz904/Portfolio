@@ -36,7 +36,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative min-h-screen w-full bg-[#050505] overflow-hidden flex items-center">
+    <section id="home" className="relative min-h-[100svh] w-full bg-[#050505] overflow-hidden flex items-center justify-center md:justify-start">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -51,7 +51,7 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON --- */}
-      <div className="absolute left-[50vw] md:left-[75vw] top-[40vh] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+      <div className="absolute left-[50vw] md:left-[75vw] top-[45vh] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] flex items-center justify-center">
 
@@ -72,7 +72,7 @@ export default function Hero() {
                 fill="#bcff00" 
                 fontWeight="bold" 
                 letterSpacing="2.8"
-                style={{ fontSize: mounted && window.innerWidth < 768 ? '3.8px' : '4.2px' }}
+                style={{ fontSize: '4.1px' }}
               >
                 <textPath xlinkHref="#circlePath">
                   • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
@@ -105,24 +105,24 @@ export default function Hero() {
       {/* --- LAYER 3: KONTEN TEKS --- */}
       <div className="w-full px-6 md:px-12 lg:px-16 relative z-10 grid grid-cols-1 md:grid-cols-12 items-center">
         <motion.div
-          className="md:col-span-8 lg:col-span-7 text-center md:text-left pt-20 md:pt-0"
-          initial={{ opacity: 0, y: 50 }}
+          className="md:col-span-8 lg:col-span-7 text-center md:text-left mt-16 md:mt-0"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-6 md:mb-8 bg-[#bcff00]/5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
             <span className="text-[8px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
 
-          <h1 className="text-[16vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-white">
+          <h1 className="text-[15vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-white">
             New Tech
           </h1>
-          <h1 className="text-[16vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-8 md:mb-10">
+          <h1 className="text-[15vw] md:text-[8.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-8 md:mb-10">
             Solution
           </h1>
 
-          <div className="max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mb-8 md:mb-12 mx-auto md:ml-1 text-left">
+          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mb-8 md:mb-12 mx-auto md:ml-1 text-left">
             <p className="text-white/40 text-sm md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
