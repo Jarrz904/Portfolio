@@ -31,13 +31,14 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON TERKUNCI --- 
-          PERBAIKAN: Menggunakan left-[75%] dan top-[50%] agar sinkron dengan koordinat Page.tsx
+          PERBAIKAN STABILITAS: Menggunakan left-[75%] dan top-[50%] secara eksplisit 
+          agar selaras dengan elemen Fixed Photo di Page.tsx pada lingkungan Production Vercel.
       */}
       <div className="absolute left-[75%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none hidden md:block">
         {mounted && (
           <div className="relative w-[400px] h-[400px] flex items-center justify-center">
 
-            {/* --- NAMA BERPUTAR --- */}
+            {/* --- NAMA BERPUTAR (KONTROL RADIUS TETAP 41) --- */}
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}

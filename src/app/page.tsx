@@ -18,19 +18,14 @@ export default function Home() {
     setIsMounted(true);
   }, []);
 
-  /**
-   * 1. POSISI X (HORIZONTAL)
-   * Menggunakan % agar sinkron dengan dekorasi di Hero.tsx
-   */
+  // POSISI X: Menggunakan nilai mentah string untuk mencegah glitch Vercel
   const xPos = useTransform(
     scrollYProgress,
     [0, 0.12, 1],
     ["75%", "25%", "25%"] 
   );
 
-  /**
-   * 2. POSISI Y (VERTICAL)
-   */
+  // POSISI Y
   const yPos = useTransform(
     scrollYProgress,
     [0, 0.18, 0.23], 
@@ -40,9 +35,11 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.85]);
 
-  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  // Spring untuk menghaluskan gerakan
+  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30 });
+  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30 });
 
+  // Jika belum mounted (SSR Vercel), tampilkan div kosong dengan warna background agar tidak flicker
   if (!isMounted) return <div className="bg-[#050505] min-h-screen" />;
 
   return (
@@ -50,26 +47,24 @@ export default function Home() {
       <Navbar />
       <Scene />
       
-      {/* FOTO PROFIL LAYER - FIXED POSITION */}
+      {/* FOTO PROFIL LAYER - FIX PRODUCTION POSITION */}
       <motion.div
+        initial={false}
         style={{ 
           position: "fixed",
-          // Mencegah foto nyangkut di pojok kiri (0,0) saat loading
+          // Jika Vercel mencoba menaruh di 0, kita paksa ke 75% via state
           left: isMounted ? smoothX : "75%", 
           top: isMounted ? smoothY : "50%", 
           opacity,
           scale,
-          translateX: "-50%", 
-          translateY: "-50%",
+          x: "-50%", 
+          y: "-50%",
           pointerEvents: "none" 
         }}
         className="z-[50] hidden md:block"
       >
         <div className="relative flex items-center justify-center">
-          {/* Cahaya Neon Belakang */}
-          <div className="absolute w-[280px] h-[280px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
-          
-          {/* Frame Foto Profile - Ukuran w-72 */}
+          <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
           <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)] z-20">
             <img 
               src={fotoProfile} 
