@@ -6,9 +6,13 @@
   --accent: #bcff00;
 }
 
-/* Penambahan Smooth Scroll agar navigasi halus */
+/* Penambahan Reset & Smooth Scroll agar tidak ada jarak liar */
 html {
   scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  /* Mencegah bouncing di iOS yang bikin keliatan renggang */
+  overscroll-behavior-y: none; 
 }
 
 @theme {
@@ -19,8 +23,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
+  margin: 0; /* WAJIB: Menghapus margin bawaan browser */
+  padding: 0;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; /* Tambahan untuk rendering font di Mac */
+  -moz-osx-font-smoothing: grayscale;
+  /* Memastikan tinggi body benar-benar rapat */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Background Neon Glow Glow - Tetap Stabil */
@@ -57,7 +67,7 @@ body::before {
 .group:hover .text-outline-neon {
   -webkit-text-stroke: 1.5px var(--accent) !important;
   filter: drop-shadow(0 0 10px var(--accent));
-  color: transparent; /* Memastikan tetap transparan saat hover agar stroke terlihat */
+  color: transparent;
 }
 
 /* Custom Scrollbar - Dibuat lebih modern dan minimalis */
@@ -76,10 +86,23 @@ body::before {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent); /* Scrollbar berubah neon saat disentuh */
+  background: var(--accent);
+}
+
+/* Perbaikan Penting: Menghapus margin default pada heading dan paragraf */
+/* Ini seringkali penyebab utama "renggang" antar section */
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
 }
 
 /* Mencegah pergeseran layout saat animasi muncul */
 * {
   box-sizing: border-box;
+}
+
+/* Menghapus gap pada semua section pembungkus di Next.js */
+section {
+  display: block;
+  position: relative;
 }
