@@ -21,13 +21,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
+    <html 
+      lang="en" 
+      className="dark" 
+      style={{ 
+        colorScheme: "dark",
+        margin: 0,
+        padding: 0,
+        backgroundColor: "#050505" 
+      }}
+    >
       <body
         className={`${inter.variable} font-sans antialiased bg-[#050505] text-white selection:bg-[#bcff00] selection:text-black`}
+        style={{ 
+          margin: 0, 
+          padding: 0,
+          overflowX: "hidden" // Mencegah scroll horizontal yang merusak layout mobile
+        }}
       >
-        {/* SmoothScroll membungkus seluruh konten untuk efek scrolling mewah */}
+        {/* SmoothScroll membungkus seluruh konten */}
         <SmoothScroll>
-          {children}
+          {/* Pembungkus 'relative flex flex-col' memastikan semua section 
+            (Hero, About, dll) menempel satu sama lain tanpa gap.
+          */}
+          <div className="relative flex flex-col min-h-screen w-full">
+            {children}
+          </div>
         </SmoothScroll>
       </body>
     </html>

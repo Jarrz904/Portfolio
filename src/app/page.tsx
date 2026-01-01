@@ -36,7 +36,7 @@ export default function Home() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // --- LOGIKA POSISI (DIPERBAIKI) ---
+  // --- LOGIKA POSISI ---
   
   // Horizontal Position (X)
   const xRaw = useTransform(
@@ -46,19 +46,19 @@ export default function Home() {
   );
   
   // Vertical Position (Y)
-  // Perbaikan Mobile: Profil ditahan di posisi 40vh lebih lama (0 sampai 0.3) 
-  // agar tidak langsung naik saat baru scroll sedikit.
+  // PERBAIKAN: Di mobile, profil ditahan di 40vh sampai progress 0.6 (lebih lama)
+  // agar tetap sinkron dengan dekorasi lingkaran di Hero.
   const yRaw = useTransform(
     scrollYProgress, 
-    [0, 0.3, 0.45], 
-    isMobile ? [40, 40, -60] : [50, 50, -60]
+    isMobile ? [0, 0.6, 0.8] : [0, 0.3, 0.45], 
+    isMobile ? [40, 40, -100] : [50, 50, -60]
   );
   
   // Opacity
-  // Disesuaikan agar menghilang setelah melewati area Hero/Awal About
+  // PERBAIKAN: Opacity dibuat bertahan lebih lama di mobile agar tidak flicker saat scroll awal
   const opacity = useTransform(
     scrollYProgress, 
-    isMobile ? [0, 0.35, 0.4] : [0, 0.18, 0.21], 
+    isMobile ? [0, 0.7, 0.8] : [0, 0.18, 0.21], 
     [1, 1, 0]
   );
   
@@ -66,10 +66,10 @@ export default function Home() {
   const scale = useTransform(
     scrollYProgress, 
     [0, 0.25], 
-    isMobile ? [0.65, 0.45] : [1, 0.85]
+    isMobile ? [0.65, 0.55] : [1, 0.85]
   );
 
-  // Spring untuk kelembutan gerakan - Ditingkatkan agar lebih stabil di mobile
+  // Spring untuk kelembutan gerakan
   const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
   const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
 
@@ -89,16 +89,16 @@ export default function Home() {
       {/* FOTO PROFIL LAYER */}
       <motion.div
         style={{ 
-          position: "fixed", // Tetap fixed agar tidak terdorong scroll
+          position: "fixed", // Tetap fixed agar tidak terdorong scroll ke atas secara manual
           left: finalX, 
           top: finalY, 
           opacity,
           scale,
           x: "-50%", 
           y: "-50%",
-          pointerEvents: "none",
+          pointerEvents: "none", // Agar tidak menghalangi klik pada tombol Hero
           zIndex: 999,
-          willChange: "transform" // Optimasi performa mobile
+          willChange: "transform" 
         }}
       >
         <div className="relative flex items-center justify-center">
@@ -116,8 +116,8 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Konten ditaruh di dalam pembungkus dengan z-index lebih rendah dari profil */}
-      <div className="relative z-10">
+      {/* Konten Utama */}
+      <div className="relative z-10 flex flex-col gap-0">
         <Hero />
         <About />
         <Projects />

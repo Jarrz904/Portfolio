@@ -50,17 +50,17 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: DEKORASI NEON TERKUNCI --- */}
-      {/* Penyesuaian Mobile: Posisi diturunkan sedikit (40vh) agar pas dengan area foto di mobile */}
+      {/* --- LAYER 2: DEKORASI NEON --- */}
+      {/* Posisi diturunkan di mobile agar sinkron dengan foto profil yang bersifat fixed */}
       <div className="absolute left-[50vw] md:left-[75vw] top-[40vh] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
           <div className="relative w-[280px] h-[280px] md:w-[400px] md:h-[400px] flex items-center justify-center">
 
-            {/* --- NAMA BERPUTAR (SVG CIRCLE TEXT) --- */}
+            {/* --- NAMA BERPUTAR (UKURAN DIPERBAIKI UNTUK MOBILE) --- */}
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[260px] h-[260px] md:w-[385px] md:h-[385px] z-10 opacity-70"
+              className="absolute w-[245px] h-[245px] md:w-[385px] md:h-[385px] z-10 opacity-70"
               viewBox="0 0 100 100"
             >
               <defs>
@@ -69,29 +69,29 @@ export default function Hero() {
                   d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-              {/* font-size dikecilkan di mobile via CSS atau tetap proporsional karena viewBox 100 100 */}
-              <text fill="#bcff00" fontSize="4.2" fontWeight="bold" letterSpacing="2.5">
+              {/* FontSize disesuaikan agar pas dengan lingkar profil di mobile (4.5 -> 3.8) */}
+              <text fill="#bcff00" fontSize="3.8" md:fontSize="4.2" fontWeight="bold" letterSpacing="2.8">
                 <textPath xlinkHref="#circlePath">
                   • MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK
                 </textPath>
               </text>
             </motion.svg>
 
-            {/* Ring Putar Putus-putus */}
+            {/* Ring Putar Putus-putus (Dikecilkan sedikit di mobile agar tidak menabrak teks) */}
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[220px] h-[220px] md:w-[325px] md:h-[325px] border-[1px] border-dashed border-[#bcff00]/30 rounded-full"
+              className="absolute w-[210px] h-[210px] md:w-[325px] md:h-[325px] border-[1px] border-dashed border-[#bcff00]/30 rounded-full"
             />
 
             {/* Cahaya Pendar (Glow) */}
             <div className="absolute w-[180px] h-[180px] md:w-[280px] md:h-[280px] bg-[#bcff00]/10 rounded-full blur-[40px] md:blur-[70px]" />
 
-            {/* Label PHP & JS EXPERT */}
+            {/* Label PHP & JS EXPERT (Posisi dipaskan di mobile) */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[20%] md:top-[10%] -right-2 md:-right-8 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[8px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
+              className="absolute top-[22%] md:top-[10%] -right-0 md:-right-8 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[8px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
             >
               PHP & JS EXPERT
             </motion.div>
@@ -125,10 +125,12 @@ export default function Hero() {
             </p>
           </div>
 
+          {/* PERBAIKAN TOMBOL: MENGHAPUS CARD PUTIH DI BAWAH */}
           <a href="#work" className="inline-block">
-            <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95">
+            <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
-              <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 -z-0" />
+              {/* Layer hover putih dipastikan berada di dalam kontainer tombol yang overflow-hidden */}
+              <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
             </button>
           </a>
         </motion.div>
