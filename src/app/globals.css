@@ -6,19 +6,9 @@
   --accent: #bcff00;
 }
 
-/* Reset Global untuk menghilangkan celah antar section */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* Penambahan Smooth Scroll agar navigasi halus */
 html {
-  /* Catatan: Jika SmoothScroll library (seperti Lenis) aktif, 
-     scroll-behavior: smooth bawaan CSS sebaiknya dimatikan 
-     agar tidak terjadi konflik gerakan (stuttering). */
   scroll-behavior: smooth;
-  background-color: var(--background);
 }
 
 @theme {
@@ -30,10 +20,7 @@ body {
   color: var(--foreground);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* Memastikan tidak ada padding/margin yang mendorong konten */
-  min-height: 100vh;
-  position: relative;
+  -moz-osx-font-smoothing: grayscale; /* Tambahan untuk rendering font di Mac */
 }
 
 /* Background Neon Glow Glow - Tetap Stabil */
@@ -59,19 +46,6 @@ body::before {
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
 }
 
-/* Menghilangkan gap pada elemen image dan section */
-img {
-  display: block;
-  max-width: 100%;
-}
-
-section {
-  display: block;
-  position: relative;
-  /* Memastikan tidak ada margin bawah tidak sengaja */
-  margin-bottom: 0 !important;
-}
-
 /* Custom Utilities - Stroke Neon Tetap Stabil */
 .text-outline {
   -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
@@ -83,7 +57,7 @@ section {
 .group:hover .text-outline-neon {
   -webkit-text-stroke: 1.5px var(--accent) !important;
   filter: drop-shadow(0 0 10px var(--accent));
-  color: transparent;
+  color: transparent; /* Memastikan tetap transparan saat hover agar stroke terlihat */
 }
 
 /* Custom Scrollbar - Dibuat lebih modern dan minimalis */
@@ -102,5 +76,10 @@ section {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: var(--accent); /* Scrollbar berubah neon saat disentuh */
+}
+
+/* Mencegah pergeseran layout saat animasi muncul */
+* {
+  box-sizing: border-box;
 }
