@@ -3,8 +3,9 @@ import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <section id="about" className="relative min-h-screen flex items-center px-8 md:px-20 border-t border-white/5 bg-[#050505] overflow-hidden">
-      
+    <section 
+  id="about" 
+  className="relative py-20 md:py-32 px-8 md:px-20 bg-[#050505] overflow-hidden">       
       {/* --- LAYER 1: BACKGROUND GRID & AMBIENCE --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
         {/* Grid Background - Arah ke Atas (Inverted dari Hero) */}

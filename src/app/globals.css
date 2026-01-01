@@ -61,17 +61,26 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, figure {
 }
 
 /* Mengatur jarak standar antar section agar konsisten dan padat */
+/* globals.css */
+
+/* Reset Padding Global Section */
 section {
   position: relative;
   width: 100%;
-  padding-top: 5rem;    /* Sesuaikan jika masih terasa terlalu jauh */
-  padding-bottom: 5rem;
   box-sizing: border-box;
+  /* Hindari padding-top di sini agar tidak merusak Hero-to-About transition */
 }
 
-/* Khusus Hero Section agar menempel ke Navbar */
-#home {
-  padding-top: 0 !important;
+/* Pastikan tidak ada gap antar section karena background warna yang sama */
+#home, #about, #projects, #pricing, #contact {
+  margin: 0;
+  display: block;
+}
+
+/* Jika ingin jarak default untuk konten di dalam section */
+.section-container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 /* 4. UTILITIES */
