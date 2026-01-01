@@ -72,7 +72,7 @@ section {
 }
 
 /* Pastikan tidak ada gap antar section karena background warna yang sama */
-#home, #about, #projects, #pricing, #contact {
+#home,#hero, #about, #projects, #pricing, #contact {
   margin: 0;
   display: block;
 }
