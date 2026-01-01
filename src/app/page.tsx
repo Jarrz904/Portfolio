@@ -15,23 +15,30 @@ export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // FIX 1: Hapus target ref agar scroll terbaca secara global di Window
+  // Ambil progress scroll global
   const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     setIsMounted(true);
+    // Fix untuk memaksa browser refresh kalkulasi scroll
+    window.scrollTo(window.scrollX, window.scrollY + 1);
   }, []);
 
-  // FIX 2: Gunakan unit vw (viewport width) dan vh (viewport height)
-  // Ini memaksa elemen berada di 75% lebar layar dan 50% tinggi layar secara akurat
-  const xPos = useTransform(scrollYProgress, [0, 0.12, 1], ["75vw", "25vw", "25vw"]);
-  const yPos = useTransform(scrollYProgress, [0, 0.18, 0.23], ["50vh", "50vh", "-60vh"]);
+  // --- PERBAIKAN LOGIKA POSISI ---
+  // Kita gunakan angka mentah (0-100) agar useSpring bekerja mulus
+  const xRaw = useTransform(scrollYProgress, [0, 0.12, 1], [75, 25, 25]);
+  const yRaw = useTransform(scrollYProgress, [0, 0.18, 0.23], [50, 50, -60]);
   
   const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.85]);
 
-  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  // Spring hanya memproses angka mentah
+  const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
+  const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
+
+  // Gabungkan angka spring dengan unit vw/vh menggunakan useTransform lagi
+  const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
+  const finalY = useTransform(smoothYRaw, (val) => `${val}vh`);
 
   if (!isMounted) {
     return <div className="bg-[#050505] min-h-screen" />;
@@ -44,12 +51,10 @@ export default function Home() {
       
       {/* FOTO PROFIL LAYER */}
       <motion.div
-        // FIX 3: Tambahkan initial untuk mencegah loncatan saat page load
-        initial={{ left: "75vw", top: "50vh" }}
         style={{ 
           position: "fixed",
-          left: smoothX, 
-          top: smoothY, 
+          left: finalX, // Menggunakan nilai yang sudah digabung unitnya
+          top: finalY, 
           opacity,
           scale,
           x: "-50%", 
@@ -60,8 +65,10 @@ export default function Home() {
         className="hidden md:block"
       >
         <div className="relative flex items-center justify-center">
+          {/* Glow Background */}
           <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
           
+          {/* Frame Foto Profil */}
           <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)]">
             <img 
               src="/foto-profil.jpg" 
