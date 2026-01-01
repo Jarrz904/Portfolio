@@ -6,103 +6,43 @@
   --accent: #bcff00;
 }
 
-/* Penambahan Reset & Smooth Scroll agar tidak ada jarak liar */
 html {
   scroll-behavior: smooth;
-  margin: 0;
-  padding: 0;
-  /* Mencegah bouncing di iOS yang bikin keliatan renggang */
-  overscroll-behavior-y: none; 
-}
-
-@theme {
-  --color-accent: var(--accent);
+  margin: 0; padding: 0;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
-  margin: 0; /* WAJIB: Menghapus margin bawaan browser */
-  padding: 0;
+  margin: 0; padding: 0;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* Memastikan tinggi body benar-benar rapat */
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Background Neon Glow Glow - Tetap Stabil */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: 
-    radial-gradient(circle at 15% 15%, rgba(188, 255, 0, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(188, 255, 0, 0.08) 0%, transparent 40%);
-  pointer-events: none;
-}
-
-/* Efek Tekstur Kasar (Noise) - Dipastikan menutupi seluruh layar */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 9999;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-}
-
-/* Custom Utilities - Stroke Neon Tetap Stabil */
-.text-outline {
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
-  color: transparent;
-  transition: all 0.5s ease;
-}
-
-/* Class khusus untuk efek hover pada Contact/Pricing agar lebih 'Glow' */
-.group:hover .text-outline-neon {
-  -webkit-text-stroke: 1.5px var(--accent) !important;
-  filter: drop-shadow(0 0 10px var(--accent));
-  color: transparent;
-}
-
-/* Custom Scrollbar - Dibuat lebih modern dan minimalis */
-::-webkit-scrollbar { 
-  width: 5px; 
-}
-
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-
-::-webkit-scrollbar-thumb { 
-  background: #222; 
-  border-radius: 10px; 
-  transition: background 0.3s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
-}
-
-/* Perbaikan Penting: Menghapus margin default pada heading dan paragraf */
-/* Ini seringkali penyebab utama "renggang" antar section */
+/* Reset Spacing Global untuk merapatkan landing page */
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
-  padding: 0;
 }
 
-/* Mencegah pergeseran layout saat animasi muncul */
-* {
-  box-sizing: border-box;
-}
-
-/* Menghapus gap pada semua section pembungkus di Next.js */
 section {
-  display: block;
-  position: relative;
+  padding-top: 4rem; /* Jarak standar antar section */
+  padding-bottom: 4rem;
+}
+
+#home {
+  padding-top: 0 !important; /* Hero tidak butuh padding top tambahan */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* Noise Effect */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  opacity: 0.03; z-index: 9999; pointer-events: none;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
 }
