@@ -18,53 +18,75 @@ export default function Home() {
     setIsMounted(true);
   }, []);
 
-  // POSISI X: 75% adalah posisi ideal untuk area kanan Hero
-  const xPos = useTransform(scrollYProgress, [0, 0.12, 1], ["75%", "25%", "25%"]);
-  // POSISI Y: 50% adalah tepat di tengah layar secara vertikal
-  const yPos = useTransform(scrollYProgress, [0, 0.18, 0.23], ["50%", "50%", "-60%"]);
-  
-  const opacity = useTransform(scrollYProgress, [0, 0.18, 0.21], [1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.8]);
+  /**
+   * 1. POSISI X (HORIZONTAL)
+   * Tetap di 25vw agar pas di tengah kolom kiri About.
+   */
+  const xPos = useTransform(
+    scrollYProgress,
+    [0, 0.12, 1],
+    ["75vw", "25vw", "25vw"] 
+  );
 
-  const smoothX = useSpring(xPos, { stiffness: 100, damping: 30 });
-  const smoothY = useSpring(yPos, { stiffness: 100, damping: 30 });
+  /**
+   * 2. POSISI Y (VERTICAL)
+   * Bergerak keluar layar ke atas saat scroll masuk ke Projects.
+   */
+  const yPos = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.23], 
+    ["50vh", "50vh", "-60vh"]
+  );
 
-  if (!isMounted) return <div className="bg-[#050505] min-h-screen" />;
+  /**
+   * 3. OPACITY (TRANSPARANSI)
+   */
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.21],
+    [1, 1, 0]
+  );
+
+  const smoothX = useSpring(xPos, { stiffness: 120, damping: 30 });
+  const smoothY = useSpring(yPos, { stiffness: 120, damping: 30 });
+
+  if (!isMounted) return null;
 
   return (
-    <main className="relative bg-[#050505] min-h-screen overflow-x-hidden">
+    <main className="relative bg-[#050505] min-h-screen">
       <Navbar />
       <Scene />
       
-      {/* FOTO PROFIL LAYER - INI YANG HARUS PAS DI TENGAH */}
+      {/* FOTO PROFIL LAYER - BIGGER VERSION */}
       <motion.div
         style={{ 
-          position: "fixed",
           left: smoothX, 
           top: smoothY, 
           opacity,
-          scale,
           x: "-50%", 
           y: "-50%",
           pointerEvents: "none" 
         }}
-        className="z-[40] hidden md:block"
+        className="fixed z-[40] hidden md:block"
       >
         <div className="relative flex items-center justify-center">
-          {/* Cahaya Pendar Hijau Neon */}
-          <div className="absolute w-[300px] h-[300px] bg-[#bcff00] rounded-full blur-[80px] opacity-20" />
           
-          {/* Frame Foto (w-72 md) */}
-          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)]">
+          {/* GLOW BACKGROUND - Ukuran ditambah mengikuti besarnya foto */}
+          <div className="absolute w-[280px] h-[280px] bg-[#bcff00] rounded-full blur-[70px] opacity-20" />
+          
+          {/* FRAME FOTO PROFIL - Ukuran ditingkatkan ke w-72 (288px) */}
+          <div className="relative w-64 h-64 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.3)] z-20">
             <img 
-              src={fotoProfile} 
-              alt="Profile" 
-              className="w-full h-full object-cover rounded-full" 
+              src={fotoProfile}
+              alt="Avatar"
+              className="w-full h-full object-cover rounded-full"
             />
           </div>
+
         </div>
       </motion.div>
 
+      {/* SECTIONS CONTENT */}
       <div className="relative z-10">
         <Hero />
         <About />
