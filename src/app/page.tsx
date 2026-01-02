@@ -38,8 +38,8 @@ export default function Home() {
   // --- LOGIKA POSISI (SINKRONISASI HERO & ABOUT) ---
 
   // Horizontal Position (X): 
-  // Mobile: Tetap di tengah (50vw)
-  // Desktop: Start di kanan (75vw), bergerak ke kiri (25vw) untuk section About
+  // Mobile: Tetap di tengah (50vw) untuk sinkron dengan layout flex-col Hero
+  // Desktop: Start di 75vw (Sisi kanan Hero), bergerak ke 25vw (Sisi kiri About)
   const xRaw = useTransform(
     scrollYProgress,
     [0, 0.2],
@@ -47,22 +47,22 @@ export default function Home() {
   );
 
   // Vertical Position (Y):
-  // Mobile: Tetap di 340px (Hero) lalu naik ke atas saat scroll
-  // Desktop: Start di 45vh (Hero) lalu bergerak naik
+  // Mobile: Start di 320px (Tengah dekorasi Hero mobile) lalu naik
+  // Desktop: Start di 50vh (Tengah dekorasi Hero desktop) lalu naik
   const yRaw = useTransform(
     scrollYProgress,
     isMobile ? [0, 0.2, 0.4] : [0, 0.25, 0.45],
-    isMobile ? [340, 340, -150] : [45, 45, -20]
+    isMobile ? [320, 320, -100] : [50, 50, -20]
   );
 
-  // Opacity: Profil menghilang perlahan saat masuk ke konten dalam About
+  // Opacity: Profil menghilang perlahan saat scroll ke arah About
   const opacity = useTransform(
     scrollYProgress,
     isMobile ? [0, 0.25, 0.35] : [0, 0.3, 0.45],
     [1, 1, 0]
   );
 
-  // Scale: Mengecil halus agar transisi elegan
+  // Scale: Menyesuaikan ukuran agar pas di dalam ring dekorasi
   const scale = useTransform(
     scrollYProgress,
     [0, 0.2],
@@ -70,8 +70,8 @@ export default function Home() {
   );
 
   // Spring untuk gerakan yang organic dan tidak kaku
-  const smoothXRaw = useSpring(xRaw, { stiffness: 80, damping: 25 });
-  const smoothYRaw = useSpring(yRaw, { stiffness: 80, damping: 25 });
+  const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
+  const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
 
   // Konversi nilai ke unit CSS yang sesuai
   const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
@@ -111,9 +111,9 @@ export default function Home() {
           <div className="absolute w-[180px] h-[180px] md:w-[320px] md:h-[320px] bg-[#bcff00] rounded-full blur-[40px] md:blur-[80px] opacity-20" />
           
           {/* Frame Foto Profil */}
-          <div className="relative w-44 h-44 md:w-72 md:h-72 rounded-full border-[3px] md:border-4 border-[#bcff00] p-1.5 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.25)]">
+          <div className="relative w-40 h-40 md:w-72 md:h-72 rounded-full border-[3px] md:border-4 border-[#bcff00] p-1.5 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.25)]">
             <img
-              src="/foto-profil.jpg" // Pastikan file ini ada di folder public
+              src="/foto-profil.jpg" 
               alt="Muhammad Fajar Sidik"
               className="w-full h-full object-cover rounded-full transition-transform duration-700 hover:scale-110"
             />
@@ -123,14 +123,11 @@ export default function Home() {
 
       {/* --- KONTEN HALAMAN --- */}
       <div className="relative z-10 flex flex-col">
-        {/* Section Hero - Tempat awal profil berada */}
+        {/* Section Hero */}
         <Hero />
 
-        {/* Wrapper Section Lainnya: 
-          -mt-10 (Mobile) dan -mt-24 (Desktop) untuk merapatkan gap antar section 
-          agar tidak terlihat renggang hitam kosong.
-        */}
-        <div className="relative z-20 bg-[#050505] -mt-10 md:-mt-24">
+        {/* Wrapper Section Lainnya */}
+        <div className="relative z-20 bg-[#050505] -mt-16 md:-mt-24">
           <About />
           <Projects />
           <Pricing />
@@ -138,10 +135,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer / Copyright Sederhana (Opsional) */}
+      {/* Footer / Copyright */}
       <footer className="relative z-30 bg-[#050505] py-10 border-t border-white/5 text-center">
         <p className="text-white/20 text-[10px] uppercase tracking-[0.5em]">
-          &copy; 2024 Muhammad Fajar Sidik. All Rights Reserved.
+          &copy; 2026 Muhammad Fajar Sidik. All Rights Reserved.
         </p>
       </footer>
     </main>
