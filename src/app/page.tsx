@@ -37,43 +37,48 @@ export default function Home() {
 
   // --- LOGIKA POSISI (SINKRONISASI HERO & ABOUT) ---
 
-  // Horizontal Position (X): 
-  // Mobile: Tetap di tengah (50vw) untuk sinkron dengan layout flex-col Hero
-  // Desktop: Start di 75vw (Sisi kanan Hero), bergerak ke 25vw (Sisi kiri About)
+  /** * Horizontal Position (X): 
+   * Mobile: Tetap di 50vw (tengah) karena Hero Mobile menggunakan layout flex-col center.
+   * Desktop: Start di 75vw (sesuai posisi kolom kanan Hero Desktop), bergerak ke 25vw di About.
+   */
   const xRaw = useTransform(
     scrollYProgress,
     [0, 0.2],
     isMobile ? [50, 50] : [75, 25]
   );
 
-  // Vertical Position (Y):
-  // Mobile: Start di 320px (Tengah dekorasi Hero mobile) lalu naik
-  // Desktop: Start di 50vh (Tengah dekorasi Hero desktop) lalu naik
+  /** * Vertical Position (Y):
+   * Mobile: Start di 320px (menyesuaikan top-[320px] pada dekorasi Hero mobile).
+   * Desktop: Start di 50vh (menyesuaikan top-[50vh] atau center pada Hero desktop).
+   */
   const yRaw = useTransform(
     scrollYProgress,
     isMobile ? [0, 0.2, 0.4] : [0, 0.25, 0.45],
     isMobile ? [320, 320, -100] : [50, 50, -20]
   );
 
-  // Opacity: Profil menghilang perlahan saat scroll ke arah About
+  // Opacity: Profil tetap solid di Hero, lalu menghilang saat melewati section About
   const opacity = useTransform(
     scrollYProgress,
     isMobile ? [0, 0.25, 0.35] : [0, 0.3, 0.45],
     [1, 1, 0]
   );
 
-  // Scale: Menyesuaikan ukuran agar pas di dalam ring dekorasi
+  /** * Scale:
+   * Mobile: Dikecilkan ke 0.65 agar pas di dalam ring dekorasi mobile yang lebih sempit.
+   * Desktop: Ukuran penuh (1) agar pas dengan ring 450px di desktop.
+   */
   const scale = useTransform(
     scrollYProgress,
     [0, 0.2],
     isMobile ? [0.65, 0.45] : [1, 0.8]
   );
 
-  // Spring untuk gerakan yang organic dan tidak kaku
+  // Spring untuk gerakan yang halus (damping ditingkatkan agar tidak terlalu goyang/bounce)
   const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
   const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
 
-  // Konversi nilai ke unit CSS yang sesuai
+  // Konversi nilai ke unit CSS
   const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
   const finalY = useTransform(smoothYRaw, (val) => {
     if (isMobile) return `${val}px`;
@@ -107,10 +112,10 @@ export default function Home() {
         }}
       >
         <div className="relative flex items-center justify-center">
-          {/* Efek Cahaya di belakang foto */}
+          {/* Efek Cahaya Glow di belakang foto */}
           <div className="absolute w-[180px] h-[180px] md:w-[320px] md:h-[320px] bg-[#bcff00] rounded-full blur-[40px] md:blur-[80px] opacity-20" />
           
-          {/* Frame Foto Profil */}
+          {/* Frame Foto Profil - Ukuran disesuaikan agar presisi dalam ring Muhammad Fajar Sidik */}
           <div className="relative w-40 h-40 md:w-72 md:h-72 rounded-full border-[3px] md:border-4 border-[#bcff00] p-1.5 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.25)]">
             <img
               src="/foto-profil.jpg" 
@@ -123,7 +128,7 @@ export default function Home() {
 
       {/* --- KONTEN HALAMAN --- */}
       <div className="relative z-10 flex flex-col">
-        {/* Section Hero */}
+        {/* Section Hero - Titik awal profil berada */}
         <Hero />
 
         {/* Wrapper Section Lainnya */}
@@ -135,7 +140,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer / Copyright */}
+      {/* Footer */}
       <footer className="relative z-30 bg-[#050505] py-10 border-t border-white/5 text-center">
         <p className="text-white/20 text-[10px] uppercase tracking-[0.5em]">
           &copy; 2026 Muhammad Fajar Sidik. All Rights Reserved.
