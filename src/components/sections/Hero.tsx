@@ -51,44 +51,45 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: DEKORASI NEON --- */}
-      {/* Sinkronisasi posisi dengan Logic di page.tsx */}
-      <div className="absolute left-[50vw] md:left-[72vw] top-[340px] md:top-[45vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+      {/* PERBAIKAN: Menyesuaikan top agar sinkron dengan koordinat logic di page.tsx */}
+      <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
-          <div className="relative w-[210px] h-[210px] md:w-[320px] md:h-[320px] flex items-center justify-center">
+          <div className="relative w-[280px] h-[280px] md:w-[450px] md:h-[450px] flex items-center justify-center">
 
-            {/* --- NAMA BERPUTAR (UKURAN DIPERKETAT) --- */}
+            {/* --- NAMA BERPUTAR --- */}
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[205px] h-[205px] md:w-[315px] md:h-[315px] z-10 opacity-90"
+              className="absolute w-[260px] h-[260px] md:w-[420px] md:h-[420px] z-10 opacity-70"
               viewBox="0 0 100 100"
             >
               <defs>
                 <path
                   id="circlePath"
-                  d="M 50, 50 m -43.5, 0 a 43.5,43.5 0 1,1 87,0 a 43.5,43.5 0 1,1 -87,0"
+                  d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-              <text fill="#bcff00" fontSize="3.8" fontWeight="bold" letterSpacing="1.2">
-                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}</textPath>
+              <text fill="#bcff00" fontSize="4.1" fontWeight="bold" letterSpacing="2.8">
+                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
+                </textPath>
               </text>
             </motion.svg>
 
-            {/* Ring Putar Putus-putus (Sangat rapat dengan border foto) */}
+            {/* Ring Putar Putus-putus */}
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[168px] h-[168px] md:w-[298px] md:h-[298px] border-[1.5px] border-[#bcff00]/40 rounded-full"
+              className="absolute w-[220px] h-[220px] md:w-[360px] md:h-[360px] border-[1.5px] border-dashed border-[#bcff00]/30 rounded-full"
             />
 
             {/* Cahaya Pendar (Glow) */}
-            <div className="absolute w-[150px] h-[150px] md:w-[280px] md:h-[280px] bg-[#bcff00]/15 rounded-full blur-[30px] md:blur-[60px]" />
+            <div className="absolute w-[180px] h-[180px] md:w-[300px] md:h-[300px] bg-[#bcff00]/10 rounded-full blur-[40px] md:blur-[80px]" />
 
             {/* Label PHP & JS EXPERT */}
             <motion.div
-              animate={{ y: [0, -5, 0] }}
+              animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[8%] -right-1 md:-right-6 px-2.5 py-0.5 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
+              className="absolute top-[20%] md:top-[15%] -right-2 md:-right-10 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
             >
               PHP & JS EXPERT
             </motion.div>
@@ -96,8 +97,8 @@ export default function Hero() {
         )}
       </div>
 
-      {/* --- LAYER 3: KONTEN TEKS (DIKECILKAN SEDIKIT AGAR TIDAK NABRAK) --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-20 md:pb-32">
+      {/* --- LAYER 3: KONTEN TEKS --- */}
+     <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-20 md:pb-32">
         <motion.div
           className="max-w-2xl md:max-w-3xl text-left"
           initial={{ opacity: 0, y: 30 }}
@@ -135,7 +136,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK --- */}
+      {/* --- LAYER 4: MARQUEE TECH STACK (SEBAGAI PENUTUP BAWAH) --- */}
       <div className="relative w-full py-6 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
@@ -144,10 +145,10 @@ export default function Hero() {
         >
           {[...techStack, ...techStack].map((tech, i) => (
             <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
-              <img 
-                src={tech.logo} 
-                alt={tech.name} 
-                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110" 
+              <img
+                src={tech.logo}
+                alt={tech.name}
+                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110"
               />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
