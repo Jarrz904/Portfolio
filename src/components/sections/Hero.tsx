@@ -36,7 +36,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-32 md:pt-48 pb-0">
+    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-24 md:pt-48 pb-0 min-h-screen">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -50,17 +50,16 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: DEKORASI NEON --- */}
-      {/* PERBAIKAN: Menyesuaikan top agar sinkron dengan koordinat logic di page.tsx */}
+      {/* --- LAYER 2: DEKORASI NEON (FRAME UNTUK PROFIL) --- */}
       <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
         {mounted && (
-          <div className="relative w-[280px] h-[280px] md:w-[450px] md:h-[450px] flex items-center justify-center">
+          <div className="relative w-[220px] h-[220px] md:w-[450px] md:h-[450px] flex items-center justify-center">
 
-            {/* --- NAMA BERPUTAR --- */}
+            {/* Nama Berputar - Ukuran Mobile Minimized */}
             <motion.svg
               animate={{ rotate: 360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[260px] h-[260px] md:w-[420px] md:h-[420px] z-10 opacity-70"
+              className="absolute w-[200px] h-[200px] md:w-[420px] md:h-[420px] z-10 opacity-60 md:opacity-70"
               viewBox="0 0 100 100"
             >
               <defs>
@@ -69,8 +68,9 @@ export default function Hero() {
                   d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
                 />
               </defs>
-               <text fill="#bcff00" fontSize="4.1" fontWeight="bold" letterSpacing="2.8">
-                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
+              <text fill="#bcff00" fontSize="4" fontWeight="bold" letterSpacing="2.5">
+                <textPath xlinkHref="#circlePath">
+                  MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
                 </textPath>
               </text>
             </motion.svg>
@@ -79,17 +79,17 @@ export default function Hero() {
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[220px] h-[220px] md:w-[360px] md:h-[360px] border-[1.5px] border-dashed border-[#bcff00]/30 rounded-full"
+              className="absolute w-[160px] h-[160px] md:w-[360px] md:h-[360px] border-[1px] md:border-[1.5px] border-dashed border-[#bcff00]/20 md:border-[#bcff00]/30 rounded-full"
             />
 
             {/* Cahaya Pendar (Glow) */}
-            <div className="absolute w-[180px] h-[180px] md:w-[300px] md:h-[300px] bg-[#bcff00]/10 rounded-full blur-[40px] md:blur-[80px]" />
+            <div className="absolute w-[140px] h-[140px] md:w-[300px] md:h-[300px] bg-[#bcff00]/10 rounded-full blur-[30px] md:blur-[80px]" />
 
-            {/* Label PHP & JS EXPERT */}
+            {/* Label PHP & JS EXPERT - Ukuran Mobile Minimized */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
+              animate={{ y: [0, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[20%] md:top-[15%] -right-2 md:-right-10 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
+              className="absolute top-[15%] -right-2 md:-right-10 px-2 md:px-3 py-0.5 md:py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_10px_rgba(188,255,0,0.4)]"
             >
               PHP & JS EXPERT
             </motion.div>
@@ -98,37 +98,39 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 3: KONTEN TEKS --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-20 md:pb-32">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-16 md:pb-32">
         <motion.div
           className="max-w-4xl text-left"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           {/* Badge System Online */}
           <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-6 md:mb-10 bg-[#bcff00]/5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
-            <span className="text-[8px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
+            <span className="text-[7px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
 
-          {/* Judul Utama */}
-          <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-white">
-            New Tech
-          </h1>
-          <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-10 md:mb-14">
-            Solution
-          </h1>
+          {/* Judul Utama - Optimized for Mobile Viewport */}
+          <div className="space-y-0">
+            <h1 className="text-[12vw] md:text-[8.5vw] font-black uppercase leading-[0.9] md:leading-[0.8] tracking-tighter text-white">
+              New Tech
+            </h1>
+            <h1 className="text-[12vw] md:text-[8.5vw] font-black uppercase leading-[0.9] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_15px_rgba(188,255,0,0.2)]">
+              Solution
+            </h1>
+          </div>
 
-          {/* Slogan */}
-          <div className="max-w-[260px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-4 mb-10 md:mb-14 text-left">
-            <p className="text-white/40 text-xs md:text-xl leading-relaxed italic">
+          {/* Slogan - Ukuran Mobile Minimized */}
+          <div className="max-w-[240px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-6 md:mt-8 mb-8 md:mb-14 text-left">
+            <p className="text-white/50 text-[10px] md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
           </div>
 
           {/* Tombol CTA */}
-          <a href="#projects" className="inline-block">
-            <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
+          <a href="#projects" className="inline-block relative z-30">
+            <button className="group relative px-6 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[9px] md:text-[11px] tracking-[0.2em] md:tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
             </button>
@@ -136,24 +138,24 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK (SEBAGAI PENUTUP BAWAH) --- */}
-      <div className="relative w-full py-6 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
+      {/* --- LAYER 4: MARQUEE TECH STACK (PENUTUP BAWAH) --- */}
+      <div className="relative w-full py-4 md:py-8 bg-black/40 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+          className="flex whitespace-nowrap gap-10 md:gap-20 items-center"
         >
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-30 hover:opacity-100 transition-all duration-500 cursor-default">
               <img 
                 src={tech.logo} 
                 alt={tech.name} 
-                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110" 
+                className="w-3.5 h-3.5 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500" 
               />
-              <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
+              <span className="text-white text-[7px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
               </span>
-              <div className="w-1 h-1 bg-[#bcff00] rounded-full group-hover:shadow-[0_0_8px_#bcff00] transition-all" />
+              <div className="w-1 h-1 bg-[#bcff00] rounded-full opacity-50" />
             </div>
           ))}
         </motion.div>
