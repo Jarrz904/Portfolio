@@ -16,63 +16,98 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Ambil progress scroll global
   const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     setIsMounted(true);
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+
+    // Deteksi apakah user menggunakan Mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
     checkMobile();
     window.addEventListener("resize", checkMobile);
+
+    // Fix untuk memaksa browser refresh kalkulasi scroll
+    window.scrollTo(window.scrollX, window.scrollY + 1);
+
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // --- LOGIKA POSISI ---
-  
-  // Horizontal (X): Tetap di tengah (50) untuk mobile
-  const xRaw = useTransform(scrollYProgress, [0, 0.2], isMobile ? [50, 50] : [75, 25]);
 
-  // Vertical (Y): Mobile mulai dari 340px sesuai desain Hero
-  const yRaw = useTransform(
+  // Horizontal Position (X): Tetap di tengah (50) untuk mobile, kanan ke kiri untuk desktop
+  const xRaw = useTransform(
     scrollYProgress,
-    isMobile ? [0, 0.2, 0.3] : [0, 0.3, 0.4],
-    isMobile ? [340, 300, 100] : [50, 50, 20]
+    [0, 0.15],
+    isMobile ? [50, 50] : [75, 25]
   );
 
-  // Opacity: Menghilang total saat masuk section About (0.2 scroll progress)
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.2], [1, 1, 0]);
+  // Vertical Position (Y)
+  // DISESUAIKAN: Start di 340px (Mobile) agar sinkron dengan dekorasi Hero
+  const yRaw = useTransform(
+    scrollYProgress,
+    isMobile ? [0, 0.2, 0.35] : [0, 0.3, 0.45],
+    isMobile ? [340, 340, -100] : [50, 50, -60]
+  );
 
-  // Scale: Mengecil halus agar transisi tidak kasar
-  const scale = useTransform(scrollYProgress, [0, 0.2], isMobile ? [0.65, 0.4] : [1, 0.7]);
+  // Opacity: Menghilang total sebelum masuk ke section About
+  const opacity = useTransform(
+    scrollYProgress,
+    isMobile ? [0, 0.15, 0.22] : [0, 0.18, 0.25],
+    [1, 1, 0]
+  );
 
-  const smoothX = useSpring(xRaw, { stiffness: 100, damping: 30 });
-  const smoothY = useSpring(yRaw, { stiffness: 100, damping: 30 });
+  // Scale: Mengecil halus agar transisi elegan
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.2],
+    isMobile ? [0.6, 0.4] : [1, 0.8]
+  );
 
-  if (!isMounted) return <div className="bg-[#050505] min-h-screen" />;
+  // Spring untuk kelembutan gerakan
+  const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
+  const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
+
+  // Konversi ke unit CSS
+  const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
+  const finalY = useTransform(smoothYRaw, (val) => {
+    if (isMobile) return `${val}px`;
+    return `${val}vh`;
+  });
+
+  if (!isMounted) {
+    return <div className="bg-[#050505] min-h-screen" />;
+  }
 
   return (
     <main ref={containerRef} className="relative bg-[#050505] min-h-screen overflow-x-hidden">
       <Navbar />
       <Scene />
 
-      {/* SATU-SATUNYA LAYER PROFIL (FIXED) */}
+      {/* --- SATU-SATUNYA LAYER PROFIL (Fixed) --- */}
+      {/* Komponen ini akan terlihat seolah berada di dalam Hero karena posisinya kita samakan */}
       <motion.div
         style={{
           position: "fixed",
-          left: useTransform(smoothX, (v) => `${v}vw`),
-          top: useTransform(smoothY, (v) => isMobile ? `${v}px` : `${v}vh`),
+          left: finalX,
+          top: finalY,
           opacity,
           scale,
           x: "-50%",
           y: "-50%",
           pointerEvents: "none",
-          zIndex: 40, 
+          zIndex: 99,
           willChange: "transform, opacity"
         }}
       >
         <div className="relative flex items-center justify-center">
-          {/* Efek Cahaya Belakang */}
+          {/* Glow Effect */}
           <div className="absolute w-[180px] h-[180px] md:w-[300px] md:h-[300px] bg-[#bcff00] rounded-full blur-[50px] md:blur-[80px] opacity-20" />
           
+          {/* Foto Profil Frame */}
           <div className="relative w-40 h-40 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-1.5 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_40px_rgba(188,255,0,0.3)]">
             <img
               src="/foto-profil.jpg"
@@ -83,9 +118,13 @@ export default function Home() {
         </div>
       </motion.div>
 
+      {/* Konten Utama */}
       <div className="relative z-10 flex flex-col">
+        {/* Pastikan di dalam komponen Hero, tag <img> profil SUDAH DIHAPUS */}
         <Hero />
-        <div className="relative z-50 bg-[#050505]">
+
+        {/* Wrapper Section Lainnya */}
+        <div className="relative z-20 bg-[#050505]">
           <About />
           <Projects />
           <Pricing />
