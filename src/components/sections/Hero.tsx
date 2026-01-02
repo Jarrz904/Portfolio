@@ -36,7 +36,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col min-h-screen">
+    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-32 md:pt-48 pb-0">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -50,114 +50,110 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2 & 3: WRAPPER KONTEN UTAMA --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between flex-grow pt-20 pb-12 md:pt-0 md:pb-0 gap-10 md:gap-12">
-        
-        {/* SISI KIRI: TEKS */}
+      {/* --- LAYER 2: DEKORASI NEON --- */}
+      {/* PERBAIKAN: Menyesuaikan top agar sinkron dengan koordinat logic di page.tsx */}
+      <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+        {mounted && (
+          <div className="relative w-[280px] h-[280px] md:w-[450px] md:h-[450px] flex items-center justify-center">
+
+            {/* --- NAMA BERPUTAR --- */}
+            <motion.svg
+              animate={{ rotate: 360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute w-[260px] h-[260px] md:w-[420px] md:h-[420px] z-10 opacity-70"
+              viewBox="0 0 100 100"
+            >
+              <defs>
+                <path
+                  id="circlePath"
+                  d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
+                />
+              </defs>
+               <text fill="#bcff00" fontSize="4.1" fontWeight="bold" letterSpacing="2.8">
+                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
+                </textPath>
+              </text>
+            </motion.svg>
+
+            {/* Ring Putar Putus-putus */}
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="absolute w-[220px] h-[220px] md:w-[360px] md:h-[360px] border-[1.5px] border-dashed border-[#bcff00]/30 rounded-full"
+            />
+
+            {/* Cahaya Pendar (Glow) */}
+            <div className="absolute w-[180px] h-[180px] md:w-[300px] md:h-[300px] bg-[#bcff00]/10 rounded-full blur-[40px] md:blur-[80px]" />
+
+            {/* Label PHP & JS EXPERT */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-[20%] md:top-[15%] -right-2 md:-right-10 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
+            >
+              PHP & JS EXPERT
+            </motion.div>
+          </div>
+        )}
+      </div>
+
+      {/* --- LAYER 3: KONTEN TEKS --- */}
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-20 md:pb-32">
         <motion.div
-          className="w-full md:w-1/2 text-left"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="max-w-4xl text-left"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
         >
           {/* Badge System Online */}
           <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-6 md:mb-10 bg-[#bcff00]/5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
-            <span className="text-[7px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
+            <span className="text-[8px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
 
           {/* Judul Utama */}
-          <div className="space-y-0">
-            <h1 className="text-[12vw] md:text-[8.5vw] font-black uppercase leading-[0.9] md:leading-[0.8] tracking-tighter text-white">
-              New Tech
-            </h1>
-            <h1 className="text-[12vw] md:text-[8.5vw] font-black uppercase leading-[0.9] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_15px_rgba(188,255,0,0.2)]">
-              Solution
-            </h1>
-          </div>
+          <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-white">
+            New Tech
+          </h1>
+          <h1 className="text-[13vw] md:text-[8.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-10 md:mb-14">
+            Solution
+          </h1>
 
           {/* Slogan */}
-          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-6 md:mt-8 mb-8 md:mb-14 text-left">
-            <p className="text-white/50 text-[10px] md:text-xl leading-relaxed italic">
+          <div className="max-w-[260px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-4 mb-10 md:mb-14 text-left">
+            <p className="text-white/40 text-xs md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
           </div>
 
           {/* Tombol CTA */}
-          <a href="#projects" className="inline-block relative z-30">
-            <button className="group relative px-6 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[9px] md:text-[11px] tracking-[0.2em] md:tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
+          <a href="#projects" className="inline-block">
+            <button className="group relative px-8 md:px-10 py-3 md:py-4 bg-[#bcff00] text-black font-black uppercase text-[10px] md:text-[11px] tracking-[0.3em] transition-all hover:shadow-[0_0_30px_#bcff00] active:scale-95 overflow-hidden">
               <span className="relative z-10">Hasil Project</span>
               <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
             </button>
           </a>
         </motion.div>
-
-        {/* SISI KANAN: AREA DEKORASI */}
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end items-center relative">
-          {mounted && (
-            <div className="relative w-[180px] h-[180px] md:w-[320px] md:h-[320px] flex items-center justify-center">
-
-              {/* Nama Berputar - Radius disesuaikan agar rapat mengelilingi profil */}
-              <motion.svg
-                animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[185px] h-[185px] md:w-[330px] md:h-[330px] z-10 opacity-90"
-                viewBox="0 0 100 100"
-              >
-                <defs>
-                  <path
-                    id="circlePath"
-                    d="M 50, 50 m -43, 0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0"
-                  />
-                </defs>
-                <text fill="#bcff00" fontSize="3.6" fontWeight="bold" letterSpacing="1.8">
-                  <textPath xlinkHref="#circlePath">
-                    MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
-                  </textPath>
-                </text>
-              </motion.svg>
-
-              {/* Ring Putar Putus-putus */}
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[165px] h-[165px] md:w-[295px] md:h-[295px] border-[1px] border-[#bcff00]/40 rounded-full"
-              />
-
-              {/* Cahaya Glow */}
-              <div className="absolute w-[150px] h-[150px] md:w-[280px] md:h-[280px] bg-[#bcff00]/15 rounded-full blur-[30px] md:blur-[60px]" />
-
-              {/* Floating Label */}
-              <motion.div
-                animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[5%] -right-2 md:-right-6 px-2 md:px-3 py-0.5 md:py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
-              >
-                PHP & JS EXPERT
-              </motion.div>
-            </div>
-          )}
-        </div>
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK --- */}
-      <div className="relative w-full py-4 md:py-6 bg-black/40 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
+      {/* --- LAYER 4: MARQUEE TECH STACK (SEBAGAI PENUTUP BAWAH) --- */}
+      <div className="relative w-full py-6 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-          className="flex whitespace-nowrap gap-10 md:gap-20 items-center"
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+          className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
         >
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-30 hover:opacity-100 transition-all duration-500 cursor-default">
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
               <img 
                 src={tech.logo} 
                 alt={tech.name} 
-                className="w-3.5 h-3.5 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500" 
+                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 group-hover:invert-0 group-hover:brightness-100 transition-all duration-500 scale-100 group-hover:scale-110" 
               />
-              <span className="text-white text-[7px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
+              <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
               </span>
-              <div className="w-1 h-1 bg-[#bcff00] rounded-full opacity-50" />
+              <div className="w-1 h-1 bg-[#bcff00] rounded-full group-hover:shadow-[0_0_8px_#bcff00] transition-all" />
             </div>
           ))}
         </motion.div>
