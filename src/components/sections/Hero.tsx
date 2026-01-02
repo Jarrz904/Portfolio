@@ -70,7 +70,7 @@ export default function Hero() {
                 />
               </defs>
               <text fill="#bcff00" fontSize="4.1" fontWeight="bold" letterSpacing="2.8">
-                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •
+                <textPath xlinkHref="#circlePath">MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •
                 </textPath>
               </text>
             </motion.svg>
@@ -116,7 +116,7 @@ export default function Hero() {
             New Tech
           </h1>
           <h1 className="text-[11vw] md:text-[7.5vw] font-black uppercase leading-[0.85] md:leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-8 md:mb-12">
-            Solution
+            Solution99
           </h1>
 
           {/* Slogan (Max-width dipersempit) */}
