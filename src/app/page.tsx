@@ -29,57 +29,59 @@ export default function Home() {
     checkMobile();
     window.addEventListener("resize", checkMobile);
 
-    // Refresh scroll position
+    // Memastikan posisi scroll kembali ke atas saat refresh
     window.scrollTo(0, 0);
 
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // --- LOGIKA POSISI SINKRON DENGAN FLEXBOX HERO ---
+  // --- LOGIKA POSISI SINKRON DENGAN HERO ---
 
   // Horizontal Position (X)
-  // Mobile: 50vw (Tengah layar karena flex-col)
-  // Desktop: 75vw (Area kolom kanan Hero)
   const xRaw = useTransform(
     scrollYProgress,
     [0, 0.2],
     isMobile ? [50, 50] : [75, 25]
   );
 
-  // Vertical Position (Y)
-  // KUNCI: Karena Hero sekarang menggunakan flex-grow/min-h-screen, 
-  // posisi profil secara visual di desktop maupun mobile adalah di TENGAH area Hero.
-  // Maka kita gunakan unit % atau VH agar dinamis mengikuti tinggi layar.
+  /**
+   * Vertical Position (Y)
+   * Menggunakan VH (Viewport Height) agar konsisten di berbagai ukuran layar.
+   * Dipercepat gerakannya ke atas saat mulai scroll agar tidak menempel di section About.
+   */
   const yRaw = useTransform(
     scrollYProgress,
-    isMobile ? [0, 0.25, 0.45] : [0, 0.3, 0.5],
-    isMobile ? [55, 55, -20] : [50, 50, -10] // Start di 55% height untuk mobile agar pas di bawah teks
+    isMobile ? [0, 0.2, 0.3] : [0, 0.2, 0.35],
+    isMobile ? [55, 50, 20] : [50, 45, 10] 
   );
 
-  // Opacity: Menghilang halus saat masuk About
+  /**
+   * Opacity (KUNCI PERBAIKAN):
+   * Profil dibuat menghilang total (0) pada progress 0.15 - 0.2.
+   * Ini memastikan sebelum section About muncul, profil sudah tidak terlihat.
+   */
   const opacity = useTransform(
     scrollYProgress,
-    isMobile ? [0, 0.2, 0.3] : [0, 0.25, 0.4],
+    isMobile ? [0, 0.12, 0.2] : [0, 0.15, 0.22],
     [1, 1, 0]
   );
 
-  // Scale: Menyesuaikan ring dekorasi (220px mobile / 450px desktop)
+  /**
+   * Scale:
+   * Profil mengecil saat menjauh untuk memberikan efek kedalaman (depth).
+   */
   const scale = useTransform(
     scrollYProgress,
     [0, 0.2],
-    isMobile ? [0.65, 0.4] : [1, 0.8]
+    isMobile ? [0.65, 0.3] : [1, 0.5]
   );
 
-  // Spring yang lebih responsif
-  const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
-  const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
+  // Spring yang lebih kencang (stiffness tinggi) agar profil menghilang tepat waktu
+  const smoothXRaw = useSpring(xRaw, { stiffness: 150, damping: 30 });
+  const smoothYRaw = useSpring(yRaw, { stiffness: 150, damping: 30 });
 
-  // Konversi ke unit CSS menggunakan % atau VH untuk fleksibilitas layar
   const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
-  const finalY = useTransform(smoothYRaw, (val) => {
-    // Menggunakan % untuk vertical agar selalu presisi di tengah container flex Hero
-    return `${val}vh`; 
-  });
+  const finalY = useTransform(smoothYRaw, (val) => `${val}vh`);
 
   if (!isMounted) {
     return <div className="bg-[#050505] min-h-screen" />;
@@ -88,6 +90,8 @@ export default function Home() {
   return (
     <main ref={containerRef} className="relative bg-[#050505] min-h-screen overflow-x-hidden">
       <Navbar />
+      
+      {/* Background 3D Scene */}
       <Scene />
 
       {/* --- LAYER PROFIL FIXED --- */}
@@ -100,13 +104,13 @@ export default function Home() {
           scale,
           x: "-50%",
           y: "-50%",
-          pointerEvents: "none",
-          zIndex: 99,
+          pointerEvents: "none", // Agar tidak menghalangi klik pada menu/tombol
+          zIndex: 40, // Di atas Hero tapi di bawah konten section About yang z-index-nya lebih tinggi
           willChange: "transform, opacity"
         }}
       >
         <div className="relative flex items-center justify-center">
-          {/* Glow Effect */}
+          {/* Efek Cahaya Glow */}
           <div className="absolute w-[180px] h-[180px] md:w-[320px] md:h-[320px] bg-[#bcff00] rounded-full blur-[40px] md:blur-[80px] opacity-20" />
           
           {/* Frame Foto Profil */}
@@ -122,10 +126,13 @@ export default function Home() {
 
       {/* --- KONTEN HALAMAN --- */}
       <div className="relative z-10 flex flex-col">
-        <Hero />
+        {/* Section Hero - z-index rendah agar profil terlihat di atasnya */}
+        <div className="relative z-10">
+          <Hero />
+        </div>
 
-        {/* Wrapper Section Lainnya */}
-        <div className="relative z-20 bg-[#050505] -mt-1">
+        {/* Wrapper Section Lainnya - z-index lebih tinggi (z-50) agar menutupi profil saat scroll */}
+        <div className="relative z-50 bg-[#050505] -mt-[1px]">
           <About />
           <Projects />
           <Pricing />
@@ -133,7 +140,7 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="relative z-30 bg-[#050505] py-10 border-t border-white/5 text-center">
+      <footer className="relative z-[60] bg-[#050505] py-10 border-t border-white/5 text-center">
         <p className="text-white/20 text-[10px] uppercase tracking-[0.5em]">
           &copy; 2026 Muhammad Fajar Sidik. All Rights Reserved.
         </p>

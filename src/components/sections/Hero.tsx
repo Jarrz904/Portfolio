@@ -36,7 +36,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-24 md:pt-0 pb-0 min-h-screen">
+    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col min-h-screen">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -50,18 +50,18 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2 & 3: WRAPPER KONTEN UTAMA --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center justify-between flex-grow pb-16 md:pb-0 gap-12 md:min-h-screen">
+      {/* --- LAYER 2 & 3: WRAPPER KONTEN UTAMA (Padding dipersempit) --- */}
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between flex-grow py-12 md:py-0 gap-8 md:gap-12">
         
         {/* SISI KIRI: TEKS */}
         <motion.div
-          className="w-full md:w-1/2 text-left pt-10 md:pt-0"
+          className="w-full md:w-1/2 text-left"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           {/* Badge System Online */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-6 md:mb-10 bg-[#bcff00]/5">
+          <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#bcff00]/20 rounded-full mb-4 md:mb-8 bg-[#bcff00]/5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#bcff00] animate-pulse" />
             <span className="text-[7px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
@@ -77,7 +77,7 @@ export default function Hero() {
           </div>
 
           {/* Slogan */}
-          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-6 md:mt-8 mb-8 md:mb-14 text-left">
+          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-4 md:mt-6 mb-6 md:mb-10 text-left">
             <p className="text-white/50 text-[10px] md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
@@ -92,46 +92,46 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* SISI KANAN: AREA DEKORASI (DIPASKAN DENGAN PROFIL) */}
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end items-center relative min-h-[300px] md:min-h-screen">
+        {/* SISI KANAN: AREA DEKORASI (DIPASKAN DENGAN FRAME FOTO) */}
+        <div className="w-full md:w-1/2 flex justify-center md:justify-end items-center relative">
           {mounted && (
-            <div className="relative w-[180px] h-[180px] md:w-[320px] md:h-[320px] flex items-center justify-center">
+            <div className="relative w-[170px] h-[170px] md:w-[310px] md:h-[310px] flex items-center justify-center">
 
-              {/* Nama Berputar - Ukuran dikecilkan agar memeluk foto profil */}
+              {/* Nama Berputar - Radius 42.5 agar sangat mepet ke foto */}
               <motion.svg
                 animate={{ rotate: 360 }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[175px] h-[175px] md:w-[315px] md:h-[315px] z-10 opacity-80"
+                className="absolute w-[180px] h-[180px] md:w-[325px] md:h-[325px] z-10 opacity-90"
                 viewBox="0 0 100 100"
               >
                 <defs>
                   <path
                     id="circlePath"
-                    d="M 50, 50 m -43, 0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0"
+                    d="M 50, 50 m -42.5, 0 a 42.5,42.5 0 1,1 85,0 a 42.5,42.5 0 1,1 -85,0"
                   />
                 </defs>
-                <text fill="#bcff00" fontSize="3.8" fontWeight="bold" letterSpacing="1.8">
+                <text fill="#bcff00" fontSize="3.8" fontWeight="bold" letterSpacing="1.5">
                   <textPath xlinkHref="#circlePath">
                     MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
                   </textPath>
                 </text>
               </motion.svg>
 
-              {/* Ring Putar Putus-putus - Ukuran disesuaikan tepat di luar foto */}
+              {/* Ring Putar Putus-putus - Ukuran pas di luar sedikit dari foto */}
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[165px] h-[165px] md:w-[295px] md:h-[295px] border-[1px] border-[#bcff00]/40 rounded-full"
+                className="absolute w-[162px] h-[162px] md:w-[292px] md:h-[292px] border-[1.5px] border-[#bcff00]/40 rounded-full"
               />
 
-              {/* Cahaya Pendar (Glow) di belakang foto */}
-              <div className="absolute w-[150px] h-[150px] md:w-[280px] md:h-[280px] bg-[#bcff00]/20 rounded-full blur-[30px] md:blur-[60px]" />
+              {/* Cahaya Pendar (Glow) */}
+              <div className="absolute w-[140px] h-[140px] md:w-[280px] md:h-[280px] bg-[#bcff00]/15 rounded-full blur-[25px] md:blur-[50px]" />
 
-              {/* Label PHP & JS EXPERT - Posisinya dipaskan agar tidak menabrak ring */}
+              {/* Label PHP & JS EXPERT */}
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[5%] -right-4 md:-right-8 px-2 md:px-3 py-0.5 md:py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
+                className="absolute top-[8%] -right-2 md:-right-6 px-2 md:px-3 py-0.5 md:py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
               >
                 PHP & JS EXPERT
               </motion.div>
@@ -141,7 +141,7 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 4: MARQUEE TECH STACK --- */}
-      <div className="relative w-full py-4 md:py-8 bg-black/40 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
+      <div className="relative w-full py-4 md:py-6 bg-black/40 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
