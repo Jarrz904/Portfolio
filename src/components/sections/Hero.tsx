@@ -50,57 +50,12 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: DEKORASI NEON (FRAME UNTUK PROFIL) --- */}
-      <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[50vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
-        {mounted && (
-          <div className="relative w-[220px] h-[220px] md:w-[450px] md:h-[450px] flex items-center justify-center">
-
-            {/* Nama Berputar - Ukuran Mobile Minimized */}
-            <motion.svg
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[200px] h-[200px] md:w-[420px] md:h-[420px] z-10 opacity-60 md:opacity-70"
-              viewBox="0 0 100 100"
-            >
-              <defs>
-                <path
-                  id="circlePath"
-                  d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
-                />
-              </defs>
-              <text fill="#bcff00" fontSize="4" fontWeight="bold" letterSpacing="2.5">
-                <textPath xlinkHref="#circlePath">
-                  MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
-                </textPath>
-              </text>
-            </motion.svg>
-
-            {/* Ring Putar Putus-putus */}
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[160px] h-[160px] md:w-[360px] md:h-[360px] border-[1px] md:border-[1.5px] border-dashed border-[#bcff00]/20 md:border-[#bcff00]/30 rounded-full"
-            />
-
-            {/* Cahaya Pendar (Glow) */}
-            <div className="absolute w-[140px] h-[140px] md:w-[300px] md:h-[300px] bg-[#bcff00]/10 rounded-full blur-[30px] md:blur-[80px]" />
-
-            {/* Label PHP & JS EXPERT - Ukuran Mobile Minimized */}
-            <motion.div
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[15%] -right-2 md:-right-10 px-2 md:px-3 py-0.5 md:py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_10px_rgba(188,255,0,0.4)]"
-            >
-              PHP & JS EXPERT
-            </motion.div>
-          </div>
-        )}
-      </div>
-
-      {/* --- LAYER 3: KONTEN TEKS --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-16 md:pb-32">
+      {/* --- LAYER 2 & 3: WRAPPER KONTEN UTAMA --- */}
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center md:items-start justify-between flex-grow pb-16 md:pb-32 gap-12">
+        
+        {/* SISI KIRI: TEKS */}
         <motion.div
-          className="max-w-4xl text-left"
+          className="w-full md:w-1/2 text-left"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -111,7 +66,7 @@ export default function Hero() {
             <span className="text-[7px] md:text-[10px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
 
-          {/* Judul Utama - Optimized for Mobile Viewport */}
+          {/* Judul Utama */}
           <div className="space-y-0">
             <h1 className="text-[12vw] md:text-[8.5vw] font-black uppercase leading-[0.9] md:leading-[0.8] tracking-tighter text-white">
               New Tech
@@ -121,8 +76,8 @@ export default function Hero() {
             </h1>
           </div>
 
-          {/* Slogan - Ukuran Mobile Minimized */}
-          <div className="max-w-[240px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-6 md:mt-8 mb-8 md:mb-14 text-left">
+          {/* Slogan */}
+          <div className="max-w-[280px] md:max-w-md border-l-2 border-[#bcff00] pl-4 md:pl-6 mt-6 md:mt-8 mb-8 md:mb-14 text-left">
             <p className="text-white/50 text-[10px] md:text-xl leading-relaxed italic">
               "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
@@ -136,9 +91,56 @@ export default function Hero() {
             </button>
           </a>
         </motion.div>
+
+        {/* SISI KANAN: PROFIL (LAYER 2 INTEGRATED) */}
+        <div className="w-full md:w-1/2 flex justify-center md:justify-end items-center relative min-h-[250px] md:min-h-[500px]">
+          {mounted && (
+            <div className="relative w-[220px] h-[220px] md:w-[450px] md:h-[450px] flex items-center justify-center">
+
+              {/* Nama Berputar */}
+              <motion.svg
+                animate={{ rotate: 360 }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute w-[200px] h-[200px] md:w-[420px] md:h-[420px] z-10 opacity-60 md:opacity-70"
+                viewBox="0 0 100 100"
+              >
+                <defs>
+                  <path
+                    id="circlePath"
+                    d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
+                  />
+                </defs>
+                <text fill="#bcff00" fontSize="4" fontWeight="bold" letterSpacing="2.5">
+                  <textPath xlinkHref="#circlePath">
+                    MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
+                  </textPath>
+                </text>
+              </motion.svg>
+
+              {/* Ring Putar Putus-putus */}
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute w-[160px] h-[160px] md:w-[360px] md:h-[360px] border-[1px] md:border-[1.5px] border-dashed border-[#bcff00]/20 md:border-[#bcff00]/30 rounded-full"
+              />
+
+              {/* Cahaya Pendar (Glow) */}
+              <div className="absolute w-[140px] h-[140px] md:w-[300px] md:h-[300px] bg-[#bcff00]/10 rounded-full blur-[30px] md:blur-[80px]" />
+
+              {/* Label PHP & JS EXPERT */}
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[15%] -right-2 md:-right-10 px-2 md:px-3 py-0.5 md:py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_10px_rgba(188,255,0,0.4)]"
+              >
+                PHP & JS EXPERT
+              </motion.div>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK (PENUTUP BAWAH) --- */}
+      {/* --- LAYER 4: MARQUEE TECH STACK --- */}
       <div className="relative w-full py-4 md:py-8 bg-black/40 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
