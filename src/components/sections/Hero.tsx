@@ -70,7 +70,7 @@ export default function Hero() {
                 />
               </defs>
               <text fill="#bcff00" fontSize="4.1" fontWeight="bold" letterSpacing="2.8">
-                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
+                <textPath xlinkHref="#circlePath"> MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •
                 </textPath>
               </text>
             </motion.svg>
