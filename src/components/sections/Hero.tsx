@@ -36,7 +36,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-24 md:pt-48 pb-0 min-h-screen">
+    <section id="home" className="relative w-full bg-[#050505] overflow-hidden flex flex-col pt-24 md:pt-0 pb-0 min-h-screen">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -51,11 +51,11 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2 & 3: WRAPPER KONTEN UTAMA --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center md:items-start justify-between flex-grow pb-16 md:pb-32 gap-12">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center justify-between flex-grow pb-16 md:pb-0 gap-12 md:min-h-screen">
         
         {/* SISI KIRI: TEKS */}
         <motion.div
-          className="w-full md:w-1/2 text-left"
+          className="w-full md:w-1/2 text-left pt-10 md:pt-0"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -92,8 +92,8 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* SISI KANAN: PROFIL (LAYER 2 INTEGRATED) */}
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end items-center relative min-h-[250px] md:min-h-[500px]">
+        {/* SISI KANAN: AREA DEKORASI (Pas dengan Fixed Profil di Page.tsx) */}
+        <div className="w-full md:w-1/2 flex justify-center md:justify-end items-center relative min-h-[300px] md:min-h-screen">
           {mounted && (
             <div className="relative w-[220px] h-[220px] md:w-[450px] md:h-[450px] flex items-center justify-center">
 
