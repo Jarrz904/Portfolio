@@ -92,46 +92,46 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* SISI KANAN: AREA DEKORASI (Pas dengan Fixed Profil di Page.tsx) */}
+        {/* SISI KANAN: AREA DEKORASI (DIPASKAN DENGAN PROFIL) */}
         <div className="w-full md:w-1/2 flex justify-center md:justify-end items-center relative min-h-[300px] md:min-h-screen">
           {mounted && (
-            <div className="relative w-[220px] h-[220px] md:w-[450px] md:h-[450px] flex items-center justify-center">
+            <div className="relative w-[180px] h-[180px] md:w-[320px] md:h-[320px] flex items-center justify-center">
 
-              {/* Nama Berputar */}
+              {/* Nama Berputar - Ukuran dikecilkan agar memeluk foto profil */}
               <motion.svg
                 animate={{ rotate: 360 }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[200px] h-[200px] md:w-[420px] md:h-[420px] z-10 opacity-60 md:opacity-70"
+                className="absolute w-[175px] h-[175px] md:w-[315px] md:h-[315px] z-10 opacity-80"
                 viewBox="0 0 100 100"
               >
                 <defs>
                   <path
                     id="circlePath"
-                    d="M 50, 50 m -41, 0 a 41,41 0 1,1 82,0 a 41,41 0 1,1 -82,0"
+                    d="M 50, 50 m -43, 0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0"
                   />
                 </defs>
-                <text fill="#bcff00" fontSize="4" fontWeight="bold" letterSpacing="2.5">
+                <text fill="#bcff00" fontSize="3.8" fontWeight="bold" letterSpacing="1.8">
                   <textPath xlinkHref="#circlePath">
                     MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK •{" "}
                   </textPath>
                 </text>
               </motion.svg>
 
-              {/* Ring Putar Putus-putus */}
+              {/* Ring Putar Putus-putus - Ukuran disesuaikan tepat di luar foto */}
               <motion.div
                 animate={{ rotate: -360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[160px] h-[160px] md:w-[360px] md:h-[360px] border-[1px] md:border-[1.5px] border-dashed border-[#bcff00]/20 md:border-[#bcff00]/30 rounded-full"
+                className="absolute w-[165px] h-[165px] md:w-[295px] md:h-[295px] border-[1px] border-[#bcff00]/40 rounded-full"
               />
 
-              {/* Cahaya Pendar (Glow) */}
-              <div className="absolute w-[140px] h-[140px] md:w-[300px] md:h-[300px] bg-[#bcff00]/10 rounded-full blur-[30px] md:blur-[80px]" />
+              {/* Cahaya Pendar (Glow) di belakang foto */}
+              <div className="absolute w-[150px] h-[150px] md:w-[280px] md:h-[280px] bg-[#bcff00]/20 rounded-full blur-[30px] md:blur-[60px]" />
 
-              {/* Label PHP & JS EXPERT */}
+              {/* Label PHP & JS EXPERT - Posisinya dipaskan agar tidak menabrak ring */}
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[15%] -right-2 md:-right-10 px-2 md:px-3 py-0.5 md:py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_10px_rgba(188,255,0,0.4)]"
+                className="absolute top-[5%] -right-4 md:-right-8 px-2 md:px-3 py-0.5 md:py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
               >
                 PHP & JS EXPERT
               </motion.div>
