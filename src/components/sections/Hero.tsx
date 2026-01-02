@@ -98,7 +98,7 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 3: KONTEN TEKS --- */}
-     <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-20 md:pb-32">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow pb-20 md:pb-32">
         <motion.div
           className="max-w-2xl md:max-w-3xl text-left"
           initial={{ opacity: 0, y: 30 }}
