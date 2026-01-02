@@ -22,41 +22,43 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true);
 
-    // Deteksi apakah user menggunakan Mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
-
-    // Fix untuk memaksa browser refresh kalkulasi scroll
-    window.scrollTo(window.scrollX, window.scrollY + 1);
+    
+    // Memastikan posisi scroll kembali ke atas saat refresh untuk akurasi kalkulasi
+    window.scrollTo(0, 0);
 
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // --- LOGIKA POSISI ---
+  // --- LOGIKA POSISI (SINKRONISASI HERO & ABOUT) ---
 
-  // Horizontal Position (X): Tetap di tengah (50) untuk mobile, kanan ke kiri untuk desktop
+  // Horizontal Position (X): 
+  // Mobile: Tetap di tengah (50vw)
+  // Desktop: Start di kanan (75vw), bergerak ke kiri (25vw) untuk section About
   const xRaw = useTransform(
     scrollYProgress,
-    [0, 0.15],
+    [0, 0.2],
     isMobile ? [50, 50] : [75, 25]
   );
 
-  // Vertical Position (Y)
-  // DISESUAIKAN: Start di 340px (Mobile) agar sinkron dengan dekorasi Hero
+  // Vertical Position (Y):
+  // Mobile: Tetap di 340px (Hero) lalu naik ke atas saat scroll
+  // Desktop: Start di 45vh (Hero) lalu bergerak naik
   const yRaw = useTransform(
     scrollYProgress,
-    isMobile ? [0, 0.2, 0.35] : [0, 0.3, 0.45],
-    isMobile ? [340, 340, -100] : [50, 50, -60]
+    isMobile ? [0, 0.2, 0.4] : [0, 0.25, 0.45],
+    isMobile ? [340, 340, -150] : [45, 45, -20]
   );
 
-  // Opacity: Menghilang total sebelum masuk ke section About
+  // Opacity: Profil menghilang perlahan saat masuk ke konten dalam About
   const opacity = useTransform(
     scrollYProgress,
-    isMobile ? [0, 0.15, 0.22] : [0, 0.18, 0.25],
+    isMobile ? [0, 0.25, 0.35] : [0, 0.3, 0.45],
     [1, 1, 0]
   );
 
@@ -64,14 +66,14 @@ export default function Home() {
   const scale = useTransform(
     scrollYProgress,
     [0, 0.2],
-    isMobile ? [0.6, 0.4] : [1, 0.8]
+    isMobile ? [0.65, 0.45] : [1, 0.8]
   );
 
-  // Spring untuk kelembutan gerakan
-  const smoothXRaw = useSpring(xRaw, { stiffness: 100, damping: 30 });
-  const smoothYRaw = useSpring(yRaw, { stiffness: 100, damping: 30 });
+  // Spring untuk gerakan yang organic dan tidak kaku
+  const smoothXRaw = useSpring(xRaw, { stiffness: 80, damping: 25 });
+  const smoothYRaw = useSpring(yRaw, { stiffness: 80, damping: 25 });
 
-  // Konversi ke unit CSS
+  // Konversi nilai ke unit CSS yang sesuai
   const finalX = useTransform(smoothXRaw, (val) => `${val}vw`);
   const finalY = useTransform(smoothYRaw, (val) => {
     if (isMobile) return `${val}px`;
@@ -85,10 +87,11 @@ export default function Home() {
   return (
     <main ref={containerRef} className="relative bg-[#050505] min-h-screen overflow-x-hidden">
       <Navbar />
+      
+      {/* Background 3D Scene */}
       <Scene />
 
-      {/* --- SATU-SATUNYA LAYER PROFIL (Fixed) --- */}
-      {/* Komponen ini akan terlihat seolah berada di dalam Hero karena posisinya kita samakan */}
+      {/* --- LAYER PROFIL FIXED --- */}
       <motion.div
         style={{
           position: "fixed",
@@ -104,33 +107,43 @@ export default function Home() {
         }}
       >
         <div className="relative flex items-center justify-center">
-          {/* Glow Effect */}
-          <div className="absolute w-[180px] h-[180px] md:w-[300px] md:h-[300px] bg-[#bcff00] rounded-full blur-[50px] md:blur-[80px] opacity-20" />
+          {/* Efek Cahaya di belakang foto */}
+          <div className="absolute w-[180px] h-[180px] md:w-[320px] md:h-[320px] bg-[#bcff00] rounded-full blur-[40px] md:blur-[80px] opacity-20" />
           
-          {/* Foto Profil Frame */}
-          <div className="relative w-40 h-40 md:w-72 md:h-72 rounded-full border-4 border-[#bcff00] p-1.5 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_40px_rgba(188,255,0,0.3)]">
+          {/* Frame Foto Profil */}
+          <div className="relative w-44 h-44 md:w-72 md:h-72 rounded-full border-[3px] md:border-4 border-[#bcff00] p-1.5 md:p-2 bg-[#050505] overflow-hidden shadow-[0_0_50px_rgba(188,255,0,0.25)]">
             <img
-              src="/foto-profil.jpg"
-              alt="Avatar"
-              className="w-full h-full object-cover rounded-full shadow-inner"
+              src="/foto-profil.jpg" // Pastikan file ini ada di folder public
+              alt="Muhammad Fajar Sidik"
+              className="w-full h-full object-cover rounded-full transition-transform duration-700 hover:scale-110"
             />
           </div>
         </div>
       </motion.div>
 
-      {/* Konten Utama */}
+      {/* --- KONTEN HALAMAN --- */}
       <div className="relative z-10 flex flex-col">
-        {/* Pastikan di dalam komponen Hero, tag <img> profil SUDAH DIHAPUS */}
+        {/* Section Hero - Tempat awal profil berada */}
         <Hero />
 
-        {/* Wrapper Section Lainnya */}
-        <div className="relative z-20 bg-[#050505]">
+        {/* Wrapper Section Lainnya: 
+          -mt-10 (Mobile) dan -mt-24 (Desktop) untuk merapatkan gap antar section 
+          agar tidak terlihat renggang hitam kosong.
+        */}
+        <div className="relative z-20 bg-[#050505] -mt-10 md:-mt-24">
           <About />
           <Projects />
           <Pricing />
           <Contact />
         </div>
       </div>
+
+      {/* Footer / Copyright Sederhana (Opsional) */}
+      <footer className="relative z-30 bg-[#050505] py-10 border-t border-white/5 text-center">
+        <p className="text-white/20 text-[10px] uppercase tracking-[0.5em]">
+          &copy; 2024 Muhammad Fajar Sidik. All Rights Reserved.
+        </p>
+      </footer>
     </main>
   );
 }
