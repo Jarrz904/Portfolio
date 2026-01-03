@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import ProfileCard from "./ProfileCard"; // Mengimport komponen baru
 
 const techStack = [
   { name: "Next.js", logo: "https://cdn.worldvectorlogo.com/logos/next-js.svg" },
@@ -46,66 +47,31 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 2: PROFILE CARD & NEON DECORATION --- */}
-      <div className="absolute left-[50vw] md:left-[72vw] top-[340px] md:top-[45vh] -translate-x-1/2 -translate-y-1/2 z-[5] pointer-events-none">
+      <div className="absolute left-[50vw] md:left-[75vw] top-[340px] md:top-[45vh] -translate-x-1/2 -translate-y-1/2 z-[5]">
         {mounted && (
           <div className="relative w-[300px] h-[400px] md:w-[450px] md:h-[550px] flex items-center justify-center">
 
-            {/* --- NAMA BERPUTAR (DI BELAKANG KARTU) --- */}
-            <motion.svg
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute w-[320px] h-[320px] md:w-[500px] md:h-[500px] z-0 opacity-40"
-              viewBox="0 0 100 100"
-            >
-              <defs>
-                <path id="circlePath" d="M 50, 50 m -43, 0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0" />
-              </defs>
-              <text fill="#bcff00" fontSize="4" fontWeight="bold" letterSpacing="2">
-                <textPath xlinkHref="#circlePath">MUHAMMAD FAJAR SIDIK • MUHAMMAD FAJAR SIDIK • </textPath>
-              </text>
-            </motion.svg>
-
-            {/* Cahaya Pendar (Glow) */}
-            <div className="absolute w-[200px] h-[250px] md:w-[350px] md:h-[450px] bg-[#bcff00]/10 rounded-3xl blur-[60px] md:blur-[100px]" />
-
-            {/* --- REACT BITS PROFILE CARD STYLE --- */}
+            {/* --- INTEGRASI PROFILE CARD DARI REACT BITS --- */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="relative w-[180px] h-[240px] md:w-[280px] md:h-[380px] bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden shadow-2xl group pointer-events-auto"
+              className="relative z-10 w-[240px] md:w-[320px]"
             >
-              {/* Image Container */}
-              <div className="relative w-full h-full">
-                <img 
-                  src="/foto-profil.jpg" 
-                  alt="Profile" 
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" 
-                />
-                
-                {/* Overlay Gradient ala React Bits */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
-
-                {/* Info Text on Card */}
-                <div className="absolute bottom-4 left-4 right-4 text-left">
-                  <h3 className="text-white text-[12px] md:text-[18px] font-black uppercase tracking-tighter">
-                    Fajar Sidik
-                  </h3>
-                  <p className="text-[#bcff00] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">
-                    Software Engineer
-                  </p>
-                </div>
-
-                {/* Border Glow Effect */}
-                <div className="absolute inset-0 border border-[#bcff00]/20 rounded-2xl group-hover:border-[#bcff00]/50 transition-colors duration-500" />
-              </div>
+              <ProfileCard 
+                avatarUrl="/foto-profil.jpg" 
+                name="Fajar Sidik"
+                title="SOFTWARE ENGINEER"
+                handle="fajarsidikk"
+                status="Online"
+              />
             </motion.div>
 
-            {/* Label PHP & JS EXPERT (Dipindahkan ke pojok kartu) */}
+            {/* Label PHP & JS EXPERT (Floating) */}
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[20%] -right-4 md:-right-10 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)]"
+              className="absolute top-[20%] -right-4 md:-right-10 px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[7px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)] pointer-events-none"
             >
               PHP & JS EXPERT
             </motion.div>
