@@ -32,7 +32,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full h-auto md:min-h-screen bg-[#050505] overflow-hidden flex flex-col">
+    <section id="home" className="relative w-full min-h-[100dvh] bg-[#050505] overflow-hidden flex flex-col justify-between">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -47,7 +47,7 @@ export default function Hero() {
       </div>
 
       {/* --- UTAMA: WRAPPER KONTEN --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 pt-28 md:pt-48 pb-12 md:pb-10">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 md:gap-4 pt-20 md:pt-32 flex-grow pb-8 md:pb-0">
         
         {/* --- LAYER KONTEN TEKS (KIRI) --- */}
         <motion.div
@@ -91,7 +91,7 @@ export default function Hero() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
-                className="relative z-10 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px]"
+                className="relative z-10 w-[200px] xs:w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px]"
               >
                 <ProfileCard 
                   avatarUrl="/foto-profil.jpg" 
@@ -114,11 +114,10 @@ export default function Hero() {
             </div>
           )}
         </div>
-
       </div>
 
       {/* --- LAYER 4: MARQUEE TECH STACK --- */}
-      {/* Warna logo diaktifkan dengan menghapus filter grayscale/invert */}
+      {/* Container ini diposisikan tepat di bawah tanpa margin tambahan */}
       <div className="relative w-full py-4 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
@@ -126,7 +125,7 @@ export default function Hero() {
           className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
         >
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-70 hover:opacity-100 transition-all duration-500 cursor-default">
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-80 hover:opacity-100 transition-all duration-500 cursor-default">
               <img 
                 src={tech.logo} 
                 alt={tech.name} 
