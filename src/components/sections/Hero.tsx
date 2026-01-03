@@ -32,7 +32,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full min-h-screen bg-[#050505] overflow-hidden flex flex-col pt-24 md:pt-40 pb-0">
+    <section id="home" className="relative w-full h-auto md:min-h-screen bg-[#050505] overflow-hidden flex flex-col">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -46,46 +46,12 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- LAYER 2: PROFILE CARD (Disesuaikan untuk Mobile) --- */}
-      <div className="absolute left-1/2 md:left-[75vw] top-[50%] md:top-[45vh] -translate-x-1/2 -translate-y-1/2 z-[5]">
-        {mounted && (
-          <div className="relative w-[280px] h-[380px] sm:w-[320px] sm:h-[450px] md:w-[450px] md:h-[550px] flex items-center justify-center">
-
-            {/* INTEGRASI PROFILE CARD */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
-              className="relative z-10 w-full h-full flex items-center justify-center"
-            >
-              <ProfileCard 
-                avatarUrl="/foto-profil.jpg" 
-                name="Fajar Sidik"
-                title="SOFTWARE ENGINEER"
-                handle="fajarsidikk"
-                status="Online"
-                // Properti tambahan untuk performa mobile
-                enableMobileTilt={true}
-                behindGlowEnabled={true}
-              />
-            </motion.div>
-
-            {/* Label Floating - Dibuat lebih responsif */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[15%] -right-2 md:-right-10 px-2 md:px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)] pointer-events-none"
-            >
-              PHP & JS EXPERT
-            </motion.div>
-          </div>
-        )}
-      </div>
-
-      {/* --- LAYER 3: KONTEN TEKS --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col justify-center pb-24 md:pb-32">
+      {/* --- UTAMA: WRAPPER KONTEN --- */}
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 pt-28 md:pt-48 pb-12 md:pb-10">
+        
+        {/* --- LAYER KONTEN TEKS (KIRI) --- */}
         <motion.div
-          className="max-w-2xl md:max-w-3xl text-left"
+          className="w-full md:w-1/2 text-left order-2 md:order-1"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -96,16 +62,16 @@ export default function Hero() {
             <span className="text-[7px] md:text-[9px] uppercase tracking-[0.4em] text-[#bcff00] font-bold">System Online</span>
           </div>
 
-          <h1 className="text-[14vw] md:text-[7.5vw] font-black uppercase leading-[0.8] tracking-tighter text-white">
+          <h1 className="text-[13vw] md:text-[7.5vw] font-black uppercase leading-[0.8] tracking-tighter text-white">
             New Tech
           </h1>
-          <h1 className="text-[14vw] md:text-[7.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_rgba(188,255,0,0.6)] md:[-webkit-text-stroke:1.5px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-8 md:mb-12">
+          <h1 className="text-[13vw] md:text-[7.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_rgba(188,255,0,0.6)] md:[-webkit-text-stroke:1.5px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-6 md:mb-12">
             Solution
           </h1>
 
-          <div className="max-w-[180px] md:max-w-sm border-l-2 border-[#bcff00] pl-4 md:pl-5 mt-4 mb-10 md:mb-12 text-left">
-            <p className="text-white/40 text-[9px] md:text-lg leading-relaxed italic">
-              "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest">UMKM</span> menjadi ekosistem digital bertenaga."
+          <div className="max-w-[200px] md:max-w-sm border-l-2 border-[#bcff00] pl-4 md:pl-5 mt-4 mb-8 md:mb-12 text-left">
+            <p className="text-white/40 text-[10px] md:text-lg leading-relaxed italic">
+              "Mentransformasi visi bisnis <span className="text-white font-bold uppercase tracking-widest text-[8px] md:text-sm">UMKM</span> menjadi ekosistem digital bertenaga."
             </p>
           </div>
 
@@ -116,9 +82,43 @@ export default function Hero() {
             </button>
           </a>
         </motion.div>
+
+        {/* --- LAYER PROFILE CARD (KANAN) --- */}
+        <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end order-1 md:order-2">
+          {mounted && (
+            <div className="relative w-full flex items-center justify-center md:justify-end">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8 }}
+                className="relative z-10 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px]"
+              >
+                <ProfileCard 
+                  avatarUrl="/foto-profil.jpg" 
+                  name="Fajar Sidik"
+                  title="SOFTWARE ENGINEER"
+                  handle="fajarsidikk"
+                  status="Online"
+                  enableMobileTilt={true}
+                  behindGlowEnabled={true}
+                />
+
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -top-4 -right-2 md:-right-6 px-2 md:px-3 py-1 bg-black border border-[#bcff00] text-[#bcff00] text-[6px] md:text-[9px] font-black uppercase tracking-[0.1em] rounded-full z-20 shadow-[0_0_15px_rgba(188,255,0,0.5)] pointer-events-none"
+                >
+                  PHP & JS EXPERT
+                </motion.div>
+              </motion.div>
+            </div>
+          )}
+        </div>
+
       </div>
 
       {/* --- LAYER 4: MARQUEE TECH STACK --- */}
+      {/* Warna logo diaktifkan dengan menghapus filter grayscale/invert */}
       <div className="relative w-full py-4 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
@@ -126,11 +126,11 @@ export default function Hero() {
           className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
         >
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-70 hover:opacity-100 transition-all duration-500 cursor-default">
               <img 
                 src={tech.logo} 
                 alt={tech.name} 
-                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 transition-all duration-500" 
+                className="w-4 h-4 md:w-6 md:h-6 object-contain transition-all duration-500 group-hover:scale-110" 
               />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
