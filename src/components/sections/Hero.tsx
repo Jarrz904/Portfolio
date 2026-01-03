@@ -32,7 +32,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full min-h-screen bg-[#050505] overflow-hidden flex flex-col">
+    <section id="home" className="relative w-full h-auto md:min-h-screen bg-[#050505] overflow-hidden flex flex-col">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -47,8 +47,7 @@ export default function Hero() {
       </div>
 
       {/* --- UTAMA: WRAPPER KONTEN --- */}
-      {/* Penambahan pt-32 md:pt-48 agar konten turun ke bawah sedikit lebih banyak */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4 pt-32 md:pt-48 pb-20 md:pb-10">
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 pt-28 md:pt-48 pb-12 md:pb-10">
         
         {/* --- LAYER KONTEN TEKS (KIRI) --- */}
         <motion.div
@@ -88,7 +87,6 @@ export default function Hero() {
         <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end order-1 md:order-2">
           {mounted && (
             <div className="relative w-full flex items-center justify-center md:justify-end">
-              {/* Ukuran dinamis: Mengecil di mobile, membesar di desktop */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -105,7 +103,6 @@ export default function Hero() {
                   behindGlowEnabled={true}
                 />
 
-                {/* Label Floating - PHP & JS EXPERT */}
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -121,18 +118,19 @@ export default function Hero() {
       </div>
 
       {/* --- LAYER 4: MARQUEE TECH STACK --- */}
-      <div className="relative w-full py-4 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
+      {/* Warna logo diaktifkan dengan menghapus filter grayscale/invert */}
+      <div className="relative w-full py-4 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
         >
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-70 hover:opacity-100 transition-all duration-500 cursor-default">
               <img 
                 src={tech.logo} 
                 alt={tech.name} 
-                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 transition-all duration-500" 
+                className="w-4 h-4 md:w-6 md:h-6 object-contain transition-all duration-500 group-hover:scale-110" 
               />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
