@@ -66,7 +66,7 @@ export default function Hero() {
             New Tech
           </h1>
           <h1 className="text-[13vw] md:text-[7.5vw] font-black uppercase leading-[0.8] tracking-tighter text-transparent [-webkit-text-stroke:1px_rgba(188,255,0,0.6)] md:[-webkit-text-stroke:1.5px_#bcff00] drop-shadow-[0_0_20px_rgba(188,255,0,0.3)] mb-6 md:mb-12">
-            Solution
+            Solution 99
           </h1>
 
           <div className="max-w-[200px] md:max-w-sm border-l-2 border-[#bcff00] pl-4 md:pl-5 mt-4 mb-8 md:mb-12 text-left">
@@ -98,14 +98,13 @@ export default function Hero() {
                   title="Software Engineer"
                   handle="jarrzcodes"
                   status="Online"
-                  contactText="Contact Me"
                   avatarUrl="/foto-profil.jpg"
                   showUserInfo={true}
                   enableTilt={true}
                   enableMobileTilt={false}
                   onContactClick={() => console.log('Contact clicked')}
                 />
-                
+
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
