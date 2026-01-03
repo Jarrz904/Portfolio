@@ -32,7 +32,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full min-h-[100dvh] bg-[#050505] overflow-hidden flex flex-col justify-between">
+    <section id="home" className="relative w-full min-h-screen bg-[#050505] overflow-hidden flex flex-col pt-24 md:pt-32 pb-0">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -46,8 +46,8 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- UTAMA: WRAPPER KONTEN --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex flex-col md:flex-row items-center justify-center md:justify-between gap-6 md:gap-4 pt-20 md:pt-32 flex-grow pb-8 md:pb-0">
+      {/* --- UTAMA: WRAPPER KONTEN (TEKS KIRI, KARTU KANAN) --- */}
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4 pb-20 md:pb-0">
         
         {/* --- LAYER KONTEN TEKS (KIRI) --- */}
         <motion.div
@@ -86,12 +86,13 @@ export default function Hero() {
         {/* --- LAYER PROFILE CARD (KANAN) --- */}
         <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end order-1 md:order-2">
           {mounted && (
-            <div className="relative w-full flex items-center justify-center md:justify-end">
+            <div className="relative w-full flex items-center justify-center">
+              {/* Ukuran dinamis: Mengecil di mobile, membesar di desktop */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
-                className="relative z-10 w-[200px] xs:w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px]"
+                className="relative z-10 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px]"
               >
                 <ProfileCard 
                   avatarUrl="/foto-profil.jpg" 
@@ -103,6 +104,7 @@ export default function Hero() {
                   behindGlowEnabled={true}
                 />
 
+                {/* Label Floating - PHP & JS EXPERT */}
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -114,22 +116,22 @@ export default function Hero() {
             </div>
           )}
         </div>
+
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK --- */}
-      {/* Container ini diposisikan tepat di bawah tanpa margin tambahan */}
-      <div className="relative w-full py-4 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20]">
+      {/* --- LAYER 4: MARQUEE TECH STACK (TETAP DI BAWAH) --- */}
+      <div className="relative w-full py-4 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="flex whitespace-nowrap gap-8 md:gap-20 items-center"
         >
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-80 hover:opacity-100 transition-all duration-500 cursor-default">
+            <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-40 hover:opacity-100 transition-all duration-500 cursor-default">
               <img 
                 src={tech.logo} 
                 alt={tech.name} 
-                className="w-4 h-4 md:w-6 md:h-6 object-contain transition-all duration-500 group-hover:scale-110" 
+                className="w-4 h-4 md:w-5 md:h-5 object-contain grayscale invert brightness-200 group-hover:grayscale-0 transition-all duration-500" 
               />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
