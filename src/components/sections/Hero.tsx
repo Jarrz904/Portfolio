@@ -48,7 +48,7 @@ export default function Hero() {
 
       {/* --- UTAMA: WRAPPER KONTEN --- */}
       <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4 pt-28 md:pt-48 pb-12 md:pb-10">
-        
+
         {/* --- LAYER KONTEN TEKS (KIRI) --- */}
         <motion.div
           className="w-full md:w-1/2 text-left order-2 md:order-1"
@@ -87,22 +87,25 @@ export default function Hero() {
         <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end order-1 md:order-2">
           {mounted && (
             <div className="relative w-full flex items-center justify-center md:justify-end">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8 }}
                 className="relative z-10 w-[240px] sm:w-[280px] md:w-[320px] lg:w-[380px]"
               >
-                <ProfileCard 
-                  avatarUrl="/foto-profil.jpg" 
-                  name="Fajar Sidik"
-                  title="SOFTWARE ENGINEER"
-                  handle="fajarsidikk"
+                <ProfileCard
+                  name="Jarrz"
+                  title="Software Engineer"
+                  handle="jarrzcodes"
                   status="Online"
-                  enableMobileTilt={true}
-                  behindGlowEnabled={true}
+                  contactText="Contact Me"
+                  avatarUrl="/foto-profil.jpg"
+                  showUserInfo={true}
+                  enableTilt={true}
+                  enableMobileTilt={false}
+                  onContactClick={() => console.log('Contact clicked')}
                 />
-
+                
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -127,10 +130,10 @@ export default function Hero() {
         >
           {[...techStack, ...techStack].map((tech, i) => (
             <div key={i} className="group flex items-center gap-3 md:gap-4 opacity-70 hover:opacity-100 transition-all duration-500 cursor-default">
-              <img 
-                src={tech.logo} 
-                alt={tech.name} 
-                className="w-4 h-4 md:w-6 md:h-6 object-contain transition-all duration-500 group-hover:scale-110" 
+              <img
+                src={tech.logo}
+                alt={tech.name}
+                className="w-4 h-4 md:w-6 md:h-6 object-contain transition-all duration-500 group-hover:scale-110"
               />
               <span className="text-white text-[8px] md:text-[10px] uppercase tracking-[0.5em] font-bold group-hover:text-[#bcff00] transition-colors duration-500">
                 {tech.name}
