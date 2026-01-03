@@ -267,7 +267,10 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     shell.addEventListener('pointermove', pointerMoveHandler);
     shell.addEventListener('pointerleave', pointerLeaveHandler);
 
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent) => {
+      // Pastikan klik pada tombol tidak memicu permission tilt jika tidak diinginkan
+      if ((e.target as HTMLElement).closest('.pc-contact-btn')) return;
+
       if (!enableMobileTilt || location.protocol !== 'https:') return;
       const anyMotion = window.DeviceMotionEvent as any;
       if (anyMotion && typeof anyMotion.requestPermission === 'function') {
@@ -283,7 +286,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
         window.addEventListener('deviceorientation', deviceOrientationHandler);
       }
     };
-    shell.addEventListener('click', handleClick);
+    shell.addEventListener('click', handleClick as EventListener);
 
     const initialX = (shell.clientWidth || 0) - ANIMATION_CONFIG.INITIAL_X_OFFSET;
     const initialY = ANIMATION_CONFIG.INITIAL_Y_OFFSET;
@@ -295,7 +298,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       shell.removeEventListener('pointerenter', pointerEnterHandler);
       shell.removeEventListener('pointermove', pointerMoveHandler);
       shell.removeEventListener('pointerleave', pointerLeaveHandler);
-      shell.removeEventListener('click', handleClick);
+      shell.removeEventListener('click', handleClick as EventListener);
       window.removeEventListener('deviceorientation', deviceOrientationHandler);
       if (enterTimerRef.current) window.clearTimeout(enterTimerRef.current);
       if (leaveRafRef.current) cancelAnimationFrame(leaveRafRef.current);
@@ -323,10 +326,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       }) as React.CSSProperties,
     [iconUrl, grainUrl, innerGradient, behindGlowColor, behindGlowSize]
   );
-
-  const handleContactClick = useCallback(() => {
-    onContactClick?.();
-  }, [onContactClick]);
 
   return (
     <div ref={wrapRef} className={`pc-card-wrapper ${className}`.trim()} style={cardStyle}>
@@ -369,8 +368,16 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
                   </div>
                   <button
                     className="pc-contact-btn"
-                    onClick={handleContactClick}
-                    style={{ pointerEvents: 'auto' }}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Mencegah tilt trigger saat klik tombol
+                      onContactClick?.();
+                    }}
+                    style={{ 
+                      pointerEvents: 'auto', 
+                      position: 'relative', 
+                      zIndex: 50,
+                      cursor: 'pointer' 
+                    }}
                     type="button"
                     aria-label={`Contact ${name || 'user'}`}
                   >

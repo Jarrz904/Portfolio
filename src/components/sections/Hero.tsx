@@ -98,11 +98,16 @@ export default function Hero() {
                   title="Software Engineer"
                   handle="jarrzcodes"
                   status="Online"
+                  contactText="Contact"
                   avatarUrl="/foto-profil.jpg"
                   showUserInfo={true}
                   enableTilt={true}
                   enableMobileTilt={false}
-                  onContactClick={() => console.log('Contact clicked')}
+                  onContactClick={() => {
+                    // Ganti URL di bawah dengan link WhatsApp, Email, atau Linktree Anda
+                    const contactUrl = "https://wa.me/6285741129749";
+                    window.open(contactUrl, '_blank', 'noopener,noreferrer');
+                  }}
                 />
 
                 <motion.div

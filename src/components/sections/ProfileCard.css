@@ -181,6 +181,7 @@
   filter: brightness(0.5) contrast(1.2) opacity(0.3); /* Opacity dikurangi agar tidak mencolok */
   animation: holo-bg 20s linear infinite;
   mix-blend-mode: soft-light; /* Soft light agar tidak terlalu keras warnanya */
+  pointer-events: none;
 }
 
 .pc-shine,
@@ -244,6 +245,7 @@
   mix-blend-mode: overlay;
   filter: brightness(0.8) contrast(1.2);
   z-index: 4;
+  pointer-events: none;
 }
 
 .pc-avatar-content .avatar {
