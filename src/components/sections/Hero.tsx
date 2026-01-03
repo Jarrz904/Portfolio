@@ -32,7 +32,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="home" className="relative w-full min-h-screen bg-[#050505] overflow-hidden flex flex-col pt-24 md:pt-32 pb-0">
+    <section id="home" className="relative w-full min-h-screen bg-[#050505] overflow-hidden flex flex-col">
 
       {/* --- LAYER 1: GRID BACKGROUND --- */}
       <div className="absolute inset-0 z-0 [perspective:1000px] pointer-events-none">
@@ -46,8 +46,9 @@ export default function Hero() {
         />
       </div>
 
-      {/* --- UTAMA: WRAPPER KONTEN (TEKS KIRI, KARTU KANAN) --- */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4 pb-20 md:pb-0">
+      {/* --- UTAMA: WRAPPER KONTEN --- */}
+      {/* Penambahan pt-32 md:pt-48 agar konten turun ke bawah sedikit lebih banyak */}
+      <div className="container mx-auto px-6 md:px-12 relative z-10 flex-grow flex flex-col md:flex-row items-center justify-between gap-12 md:gap-4 pt-32 md:pt-48 pb-20 md:pb-10">
         
         {/* --- LAYER KONTEN TEKS (KIRI) --- */}
         <motion.div
@@ -86,7 +87,7 @@ export default function Hero() {
         {/* --- LAYER PROFILE CARD (KANAN) --- */}
         <div className="w-full md:w-1/2 flex items-center justify-center md:justify-end order-1 md:order-2">
           {mounted && (
-            <div className="relative w-full flex items-center justify-center">
+            <div className="relative w-full flex items-center justify-center md:justify-end">
               {/* Ukuran dinamis: Mengecil di mobile, membesar di desktop */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -119,7 +120,7 @@ export default function Hero() {
 
       </div>
 
-      {/* --- LAYER 4: MARQUEE TECH STACK (TETAP DI BAWAH) --- */}
+      {/* --- LAYER 4: MARQUEE TECH STACK --- */}
       <div className="relative w-full py-4 md:py-8 bg-black/60 border-t border-white/5 backdrop-blur-md overflow-hidden z-[20] mt-auto">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
